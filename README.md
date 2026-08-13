@@ -92,7 +92,7 @@ evidence of corrections.
 7. Results and Reports
 ---
 
-### **features**
+### **Features**
 #### *User Authentication*
 * * Admin
   * Assessor
