@@ -48,8 +48,9 @@
 * Testing
 * * Browser developer tools, breakpoints, console, stack traces, manual test cases and 
 evidence of corrections.
+----
 
-**Firebase requirements**
+### **Firebase requirements**
 | :Path: | :Purpose: | :Fields: |
 |----------|-------------|------------|
 |: users/{uid}|: Basic learner profile and application role.|: displayName, email, role, createdAt|
@@ -58,7 +59,9 @@ evidence of corrections.
 |: scores/{scoreId}|:  Mini-game or quiz results.|: userId, score, duration, completedAt|
 |: resources/{resourceId}|: Optional learning resources.|: title, type, url, description|
 
-***Project folder structure***
+----
+
+### **Project folder structure**
 > Skills Task
 > > client
 > > > Components
@@ -79,7 +82,7 @@ evidence of corrections.
 > README.md
 ---
 
-**Application Workflow**
+### **Application Workflow**
 1. Login
 2. Select Role( Admin, Assesor or Learner )
 3. Dashboard
@@ -89,8 +92,8 @@ evidence of corrections.
 7. Results and Reports
 ---
 
-***features***
-*User Authentication*
+### **Features**
+#### *User Authentication*
 * * Admin
   * Assessor
   * Leaner
@@ -98,7 +101,7 @@ evidence of corrections.
 * * (POST/api/auth/register)
   * (POST/api/auth/login)
 
-*Learner Management*
+#### *Learner Management*
 * * learner Name
   * Class
   * Date of Birth
@@ -106,7 +109,7 @@ evidence of corrections.
   * learner Number
   * Section
 
-*Assessor Management*
+#### *Assessor Management*
 * * Assessor Name
   * Subject
   * Qualification
@@ -118,8 +121,8 @@ evidence of corrections.
     * Record attendance
     * Upload marks
 
-*Admin*
-* Class & Subject Management*
+### *Admin*
+#### * Class & Subject Management*
 * Manage:
 * * Classes
   * Sections
@@ -127,14 +130,14 @@ evidence of corrections.
   * Timetable
   * Assign teachers to each subject.
 
-*Attendance Management*
+### *Attendance Management*
 * Assessor can:
 * * Mark daily attendance
   * Edit attendance
   * View attendance history
   * Students can view their attendance percentage.
 
-*Examination & Results*
+### *Examination & Results*
 * Manage:
 * * Tasks
   * Marks
@@ -145,7 +148,7 @@ evidence of corrections.
     * Percentage
     * Grade
 
-*Dashboard*
+### *Dashboard*
 * Display:
 * * Total Students
   * Total Teachers
@@ -153,12 +156,12 @@ evidence of corrections.
   * Upcoming Tasks
   * Recent Activities
 
-*Notifications*
+### *Notifications*
 * Notify users about:
 * * Upcoming examinations
   * Homework submissions
   * Attendance shortages
   * School announcements
 
-***Responsive Design***
+### ***Responsive Design***
 
