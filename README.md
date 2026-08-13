@@ -20,7 +20,7 @@
 ---
 
 ### **Required tools**
-|:Area: |:Tool: |
+|Area |Tool |
 |-------|---|
 |Core Development | HTML5, CSS3, JavaScript| 
 |IDE | VS code|
@@ -35,13 +35,13 @@
 ----
 
 ### **Firebase requirements**
-| :Path: | :Purpose: | :Fields: |
+| Path | Purpose | Fields |
 |----------|-------------|------------|
-|: users/{uid}|: Basic learner profile and application role.|: displayName, email, role, createdAt|
-|: tasks/{taskId}|: Learning tasks owned by a user.|: userId, title, category, dueDate, priority, completed, createdAt|
-|: bookings/{bookingId}|: Support-session requests.|: userId, topic, preferredDate, notes, status|
-|: scores/{scoreId}|:  Mini-game or quiz results.|: userId, score, duration, completedAt|
-|: resources/{resourceId}|: Optional learning resources.|: title, type, url, description|
+| users/{uid}| Basic learner profile and application role.| displayName, email, role, createdAt|
+| tasks/{taskId}| Learning tasks owned by a user.| userId, title, category, dueDate, priority, completed, createdAt|
+| bookings/{bookingId}| Support-session requests.| userId, topic, preferredDate, notes, status|
+| scores/{scoreId}|  Mini-game or quiz results.| userId, score, duration, completedAt|
+| resources/{resourceId}| Optional learning resources.| title, type, url, description|
 
 ----
 
