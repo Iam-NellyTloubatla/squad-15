@@ -61,7 +61,7 @@ evidence of corrections.
 
 ----
 
-### ***Project folder structure***
+### **Project folder structure**
 > Skills Task
 > > client
 > > > Components
@@ -92,7 +92,7 @@ evidence of corrections.
 7. Results and Reports
 ---
 
-### ***features***
+### **features**
 #### *User Authentication*
 * * Admin
   * Assessor
