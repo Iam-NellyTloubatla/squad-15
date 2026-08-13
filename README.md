@@ -1,42 +1,164 @@
-### Skills Track Learner Support  
-**1. Project Purpose and Programme Alignment**
-The purpose of this project is to provide learners with an integrated opportunity to solve a realistic operational 
-problem using JavaScript and applicable development tools. The finished product must be a functional, 
-readable and testable front-end application supported by Firebase data, REST communication and disciplined 
-version control.
+# JavaScript programmer two month integrated project 
 
-The project addresses the programme requirement to create well-written JavaScript solutions, test and debug 
-code, communicate with web servers, and work collaboratively through Git and GitHub. It combines the 
-knowledge and practical skills developed during the Introduction, Principles, Intermediate Programming 
-and Projects with JavaScript modules.
+---
 
-1.1 Project Assessment Principles
-• The project is assessed in two monthly submissions.
-• Each learner must submit individual evidence even when the application is developed in a team.
-• A feature may receive no marks if the learner cannot explain, demonstrate or modify the submitted code.
-• The final mark is calculated out of 382 marks
-• All source code, project documentation and Git history must be available to the assessor.
+## Skills Track Learner Support  
 
-**2. Project Narrative and Client Brief**
-SkillsTrack Training Centre supports learners who attend short occupational programmes. Learners currently 
-record goals, tasks, support bookings and progress in separate documents and messages. Assessors struggle 
-to see what work is outstanding, which learners need support, and whether learners are making progress.
-The centre requires a browser-based Learner Support Portal. The portal must allow registered users to manage 
-learning tasks, book support sessions, review progress, use learning resources and complete a short coding 
-game. The system must use JavaScript for application logic and Firebase as the database.
+---
 
-2.1 Client Objectives
-• Provide a single, clear interface for managing learning tasks and support requests.
-• Allow users to register, sign in and view their own information.
-• Store, retrieve, update and delete application data in Firebase.
-• Provide meaningful calculations and summaries based on stored data.
-• Include an interactive mini-game that reinforces basic programming concepts.
-• Allow a team of developers to collaborate through GitHub and controlled version history.
-2.2 Required Users
-User Required access
-Learner Register and sign in; manage own tasks; book support; view progress; play the mini-game; print 
-a progress summary.
-Assessor or 
-administrator
-View submitted support bookings and relevant learner activity; update booking status where 
-included in the approved scope.
+### **Project Goal**
+1. Register and Login
+2. Manage students
+3. Manage assessors
+4. Manage student attendance
+5. Record attendance and student details
+6. Record leaner progress
+7. Manage Task
+8. Manage development goals
+9. Sort learner progress by marks obtained
+10. Access the platform from any device
+---
+
+### **Required tools**
+* Core Development
+* * HTML5
+   * CSS3
+   * JavaScript
+  
+*  IDE
+* * VS code
+
+*  Database
+* * Firebase Realtime
+   
+*  Authentication
+* * Firebase Authentication
+
+* REST Communication
+* * Firebase Realtime Database REST API using GET, POST, PUT or PATCH, and DELETE.
+
+* Framework or Library
+* * One Assessor-approved JavaScript
+
+* Version Control
+* * Git and GitHub (Repository, Branches, Commits, Pull requests, Merges and contribution history)
+* Continuous integration
+* * GitHub Workflow
+
+* Testing
+* * Browser developer tools, breakpoints, console, stack traces, manual test cases and 
+evidence of corrections.
+
+** Firebase requirements**
+| : Path : | : Purpose : | : Fields : |
+|----------|-------------|------------|
+|: users/{uid}|: Basic learner profile and application role.|: displayName, email, role, createdAt|
+|: tasks/{taskId}|: Learning tasks owned by a user.|: userId, title, category, dueDate, priority, completed, createdAt|
+|: bookings/{bookingId}|: Support-session requests.|: userId, topic, preferredDate, notes, status|
+|: scores/{scoreId}|:  Mini-game or quiz results.|: userId, score, duration, completedAt|
+|: resources/{resourceId}|: Optional learning resources.|: title, type, url, description|
+
+***Project folder structure***
+> Skills Task
+> > client
+> > > Components
+> > > Pages
+> > > Dashboard
+> > > Services
+> > > App.js
+> > > Index.js
+>  
+> > server
+> > > Routes
+> > > Controllers
+> > > Models
+> > > Middleware
+> > > Utils
+> > > Server.js
+>
+> README.md
+---
+
+**Application Workflow**
+1. Login
+2. Select Role( Admin, Assesor or Learner )
+3. Dashboard
+4. Manage classes
+5. Attandance
+6. Tasks
+7. Results and Reports
+---
+
+***features***
+*User Authentication*
+* * Admin
+  * Assessor
+  * Leaner
+* API Routes
+* * (POST/api/auth/register)
+  * (POST/api/auth/login)
+
+*Learner Management*
+* * learner Name
+  * Class
+  * Date of Birth
+  * Parent name and number
+  * learner Number
+  * Section
+
+*Assessor Management*
+* * Assessor Name
+  * Subject
+  * Qualification
+  * Experience
+  * Contact Details
+* * * Assessor can:
+    * Update profiles
+    * View assigned classes
+    * Record attendance
+    * Upload marks
+
+*Admin*
+* Class & Subject Management*
+* Manage:
+* * Classes
+  * Sections
+  * Subjects
+  * Timetable
+  * Assign teachers to each subject.
+
+*Attendance Management*
+* Assessor can:
+* * Mark daily attendance
+  * Edit attendance
+  * View attendance history
+  * Students can view their attendance percentage.
+
+*Examination & Results*
+* Manage:
+* * Tasks
+  * Marks
+  * Grades
+  * Report Cards
+  * * Automatically calculate:
+    * Total Marks
+    * Percentage
+    * Grade
+
+*Dashboard*
+*Display:
+* * Total Students
+  * Total Teachers
+  * Attendance Percentage
+  * Upcoming Tasks
+  * Recent Activities
+
+*Notifications*
+* Notify users about:
+* * Upcoming examinations
+  * Homework submissions
+  * Attendance shortages
+  * School announcements
+
+***Responsive Design***
+
