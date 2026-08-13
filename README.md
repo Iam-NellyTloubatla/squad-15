@@ -50,7 +50,7 @@
 evidence of corrections.
 
 ** Firebase requirements**
-| : Path : | : Purpose : | : Fields : |
+| :Path: | :Purpose: | :Fields: |
 |----------|-------------|------------|
 |: users/{uid}|: Basic learner profile and application role.|: displayName, email, role, createdAt|
 |: tasks/{taskId}|: Learning tasks owned by a user.|: userId, title, category, dueDate, priority, completed, createdAt|
@@ -146,7 +146,7 @@ evidence of corrections.
     * Grade
 
 *Dashboard*
-*Display:
+* Display:
 * * Total Students
   * Total Teachers
   * Attendance Percentage
