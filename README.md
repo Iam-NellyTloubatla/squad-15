@@ -28,7 +28,6 @@
 |Authentication | Firebase Authentication|
 |REST Communication | Firebase Realtime Database REST API using GET, POST, PUT or PATCH, and DELETE.|
 |Framework or Library | One Assessor-approved JavaScript|
-
 |Version Control | Git and GitHub (Repository, Branches, Commits, Pull requests, Merges and contribution history)|
 |Continuous integration | GitHub Workflow|
 |Testing | Browser developer tools, breakpoints, console, stack traces, manual test cases and evidence of corrections. |
