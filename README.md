@@ -20,44 +20,28 @@
 ---
 
 ### **Required tools**
-* Core Development
-* * HTML5
-   * CSS3
-   * JavaScript
-  
-*  IDE
-* * VS code
+|Area |Tool |
+|-------|---|
+|Core Development | HTML5, CSS3, JavaScript| 
+|IDE | VS code|
+|Database |Firebase Realtime |
+|Authentication | Firebase Authentication|
+|REST Communication | Firebase Realtime Database REST API using GET, POST, PUT or PATCH, and DELETE.|
+|Framework or Library | One Assessor-approved JavaScript|
 
-*  Database
-* * Firebase Realtime
-   
-*  Authentication
-* * Firebase Authentication
-
-* REST Communication
-* * Firebase Realtime Database REST API using GET, POST, PUT or PATCH, and DELETE.
-
-* Framework or Library
-* * One Assessor-approved JavaScript
-
-* Version Control
-* * Git and GitHub (Repository, Branches, Commits, Pull requests, Merges and contribution history)
-* Continuous integration
-* * GitHub Workflow
-
-* Testing
-* * Browser developer tools, breakpoints, console, stack traces, manual test cases and 
-evidence of corrections.
+|Version Control | Git and GitHub (Repository, Branches, Commits, Pull requests, Merges and contribution history)|
+|Continuous integration | GitHub Workflow|
+|Testing | Browser developer tools, breakpoints, console, stack traces, manual test cases and evidence of corrections. |
 ----
 
 ### **Firebase requirements**
-| :Path: | :Purpose: | :Fields: |
+| Path | Purpose | Fields |
 |----------|-------------|------------|
-|: users/{uid}|: Basic learner profile and application role.|: displayName, email, role, createdAt|
-|: tasks/{taskId}|: Learning tasks owned by a user.|: userId, title, category, dueDate, priority, completed, createdAt|
-|: bookings/{bookingId}|: Support-session requests.|: userId, topic, preferredDate, notes, status|
-|: scores/{scoreId}|:  Mini-game or quiz results.|: userId, score, duration, completedAt|
-|: resources/{resourceId}|: Optional learning resources.|: title, type, url, description|
+| users/{uid}| Basic learner profile and application role.| displayName, email, role, createdAt|
+| tasks/{taskId}| Learning tasks owned by a user.| userId, title, category, dueDate, priority, completed, createdAt|
+| bookings/{bookingId}| Support-session requests.| userId, topic, preferredDate, notes, status|
+| scores/{scoreId}|  Mini-game or quiz results.| userId, score, duration, completedAt|
+| resources/{resourceId}| Optional learning resources.| title, type, url, description|
 
 ----
 
