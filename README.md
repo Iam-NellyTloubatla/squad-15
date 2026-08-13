@@ -1,4 +1,4 @@
-### Skills Track Learner Support.
+### Skills Track Learner Support 
 **1. Project Purpose and Programme Alignment**
 The purpose of this project is to provide learners with an integrated opportunity to solve a realistic operational problem using JavaScript and applicable development tools. The finished product must be a functional, readable and testable front-end application supported by Firebase data, REST communication and disciplined version control.
 
