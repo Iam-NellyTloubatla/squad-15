@@ -49,7 +49,7 @@
 * * Browser developer tools, breakpoints, console, stack traces, manual test cases and 
 evidence of corrections.
 
-** Firebase requirements**
+**Firebase requirements**
 | :Path: | :Purpose: | :Fields: |
 |----------|-------------|------------|
 |: users/{uid}|: Basic learner profile and application role.|: displayName, email, role, createdAt|
