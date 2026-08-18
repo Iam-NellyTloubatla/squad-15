@@ -1,4 +1,13 @@
 # JavaScript programmer two month integrated project 
+---
+
+## Client brief summary 
+SkillsTrack Training Centre supports learners who attend short occupational programmes. Learners currently 
+record goals, tasks, support bookings and progress in separate documents and messages. Assessors struggle 
+to see what work is outstanding, which learners need support, and whether learners are making progress.
+The centre requires a browser-based Learner Support Portal. The portal must allow registered users to manage 
+learning tasks, book support sessions, review progress, use learning resources and complete a short coding 
+game. The system must use JavaScript for application logic and Firebase as the database.
 
 ---
 
