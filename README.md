@@ -55,13 +55,21 @@
 > > 
 > > docs/
 > > > Client Brief
+> > > 
 > > >  Requirements
+> > > 
 > > > Research
+> > > 
 > > > Meeting Minute
+> > > 
 > > > User stories
+> > > 
 > > > User cases
+> > > 
 > > > Wireframes
+> > > 
 > > > UI Design
+> > > 
 > > > Test plan
 > > 
 > > design
