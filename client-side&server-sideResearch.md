@@ -1,0 +1,23 @@
+# Part 1 – Architecture Investigation
+ ## 1. Client-side development
+- Client-side development refers to creating the user-facing part of a web application (the frontend), where the code executes directly inside the user's web browser rather than on a remote web server. When a user visits a website, the remote server sends raw source files—HTML, CSS, and JavaScript—over the internet to the user's device. The code executes inside the user's web browser (such as Google Chrome, Mozilla Firefox, Safari, or Microsoft Edge) utilizing the device's local hardware (CPU and RAM)
+ ## 2. Server-side development
+- **Server-side development** (also known as back-end development) refers to creating code that executes on a remote web server, rather than on the user's local device. When you visit a website, the server-side code handles background tasks—like querying databases, verifying passwords, and processing payments—before sending the final webpage structure to your computer. - The primary difference is *where the code physically runs and what it has access to*. Code executing in the browser (client-side) runs locally on your machine and focuses on user interaction, layout, and visual logic.
+ ## 3. Roles in SkillsTrack
+- In the context of **SkillsTrack** (a skills tracking or learning platform), these technologies function as a cohesive ecosystem. They are split into two categories: the **Front-End User Interface** (handled locally in the browser by HTML, CSS, and JavaScript) and the **Cloud Back-End** (handled remotely by Firebase services).
+    ### 1. Front-End User Interface (The Client-Side)
+These three technologies run inside the user's web browser to construct what the student or mentor physically sees and interacts with.
+    * **HTML (HyperText Markup Language)**: Builds the structural layout of the platform. It dictates where elements sit on the page—creating the login text fields, the user dashboard, the tracking progress bars, and the submit buttons for new competencies.
+    * **CSS (Cascading Style Sheets)**: Handles the visual presentation and styling. It turns plain HTML text into a clean dashboard. It handles the mobile-responsive layout, sets the brand colours, adds progress bar animations, and styles form states (such as turning a field red if a skill entry is invalid).
+    * **JavaScript (JS)**: Drives the platform's local logic and interactivity. When a student   clicks "Log a New Skill," JavaScript intercepts the click, packages the input data, and makes the asynchronous background requests to Firebase without reloading the entire page.
+   ### 2. Firebase Cloud Services (The Back-End)
+Firebase replaces the need to build a traditional, custom server-side backend. It securely manages data, authorization, and connectivity via the cloud.
+    * **Firebase Authentication**: Manages secure user identity and access control. When a user enters their credentials, JavaScript passes them to the Firebase Auth SDK. It securely registers new users, logs them in, and generates an encrypted digital ID token. This token ensures that a student can only view or modify their own progress, while an admin or mentor can view everything. 
+    * **Firebase Realtime Database**: Stores the platform’s live tracking data as a JSON tree. Every time a student updates a skill or a mentor approves a milestone, the data is saved here. Because it is a realtime cloud database, any update automatically pushes live changes to connected dashboards using WebSockets. For instance, if an evaluator approves a module, the student's progress bar updates instantly on their screen without requiring a page refresh.
+    * **Firebase REST API**: Acts as a universal data bridge for external or lightweight environments. While JavaScript apps normally use persistent, always-connected SDKs to communicate with Firebase, the REST API allows the platform to interact with the database using standard HTTPS requests (GET, POST, PUT, DELETE) by simply appending .json to a database URL. This is useful if SkillsTrack needs to send completion data to an external automated certificate generator, sync data with a corporate HR tool, or pull data into a lightweight mobile environment where full SDKs are too heavy.
+## 4. Is Firebase the same as server-side JavaScript?
+- No, **Firebase** and **server-side JavaScript** are entirely different things, though they are frequently used together in modern web development. 
+**Server-side JavaScript** is a programming language environment used to write custom back-end logic, while **Firebase** is a pre-built cloud platform that handles the back-end infrastructure for you so you don't have to write that server code from scratch.
+
+
+
