@@ -74,14 +74,20 @@
 > > 
 > > design
 > > > Figma link.md
+> > > 
 > > > UI Mockup
+> > > 
 > > > Images
+> 
 > > src
+> > 
 > > assets
+> > 
 > > presentation
 
 > Skills Task
 > > client
+> > 
 > > > Components
 > > > Pages
 > > > Dashboard
