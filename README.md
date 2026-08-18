@@ -1,4 +1,13 @@
 # JavaScript programmer two month integrated project 
+---
+
+## Client brief summary 
+SkillsTrack Training Centre supports learners who attend short occupational programmes. Learners currently 
+record goals, tasks, support bookings and progress in separate documents and messages. Assessors struggle 
+to see what work is outstanding, which learners need support, and whether learners are making progress.
+The centre requires a browser-based Learner Support Portal. The portal must allow registered users to manage 
+learning tasks, book support sessions, review progress, use learning resources and complete a short coding 
+game. The system must use JavaScript for application logic and Firebase as the database.
 
 ---
 
@@ -20,50 +29,74 @@
 ---
 
 ### **Required tools**
-* Core Development
-* * HTML5
-   * CSS3
-   * JavaScript
-  
-*  IDE
-* * VS code
-
-*  Database
-* * Firebase Realtime
-   
-*  Authentication
-* * Firebase Authentication
-
-* REST Communication
-* * Firebase Realtime Database REST API using GET, POST, PUT or PATCH, and DELETE.
-
-* Framework or Library
-* * One Assessor-approved JavaScript
-
-* Version Control
-* * Git and GitHub (Repository, Branches, Commits, Pull requests, Merges and contribution history)
-* Continuous integration
-* * GitHub Workflow
-
-* Testing
-* * Browser developer tools, breakpoints, console, stack traces, manual test cases and 
-evidence of corrections.
+|Area |Tool |
+|-------|---|
+|Core Development | HTML5, CSS3, JavaScript| 
+|IDE | VS code|
+|Database |Firebase Realtime |
+|Authentication | Firebase Authentication|
+|REST Communication | Firebase Realtime Database REST API using GET, POST, PUT or PATCH, and DELETE.|
+|Framework or Library | One Assessor-approved JavaScript|
+|Version Control | Git and GitHub (Repository, Branches, Commits, Pull requests, Merges and contribution history)|
+|Continuous integration | GitHub Workflow|
+|Testing | Browser developer tools, breakpoints, console, stack traces, manual test cases and evidence of corrections. |
 ----
 
 ### **Firebase requirements**
-| :Path: | :Purpose: | :Fields: |
+| Path | Purpose | Fields |
 |----------|-------------|------------|
-|: users/{uid}|: Basic learner profile and application role.|: displayName, email, role, createdAt|
-|: tasks/{taskId}|: Learning tasks owned by a user.|: userId, title, category, dueDate, priority, completed, createdAt|
-|: bookings/{bookingId}|: Support-session requests.|: userId, topic, preferredDate, notes, status|
-|: scores/{scoreId}|:  Mini-game or quiz results.|: userId, score, duration, completedAt|
-|: resources/{resourceId}|: Optional learning resources.|: title, type, url, description|
+| users/{uid}| Basic learner profile and application role.| displayName, email, role, createdAt|
+| tasks/{taskId}| Learning tasks owned by a user.| userId, title, category, dueDate, priority, completed, createdAt|
+| bookings/{bookingId}| Support-session requests.| userId, topic, preferredDate, notes, status|
+| scores/{scoreId}|  Mini-game or quiz results.| userId, score, duration, completedAt|
+| resources/{resourceId}| Optional learning resources.| title, type, url, description|
 
 ----
 
 ### **Project folder structure**
+> Learner-Support-Portal/
+> > README.md
+> > 
+> > CHANGELOG.md
+> > 
+> > LICENSE
+> > .gitignore
+> > 
+> > docs/
+> > > Client Brief
+> > > 
+> > >  Requirements
+> > > 
+> > > Research
+> > > 
+> > > Meeting Minute
+> > > 
+> > > User stories
+> > > 
+> > > User cases
+> > > 
+> > > Wireframes
+> > > 
+> > > UI Design
+> > > 
+> > > Test plan
+> > 
+> > design
+> > > Figma link.md
+> > > 
+> > > UI Mockup
+> > > 
+> > > Images
+> 
+> > src
+> > 
+> > assets
+> > 
+> > presentation
+
 > Skills Task
 > > client
+> > 
 > > > Components
 > > > Pages
 > > > Dashboard
