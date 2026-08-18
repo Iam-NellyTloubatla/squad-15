@@ -45,6 +45,29 @@
 ----
 
 ### **Project folder structure**
+> Learner-Support-Portal/
+> > README.md
+> > CHANGELOG.md
+> > LICENSE
+> > .gitignore
+> > docs/
+> > > Client Brief
+> > >  Requirements
+> > > Research
+> > > Meeting Minute
+> > > User stories
+> > > User cases
+> > > Wireframes
+> > > UI Design
+> > > Test plan
+> > design
+> > > Figma link.md
+> > > UI Mockup
+> > > Images
+> > src
+> > assets
+> > presentation
+
 > Skills Task
 > > client
 > > > Components
