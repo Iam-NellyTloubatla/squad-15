@@ -47,7 +47,9 @@
 ### **Project folder structure**
 > Learner-Support-Portal/
 > > README.md
+> > 
 > > CHANGELOG.md
+> > 
 > > LICENSE
 > > .gitignore
 > > 
