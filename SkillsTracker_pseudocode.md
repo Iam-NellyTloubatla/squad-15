@@ -17,7 +17,7 @@ Load saved preferences (like theme) from browser
     Else:
         Show "Invalid email or password"
     ENDIF
-END FUCTION
+END FUNCTION
 
 ## Function loginUser(email, password):
     Ask Firebase to log in with email + password
@@ -37,7 +37,7 @@ END FUNCTION
         Clear currentUser
         Go back to login page
     ENDIF
-END FUCTION
+END FUNCTION
 
 # 3. Dashboard
 
@@ -60,12 +60,12 @@ END FUNCTION
     Make new task with status "pending"
     Save task to Firebase
     Show "Task created" and go back to dashboard
-END FUCTION
+END FUNCTION
 
 ## Function readTasks():
     Get all tasks for currentUser from Firebase
     Show tasks in a list
-END FUCTION
+END FUNCTION
 
 ## Function updateTask(taskId, updatedData):
     Ask "Do you want to update this task?"
@@ -73,7 +73,7 @@ END FUCTION
         Update task in Firebase
         Refresh task list
     ENDIF
-END FUCTION
+END FUNCTION
 
 ## Function deleteTask(taskId):
     Ask "Do you want to delete this task? This cannot be undone."
