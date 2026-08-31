@@ -1,197 +1,125 @@
-# 1. Setup
-
-## Start the program
-Connect to Firebase (for login and data storage)
-Set currentUser = nobody logged in yet
-Set userRole = none (will be "Learner" or "Assessor")
-Load saved preferences (like theme) from browser
-
-# 2. Authentication (Login & Registration)
-
-## Function registerUser(email, password, name, role):
-    Check if email and password are valid
-    If valid:
-        Create new account in Firebase
-        Save user info (name, email, role, date created)
-        Show "Registration successful"
-    Else:
-        Show "Invalid email or password"
-    ENDIF
+# 1. System Setup
+Code
+BEGIN PROGRAM SkillTracker
+    INITIALIZE Firebase connection
+    INITIALIZE userRegistry = []
+    INITIALIZE submissionRegistry = []
+    SET currentUser = null
+    SET userRole = null
+END SETUP
+# 2. User Management
+Code
+FUNCTION registerUser(userId, name, email, role)
+    CREATE new User object
+    ADD User to userRegistry
+    DISPLAY "User registered successfully"
 END FUNCTION
 
-## Function loginUser(email, password):
-    Ask Firebase to log in with email + password
-    If login works:
-        Save currentUser info
-        Get userRole from database
-        Go to dashboard page
-    Else:
-        Show "Login failed"
-    ENDIF
+FUNCTION loginUser(email, password)
+    AUTHENTICATE with Firebase
+    IF success THEN
+        SET currentUser = User object
+        SET userRole = currentUser.role
+        REDIRECT to dashboard
+    ELSE
+        DISPLAY "Login failed"
+    END IF
 END FUNCTION
 
-## Function logoutUser():
-    Ask "Are you sure you want to log out?"
-    If yes:
-        Log out from Firebase
-        Clear currentUser
-        Go back to login page
-    ENDIF
+FUNCTION logoutUser()
+    CONFIRM "Are you sure?"
+    IF yes THEN
+        CLEAR currentUser
+        REDIRECT to login page
+    END IF
+END FUNCTION
+# 3. Dashboards
+Code
+FUNCTION loadDashboard()
+    IF userRole == LEARNER THEN
+        FETCH tasks for currentUser
+        CALCULATE progress = (completed / total) * 100
+        DISPLAY learner dashboard: tasks, progress, mini-game access
+    ELSE IF userRole == ASSESSOR THEN
+        FETCH submissions assigned
+        DISPLAY assessor dashboard: pending reviews, grading tools
+    ELSE IF userRole == ADMIN THEN
+        DISPLAY admin dashboard: 
+            - Master list of all users by role
+            - Submission dashboard (overview of all learners)
+            - Reports and analytics
+    END IF
+END FUNCTION
+# 4. Task & Submission Management
+Code
+FUNCTION createTask(title, description, dueDate)
+    IF userRole == ASSESSOR OR ADMIN THEN
+        CREATE new Task object with status "Pending"
+        SAVE to Firebase
+        DISPLAY "Task created"
+    ELSE
+        DISPLAY "Access denied"
+    END IF
 END FUNCTION
 
-# 3. Dashboard
-
-## Function loadDashboard():
-    If userRole is "Learner":
-        Get all tasks for this user from Firebase
-        Count how many are completed
-        Count how many are pending
-        Calculate progress = (completed / total) * 100
-        Show dashboard with totals and progress
-    If userRole is "Assessor":
-        Get all support bookings from Firebase
-        Show bookings and learner activity
-    ENDIF
+FUNCTION submitAssignment(learner, assignmentTitle)
+    IF learner.role == LEARNER THEN
+        CREATE new Submission object
+        ADD to submissionRegistry
+        DISPLAY "Submission recorded"
+    ELSE
+        DISPLAY "Only learners can submit"
+    END IF
 END FUNCTION
 
-# 4. Task Manager (CRUD)
-
-## Function createTask(title, description, dueDate):
-    Make new task with status "pending"
-    Save task to Firebase
-    Show "Task created" and go back to dashboard
+FUNCTION gradeSubmission(assessor, submissionId, grade)
+    IF assessor.role == ASSESSOR THEN
+        FIND submission by ID
+        UPDATE grade + status = "Graded"
+        DISPLAY "Submission graded"
+    ELSE
+        DISPLAY "Access denied"
+    END IF
+END FUNCTION
+# 5. Reporting & Admin Tools
+Code
+FUNCTION printUsersByRole(targetRole)
+    FOR each user in userRegistry
+        IF user.role == targetRole
+            DISPLAY userId + name
+        END IF
+    END FOR
 END FUNCTION
 
-## Function readTasks():
-    Get all tasks for currentUser from Firebase
-    Show tasks in a list
+FUNCTION printSubmissionDashboard()
+    FOR each submission in submissionRegistry
+        DISPLAY assignmentTitle, learnerName, assessorName, status, grade
+    END FOR
 END FUNCTION
-
-## Function updateTask(taskId, updatedData):
-    Ask "Do you want to update this task?"
-    If yes:
-        Update task in Firebase
-        Refresh task list
-    ENDIF
+# 6. Mini-Game
+Code
+FUNCTION startMiniGame()
+    SET score = 0
+    SET timer = 60 seconds
+    WHILE timer > 0
+        DISPLAY question + 4 answers
+        WAIT for learner input
+        IF correct THEN
+            score += 10
+        END IF
+        LOAD next question
+    END WHILE
+    SAVE score to Firebase
+    DISPLAY final score
 END FUNCTION
-
-## Function deleteTask(taskId):
-    Ask "Do you want to delete this task? This cannot be undone."
-    If yes:
-        Delete task from Firebase
-        Refresh task list
-    ENDIF
-END FUNCTION
-
-# 5. Support Booking
-
-## Function bookSupportSession(date, time, topic, notes):
-    Check if form is filled correctly
-    If valid:
-        Save booking to Firebase
-        Show "Booking submitted"
-    Else:
-        Show errors
-    ENDIF
-END FUNCTION
-
-## Function viewBookings():
-    If userRole is "Learner":
-        Show only this learner’s bookings
-    If userRole is "Assessor":
-        Show all bookings
-    ENDIF
-END FUNCTION
-
-## Function updateBookingStatus(bookingId, newStatus):
-    If userRole is "Assessor":
-        Update booking status in Firebase
-    ENDIF
-END FUNCTION
-
-# 6. Search, Filter, Sort
-
-## Function calculateProgress():
-    Get all tasks for currentUser
-    Count completed tasks
-    Count total tasks
-    progress = (completed / total) * 100
-    Return progress
-END FUNCTION
-
-## Function printProgressSummary():
-    progress = calculateProgress()
-    Make a printable page with learner name, progress %, and task breakdown
-    Print the page
-END FUNTION
-
-# 7. Progress
-
-## Function calculateProgress():
-    Get all tasks for currentUser
-    Count completed tasks
-    Count total tasks
-    progress = (completed / total) * 100
-    Return progress
-END FUNCTION
-
-## Function printProgressSummary():
-    progress = calculateProgress()
-    Make a printable page with learner name, progress %, and task breakdown
-    Print the page
-END FUNCTION
-
-# 8. Mini-Game
-
-## Function startMiniGame():
-    Set score = 0
-    Set timer = 60 seconds
-    While timer > 0:
-        Show a question with 4 answers
-        Wait for user choice
-        If answer is correct:
-            Add 10 points
-            Play success sound
-        Else:
-            Play error sound
-        Load next question
-    When timer ends:
-        Save score to Firebase
-        Show final score
-END FUNCTION
-
-# 9. Preferences & UI
-
-## Function applyTheme():
-    Get saved theme from browser
-    If theme = "dark":
-        Switch page to dark mode
-    ENDIF
-END FUNCTION
-
-## Function savePreference(key, value):
-    Save setting in browser
-END FUNCTION
-
-## Function showAnimation(element):
-    Animate element (like fade or slide)
-END FUNCTION
-
-# 10. Main Program Flow
-
-## When page loads:
-    Apply saved theme
-    Check if user is logged in
-    If logged in:
-        Load dashboard
-    Else:
-        Show login/register page
-    ENDIF
-END PROGRAM 
-
-
-
-
-
-
+# 7. Main Program Flow
+Code
+ON PAGE LOAD
+    APPLY theme from preferences
+    IF user logged in THEN
+        loadDashboard()
+    ELSE
+        SHOW login/register page
+    END IF
+END PROGRAM
 
