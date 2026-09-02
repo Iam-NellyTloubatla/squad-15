@@ -1,0 +1,23 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "msedge",
+      "request": "launch",
+      "name": "Open js-fundamentals-challenges.html",
+      "file": "c:\\Users\\T\\Desktop\\Mama Khumo\\tpc Menlyn\\evidence activities\\js-fundamentals-challenges\\js-fundamentals-challenges.html"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run jsdom.js (Node)",
+      "program": "${workspaceFolder}/jsdom.js",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
