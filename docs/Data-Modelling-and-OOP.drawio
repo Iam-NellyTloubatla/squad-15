@@ -1,0 +1,76 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="r3jUedwpWE15yAKWAS3H">
+    <mxGraphModel dx="728" dy="475" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-14" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Skills Task Program - Data modeling&lt;/h1&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="580" x="70" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-29" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=13;fontStyle=4;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;font&gt;Entities and attribute (Admin, Assessor and leaner) and API Endpoits&lt;/font&gt;&lt;/span&gt;&lt;/h1&gt;" vertex="1">
+          <mxGeometry height="40" width="820" x="10" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-41" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="Admin" vertex="1">
+          <mxGeometry height="170" width="340" x="10" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-42" parent="DnfoZgHIZ2ViauFbOWgv-41" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="* AdminID (Primary Key) -- Unique identifier for the administrator.&lt;br&gt;* FirstName -- First name of the administrator.&lt;br&gt;* LastName -- Last name of the administrator.&lt;br&gt;* Email -- Unique email address.&lt;br&gt;* RoleLevel&amp;nbsp; -- Access to all school administration and securities&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="340" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-43" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="Assessor" vertex="1">
+          <mxGeometry height="230" width="350" x="10" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-44" parent="DnfoZgHIZ2ViauFbOWgv-43" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="&lt;p class=&quot;MsoNormal&quot;&gt;* AssessorID (Primary Key) — Unique identifier for the&lt;br&gt;assessor.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* FirstName — First name of the assessor.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* LastName — Last name of the assessor.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* Email — Unique email address.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;* RoleLevel — Learner task writting, submissions and task progress&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="180" width="350" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-45" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="Learner" vertex="1">
+          <mxGeometry height="250" width="350" x="10" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-46" parent="DnfoZgHIZ2ViauFbOWgv-45" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="&lt;p class=&quot;MsoNormal&quot;&gt;* LeanerID (Primary Key) — Unique identifier for the&lt;br&gt;student.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* FirstName — First name of the student.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* LastName — Last name of the student.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* Email — Unique email address.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;* EnrollmentDate — Date the student joined the program.&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* GradeLevel -- the leaner class level&lt;/p&gt;" vertex="1">
+          <mxGeometry height="200" width="350" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-52" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;gradientColor=#7ea6e0;" value="Assessments/Task" vertex="1">
+          <mxGeometry height="180" width="350" x="10" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-53" parent="DnfoZgHIZ2ViauFbOWgv-52" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="&lt;p class=&quot;MsoNormal&quot;&gt;* AssignmentID (Primary Key) — Unique identifier for the&lt;br&gt;work to be graded.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* Title — Name of the assignment.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;* DueDate — Deadline for submission.&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;*Status -- Completed or not completed&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="350" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-54" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;gradientColor=#7ea6e0;" value="Submission" vertex="1">
+          <mxGeometry height="310" width="350" x="10" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="DnfoZgHIZ2ViauFbOWgv-55" parent="DnfoZgHIZ2ViauFbOWgv-54" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="&lt;p class=&quot;MsoNormal&quot;&gt;* SubmissionID (Primary Key) — Unique identifier for a&lt;br&gt;specific upload.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* StudentID (Foreign Key) — Links to the student who&lt;br&gt;submitted it.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* AssignmentID (Foreign Key) — Links to the task being&lt;br&gt;answered/Status of Task.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* AssessorID (Foreign Key, Nullable) — Links to the assessor&lt;br&gt;assigned to grade it.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* SubmissionDate — Date and time uploaded.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;* Grade — Final score achieved.&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;* Feedback — Written review from the assessor.&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="260" width="350" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-admin" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="Admin Endpoints" vertex="1">
+          <mxGeometry height="170" width="400" x="410" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-admin-body" parent="EP-admin" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="* GET /admins -- List all administrators.&lt;br&gt;* GET /admins/ID -- Retrieve a single administrator.&lt;br&gt;* POST /admins -- Create a new administrator.&lt;br&gt;* PUT /admins/ID -- Update an administrator&#39;s details.&lt;br&gt;* DELETE /admins/ID -- Remove an administrator." vertex="1">
+          <mxGeometry height="120" width="400" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-assessor" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="Assessor Endpoints" vertex="1">
+          <mxGeometry height="230" width="400" x="410" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-assessor-body" parent="EP-assessor" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="* GET /assessors -- List all assessors.&lt;br&gt;* GET /assessors/ID -- Retrieve a single assessor.&lt;br&gt;* POST /assessors -- Create a new assessor.&lt;br&gt;* PUT /assessors/ID -- Update an assessor&#39;s details.&lt;br&gt;* DELETE /assessors/ID -- Remove an assessor.&lt;br&gt;* GET /assessors/ID&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;/submissions -- List submissions assigned to an assessor.&lt;/span&gt;" vertex="1">
+          <mxGeometry height="180" width="400" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-learner" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=#dae8fc;gradientColor=#7ea6e0;strokeColor=#6c8ebf;" value="Learner Endpoints" vertex="1">
+          <mxGeometry height="250" width="400" x="410" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-learner-body" parent="EP-learner" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="* GET /learners -- List all learners.&lt;br&gt;* GET /learners/ID -- Retrieve a single learner.&lt;br&gt;* POST /learners -- Enroll a new learner.&lt;br&gt;* PUT /learners/ID -- Update a learner&#39;s details.&lt;br&gt;* DELETE /learners/ID -- Remove a learner.&lt;br&gt;* GET /learners/ID/submissions -- List a learner&#39;s submissions." vertex="1">
+          <mxGeometry height="200" width="400" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-task" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;gradientColor=#7ea6e0;" value="Assessments/Task Endpoints" vertex="1">
+          <mxGeometry height="180" width="400" x="410" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-task-body" parent="EP-task" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="* GET /assignments -- List all assignments/tasks.&lt;br&gt;* GET /assignments/tittle -- Retrieve a single assignment.&lt;br&gt;* POST /assignments -- Create a new assignment.&lt;br&gt;* PUT /assignments/tittle&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;-- Update an assignment.&lt;/span&gt;&lt;div&gt;* DELETE /assignments/tittle -- Remove an assignment.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="400" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-submission" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;gradientColor=#7ea6e0;" value="Submission Endpoints" vertex="1">
+          <mxGeometry height="310" width="400" x="410" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="EP-submission-body" parent="EP-submission" style="align=left;strokeColor=#6c8ebf;fillColor=#dae8fc;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;gradientColor=#7ea6e0;" value="* GET /submissions -- List all submissions.&lt;br&gt;* GET /submissions/user -- Retrieve a single submission.&lt;br&gt;* POST /submissions -- Create/upload a new submission.&lt;br&gt;* PUT /submissions/user -- Update a submission (e.g. grade, feedback).&lt;br&gt;* DELETE /submissions/ -- Remove a submission.&lt;br&gt;* PATCH /submissions/user/grade -- Assign a grade and feedback.&lt;br&gt;* GET /submissions/user/status -- Check submission/grading status." vertex="1">
+          <mxGeometry height="260" width="400" y="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
