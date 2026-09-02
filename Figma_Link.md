@@ -1,0 +1,1 @@
+[Link](https://www.figma.com/design/iGcu03fuVtCgDDsi7bR3NJ/NEMOSA?node-id=0-1&t=USjhgQDzue26wSdt-1)
