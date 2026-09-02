@@ -1,15 +1,13 @@
 # Month 1 feedback and reflection
 
-## group members and their roles
-|name |surname |activity |duration |feedack |reflection |
-|     |        |         |          |                   |
-|nelly |tloubatla |UI design |2hours completed by Nelly, updated by Moses|using Figma to illustrate design and layout,being able to design to engage eith the customers feelings|
-|nelly |tloubatla |UI design |test plan 1our designed and completed by Nelly |using draw.io to design the truce table for testing. understanding the project, notify current and problems of which may arise, testing the project by using truce table|
-|nelly |tloubatla |UI design |data modeling 2hours + 30min of updating the file designed and completed by Nelly,updated by Nelly|presenting project bacend by using entities and API Endpoints. understanding the project, placing users accordingly to their profile endpoints on the entity table|
-|                                                     |
-|moses |hlatswayo |wireframe  |      |      |        |
-|moses |hlatswayo |user story |      |      |        |
-|moses |hlatswayo |UI design  |      |      |        |  
-|                                                      |
-|sabelo |mahlangu| Pseudocode |      |      |        |
-|                                                    |
+## Group members and their roles
+
+| Name | Surname | Activity | Duration | Feedback | Reflection |
+|------|---------|----------|----------|----------|------------|
+| Nelly | Tloubatla | UI design | 2 hours completed by Nelly, updated by Moses | Using Figma to illustrate design and layout, being able to design to engage with the customer's feelings. | Completed the initial app interface and improved the layout based on team input. |
+| Nelly | Tloubatla | UI design | Test plan: 1 hour designed and completed by Nelly | Using draw.io to design the test table for the project, understanding current problems and possible issues that may arise. | This helped the team plan and test the project more effectively. |
+| Nelly | Tloubatla | UI design | Data modeling: 2 hours + 30 minutes updating the file; designed and completed by Nelly | Presenting the project backend using entities and API endpoints, understanding the project and placing users according to their profile endpoints on the entity table. | Helped clarify the data structure and system relationships. |
+| Moses | Hlatswayo | Wireframe | | | |
+| Moses | Hlatswayo | User story | | | |
+| Moses | Hlatswayo | UI design | | | |
+| Sabelo | Mahlangu | Pseudocode | | |
