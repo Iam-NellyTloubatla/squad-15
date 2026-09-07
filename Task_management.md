@@ -9,7 +9,7 @@
 ** Print and redirect Users can print a suitable summary and are redirected only when the action and application flow justify it. **
 
 ## Task & Submission Management
-|Code |
+Code
 ---
 >FUNCTION createTask(title, description, dueDate) IF userRole == ASSESSOR OR ADMIN THEN CREATE new Task object with status "Pending" SAVE to Firebase DISPLAY "Task created" ELSE DISPLAY "Access denied" END IF END FUNCTION
 
