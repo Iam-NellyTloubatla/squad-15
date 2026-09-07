@@ -1,4 +1,5 @@
-# Notes about the project backend database
+# Notes about the project backend database.
+---
 1. Task management- Users can create, view, edit, complete and delete tasks. Deletion requires confirmation.
 2. Progress calculation- The application calculates completed, outstanding and overdue work from task data and displays the result dynamically.
 3. Support booking Users- can submit a validated support request and view an appropriate success or error response.
@@ -8,7 +9,7 @@
 ** Print and redirect Users can print a suitable summary and are redirected only when the action and application flow justify it. **
 
 ## Task & Submission Management
-|Code |
+Code
 ---
 >FUNCTION createTask(title, description, dueDate) IF userRole == ASSESSOR OR ADMIN THEN CREATE new Task object with status "Pending" SAVE to Firebase DISPLAY "Task created" ELSE DISPLAY "Access denied" END IF END FUNCTION
 
