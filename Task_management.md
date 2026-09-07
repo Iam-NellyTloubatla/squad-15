@@ -1,4 +1,4 @@
-# Notes about the project backend database.
+# Project backend database.
 ---
 1. Task management- Users can create, view, edit, complete and delete tasks. Deletion requires confirmation.
 2. Progress calculation- The application calculates completed, outstanding and overdue work from task data and displays the result dynamically.
