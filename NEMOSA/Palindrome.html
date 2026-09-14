@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Palindrome</title>
+<style>
+  :root{
+    --header-bg:#2b2b2b;
+    --page-bg:#e8e8e8;
+    --card-bg:#ffffff;
+    --field-bg:#d9d9d9;
+    --text-dark:#1a1a1a;
+    --btn-bg:#1a1a1a;
+    --btn-text:#ffffff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--page-bg);
+    color:var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  header{
+    width:100%;
+    background:var(--header-bg);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    padding:18px 16px;
+  }
+  header h1{
+    font-size:1.4rem;
+    letter-spacing:2px;
+    font-weight:600;
+  }
+  .menu-icon{
+    position:absolute;
+    left:18px;
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  main{
+    width:100%;
+    max-width:480px;
+    background:var(--card-bg);
+    margin:20px auto;
+    padding:20px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .block h3{
+    font-size:0.82rem;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .panel{
+    background:var(--field-bg);
+    border-radius:var(--radius);
+    padding:16px 12px;
+    min-height:340px;
+  }
+  .field-list{
+    list-style:disc;
+    padding-left:18px;
+    font-size:0.75rem;
+    font-weight:600;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+  }
+  .btn{
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:none;
+    border-radius:4px;
+    padding:7px 18px;
+    font-size:0.75rem;
+    cursor:pointer;
+  }
+  .btn:hover{opacity:0.85;}
+  footer{
+    width:100%;
+    max-width:480px;
+    text-align:center;
+    font-size:0.65rem;
+    color:#555;
+    background:#d4d4d4;
+    padding:8px 0 24px;
+  }
+
+  h3 a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Page background and general styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+}
+
+/* Main heading */
+h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Quote box */
+#quote {
+    background-color: white;
+    color: #333;
+
+    width: 60%;
+    max-width: 600px;
+
+    padding: 30px;
+    margin-bottom: 25px;
+
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    font-size: 22px;
+    font-style: italic;
+    text-align: center;
+
+    min-height: 50px;
+}
+
+/* Generate Quote button */
+button {
+    background-color: #ffcc00;
+    color: #333;
+
+    border: none;
+    padding: 15px 30px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #ffaa00;
+    transform: scale(1.05);
+}
+
+/* Button click effect */
+button:active {
+    transform: scale(0.98);
+}
+
+/* Mobile-friendly design */
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 30px;
+    }
+
+    #quote {
+        width: 75%;
+        font-size: 18px;
+        padding: 20px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+}
+
+
+    .whatsapp-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 28px;
+}
+
+.whatsapp-icon:hover {
+    background-color: #128C7E;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="menu-icon">&#9776;</span>
+  <h1>NEMOSA</h1>
+</header>
+
+<main>
+   <div>
+    <div class="block">
+      <h3 style="text-align: center;">Palindrome Game</h3>
+      <div class="panel">
+        <ul class="field-list">
+          <input id="input" type="text" placeholder="Type something">
+    <button onclick="check()">Check</button>
+        </ul>
+      </div>
+    </div>
+    
+   </div>
+  
+  <div class="actions">
+    <button class="btn" onclick="window.history.back()">Previous</button>
+    <button class="btn" onclick="alert('Please go to previous page')">Next</button>
+  </div>
+</main>
+<script>
+    const input = document.getElementById("input")
+
+function reverseString(str) {
+    return str.split("").reverse().join("")
+}
+
+function check() {
+    const value = input.value
+    const reverse = reverseString(value)
+    
+    if (value === reverse) {
+        alert("P A L I N D R O M E")
+    } else {
+        alert("Not today!")
+    }
+
+    input.value = ""
+}
+</script>
+
+<footer>All Rights Reserved NEMOSA 2026</footer>
+
+</body>
+</html>

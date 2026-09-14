@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Login</title>
+<style>
+  :root{
+    --header-bg:#2b2b2b;
+    --page-bg:#e8e8e8;
+    --card-bg:#ffffff;
+    --field-bg:#d9d9d9;
+    --text-dark:#1a1a1a;
+    --btn-bg:#1a1a1a;
+    --btn-text:#ffffff;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--page-bg);
+    color:var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  header{
+    width:100%;
+    background:var(--header-bg);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    padding:18px 16px;
+  }
+  header h1{
+    font-size:1.4rem;
+    letter-spacing:2px;
+    font-weight:600;
+  }
+  .menu-icon{
+    position:absolute;
+    left:18px;
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  main{
+    width:100%;
+    max-width:420px;
+    background:var(--card-bg);
+    margin:20px auto;
+    padding:24px 20px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .top-links{
+    list-style:disc;
+    padding-left:20px;
+    font-size:0.85rem;
+    font-weight:600;
+    margin-bottom:24px;
+  }
+  .top-links li{margin-bottom:4px;}
+  .logo-area{
+    text-align:center;
+    margin-bottom:24px;
+  }
+  .logo {
+    position: relative;
+    justify-content: 40px;
+    left: 150px;
+    width: 120px;
+    height: auto;
+  }
+
+  form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .form-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .form-row label{
+    width:70px;
+    font-size:0.8rem;
+    font-weight:600;
+  }
+  .form-row input{
+    flex:1;
+    background:var(--field-bg);
+    border:none;
+    border-radius:var(--radius);
+    padding:10px 12px;
+    font-size:0.85rem;
+  }
+  .status-section{
+    margin-top:16px;
+    text-align:center;
+  }
+  .status-section label{
+    display:block;
+    font-weight:700;
+    font-size:0.85rem;
+    margin-bottom:6px;
+  }
+  .status-box{
+    background:var(--field-bg);
+    border-radius:var(--radius);
+    height:20px;
+  }
+  .actions{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:20px;
+  }
+  .btn{
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:none;
+    border-radius:4px;
+    padding:8px 20px;
+    font-size:0.8rem;
+    cursor:pointer;
+  }
+  .btn:hover{opacity:0.85;}
+  footer{
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    font-size:0.65rem;
+    color:#555;
+    background:#d4d4d4;
+    padding:8px 0 24px;
+  }
+
+  li a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="menu-icon">&#9776;</span>
+  <h1>NEMOSA</h1>
+</header>
+
+<main>
+  <ul class="top-links">
+    <li><a href="Login.html">Assessor</a></li>
+    <li><a href="Login.html">Learner</a></li>
+    <li><a href="Login.html">Login/sign up</a></li>
+  </ul>
+
+<img class="logo" src="images\Transparent.png" alt="NEMOSA Logo">
+
+  <form onsubmit="return handleLogin(event)">
+    <div class="form-row">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+    </div>
+    <div class="form-row">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+    </div>
+    <div class="form-row">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+    </div>
+
+    <div class="status-section">
+      <label for="status">Login Status!</label>
+      <div class="status-box" id="status"></div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn">Next</button>
+    </div>
+  </form>
+</main>
+
+<footer>All Rights Reserved NEMOSA 2026</footer>
+
+<script>
+  function handleLogin(e){
+    e.preventDefault();
+    const statusBox = document.getElementById('status');
+    statusBox.textContent = "Logged in successfully";
+    statusBox.style.display = "flex";
+    statusBox.style.alignItems = "center";
+    statusBox.style.paddingLeft = "8px";
+    statusBox.style.fontSize = "0.75rem";
+    // Replace with real navigation once pages are linked, e.g.:
+    // window.location.href = "2-admin.html";
+    return false;
+  }
+  
+</script>
+
+</body>
+</html>
