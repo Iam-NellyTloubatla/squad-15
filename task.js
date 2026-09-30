@@ -1,4 +1,6 @@
 import { db, collection, getDocs, doc, updateDoc } from './firebase-config.js';
+import { db } from "./firebase-config.js";
+import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp }from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Fetch all written submissions for the assessor view
 async function loadAssessorDashboard() {
@@ -397,3 +399,140 @@ let task1 = new Task("Math Assignment", "Complete the square problems", "2024-06
 task1.displayTaskInfo();
 let task2 = new Task("Physics Lab Report", "Write a report on Newton's Laws experiment", "2024-07-05");
 task2.displayTaskInfo();
+
+// ===== OOP: BASE CLASS =====
+class User {constructor(name, id, role) { 
+    this.name=name; 
+    this.id=id; 
+    this.role=role; 
+}
+getDisplayName(){ 
+    return `${this.name} (${this.role})`; 
+}
+canManageTasks(){ 
+    return false; 
+}
+}
+
+class Admin extends User {
+    constructor(name,id){ 
+        super(name,id,'admin'); 
+    }
+    canManageTasks(){ 
+        return true; 
+    }
+     canManageUsers(){ 
+       return true; 
+    }
+}
+
+class Assessor extends User {
+    constructor(name,id){ 
+        super(name,id,'assessor'); 
+    }
+    canManageTasks(){ r
+        eturn true; 
+    }
+}
+
+class Learner extends User {
+    constructor(name,id){ 
+        super(name,id,'learner'); 
+    }
+    canChooseTasks(){ 
+        return true; 
+    }
+}
+
+class Task {
+    constructor({title,type,desc,dueDate,totalMarks,createdBy}){
+        this.title=title; 
+        this.type=type; 
+        this.desc=desc; 
+        this.dueDate=dueDate;
+        this.totalMarks=totalMarks||100; 
+        this.createdBy=createdBy;
+        this.createdAt=serverTimestamp();
+    }
+    toFirestore(){ 
+        return{title:this.title,type:this.type,desc:this.desc,dueDate:this.dueDate,totalMarks:this.totalMarks,createdBy:this.createdBy,createdAt:this.createdAt} 
+    }
+}
+
+class TaskRepository {
+    static col = collection(db,"tasks");
+    static subCol = collection(db,"submissions");
+    static async create(task){ 
+        return await addDoc(this.col, task.toFirestore()); 
+    }
+    static async update(id, data){ 
+        return await updateDoc(doc(db,"tasks",id), data); 
+    }
+    static async delete(id){ 
+        return await deleteDoc(doc(db,"tasks",id)); 
+    }
+}
+
+class App {
+    constructor(){
+        this.currentUser=null; 
+        this.editId=null; 
+        this.allTasks=[]; 
+        this.allSubmissions=[];
+        this.cacheEls(); 
+        this.loadUser(); 
+        this.bindEvents(); 
+        this.listenData();
+    }
+    cacheEls(){ 
+        this.els = { roleSelect:document.getElementById("roleSelect"),userName:document.getElementById("userName"),userId:document.getElementById("userId"),loginBtn:document.getElementById("loginBtn"),authBox:document.getElementById("authBox"),userInfo:document.getElementById("userInfo"),userDisplay:document.getElementById("userDisplay"),
+            logoutBtn:document.getElementById("logoutBtn"),loginScreen:document.getElementById("loginScreen"),app:document.getElementById("app"),adminView:document.getElementById("adminView"),assessorView:document.getElementById("assessorView"),learnerView:document.getElementById("learnerView"),title:document.getElementById("taskTitle"), 
+            type:document.getElementById("taskType"),desc:document.getElementById("taskDesc"), due:document.getElementById("dueDate"),marks:document.getElementById("totalMarks"),addBtn:document.getElementById("addTaskBtn"),cancelBtn:document.getElementById("cancelEditBtn"),tasksList:document.getElementById("tasksList"),
+            submissionsList:document.getElementById("submissionsList"),availableTasks:document.getElementById("availableTasks"),myTasks:document.getElementById("myTasks") }; 
+    }
+    
+    loadUser(){ 
+        const data=JSON.parse(localStorage.getItem("portal_user")||"null"); 
+        if(!data)
+            return; this.setUserObject(data); this.showApp(); 
+        }
+
+        setUserObject(data){
+            if(data.role==='admin') this.currentUser=new Admin(data.name,data.id);
+            else if
+            (data.role==='assessor') this.currentUser=new Assessor(data.name,data.id);
+            else 
+                this.currentUser=new Learner(data.name,data.id);
+            }
+            
+            bindEvents(){
+                this.els.loginBtn.addEventListener("click",()=>this.login());this.els.logoutBtn.addEventListener("click",()=>{
+                    localStorage.removeItem("portal_user");location.reload();});this.els.addBtn.addEventListener("click",(e)=>this.saveTask(e));
+                    this.els.cancelBtn.addEventListener("click",()=>{this.editId=null; this.clearForm();     
+                    });window.editTask=(id)=>this.editTask(id); 
+                    window.deleteTask=(id)=>this.deleteTask(id);window.chooseTask=(id)=>this.chooseTask(id);
+                    window.updateStatus=(id,s)=>this.updateStatus(id,s); window.grade=(id)=>this.grade(id);
+}
+
+login(){
+    const name=this.els.userName.value.trim(), id=this.els.userId.value.trim(),role=this.els.roleSelect.value;
+    if(!name||!id) 
+        return alert("Enter name and ID");this.setUserObject({name,id,role});
+    localStorage.setItem("portal_user",JSON.stringify({name,id,role})); this.showApp();}showApp(){this.els.loginScreen.classList.add("hidden"); this.els.app.classList.remove("hidden");this.els.authBox.classList.add("hidden"); this.els.userInfo.classList.remove("hidden");this.els.userDisplay.textContent=this.currentUser.getDisplayName();this.els.assessorView.classList.add("hidden");this.els.learnerView.classList.add("hidden"); this.els.adminView.classList.add("hidden");
+        if(this.currentUser instanceof Admin) this.els.adminView.classList.remove("hidden");
+        if(this.currentUser instanceof Assessor || this.currentUser instanceof Admin)this.els.assessorView.classList.remove("hidden");
+        if(this.currentUser instanceof Learner) this.els.learnerView.classList.remove("hidden");}listenData(){onSnapshot(collection(db,"tasks"), snap=>{this.allTasks=snap.docs.map(d=>({id:d.id,...d.data()})); this.render(); });onSnapshot(collection(db,"submissions"), snap=>{this.allSubmissions=snap.docs.map(d=>({id:d.id,...d.data()})); this.render(); 
+});
+}
+
+async saveTask(e){e.preventDefault(); 
+    if(!this.currentUser.canManageTasks()) 
+        return alert("No permission");
+
+const taskObj=new Task({title:this.els.title.value.trim(), type:this.els.type.value,desc:this.els.desc.value.trim(), dueDate:this.els.due.value,totalMarks:Number(this.els.marks.value)||100, createdBy:this.currentUser.name});
+if(!taskObj.title) 
+    return alert("Title required");
+if(this.editId) await TaskRepository.update(this.editId, taskObj.toFirestore()); 
+else 
+    awaitTaskRepository.create(taskObj);this.editId=null; this.clearForm(); alert("Task saved!");}clearForm(){ this.els.title.value=""; this.els.desc.value=""; this.els.due.value="";this.els.marks.value=""; this.els.addBtn.textContent="Add Task";this.els.cancelBtn.classList.add("hidden"); }editTask(id){ const t=this.allTasks.find(x=>x.id===id); this.editId=id;this.els.title.value=t.title; this.els.type.value=t.type; this.els.desc.value=t.desc;this.els.due.value=t.dueDate||""; this.els.marks.value=t.totalMarks;this.els.addBtn.textContent="Update Task"; this.els.cancelBtn.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"}); }async deleteTask(id){ if(!confirm("Delete task?")) return; await TaskRepository.delete(id); }async chooseTask(taskId){ const task=this.allTasks.find(t=>t.id===taskId); awaitaddDoc(collection(db,"submissions"),{taskId,taskTitle:task.title,learnerId:this.currentUser.id,learnerName:this.currentUser.name,status:"NotStarted",result:null,feedback:"",chosenAt:serverTimestamp()}); }async updateStatus(subId,status){ awaitupdateDoc(doc(db,"submissions",subId),{status}); }async grade(subId){ const result=document.getElementById(`res-${subId}`).value,feedback=document.getElementById(`fb-${subId}`).value; awaitupdateDoc(doc(db,"submissions",subId),{result:Number(result),feedback,status:"Graded"}); }render(){if(this.els.tasksList) this.els.tasksList.innerHTML=this.allTasks.map(t=>`<divclass="task-card"><span class="badgenavy">${t.type}</span><h4>${t.title}</h4><p>${t.desc}</p><div class="task-actions"><button onclick="editTask('${t.id}')" class="secondary">Edit</button><button
+onclick="deleteTask('${t.id}')"class="secondary">Delete</button></div></div>`).join("")||"No tasks";if(this.els.availableTasks && this.currentUser instanceof Learner){constmyIds=this.allSubmissions.filter(s=>s.learnerId===this.currentUser.id).map(s=>s.taskId);this.els.availableTasks.innerHTML=this.allTasks.filter(t=>!myIds.includes(t.id)).map(t=>`<div class="task-card"><h4>${t.title}</h4><p>${t.desc}</p><buttononclick="chooseTask('${t.id}')" class="primary">Choose Task</button></div>`).join("")||"Allchosen";this.els.myTasks.innerHTML=this.allSubmissions.filter(s=>s.learnerId===this.currentUser.id).map(s=>`<div class="task-card"><span class="badge${s.status==="Graded"?"navy":"silver"}">${s.status}</span>${s.result!=null?`<spanclass="badgenavy">${s.result}%</span>`:""}<h4>${s.taskTitle}</h4>${s.feedback?`<p><b>Feedback:</b> ${s.feedback}</p>`:""}<div class="task-actions">${s.status==="Not Started"?`<buttononclick="updateStatus('${s.id}','Written')" class="secondary">MarkWritten</button>`:""}${s.status==="Written"?`<buttononclick="updateStatus('${s.id}','Submitted')"class="primary">Submit</button>`:""}${s.status==="Graded"?`Final:${s.result}%`:""}</div></div>`).join("")||"No tasks";}if(this.els.submissionsList)this.els.submissionsList.innerHTML=this.allSubmissions.map(s=>`<divclass="submission-row"><b>${s.learnerName}</b> - ${s.taskTitle} - ${s.status}${s.result!=null?`${s.result}%`:""} <input id="res-${s.id}" value="${s.result??""}"placeholder="%"><input id="fb-${s.id}" value="${s.feedback||""}"placeholder="feedback"><button onclick="grade('${s.id}')"class="primary">Save</button></div>`).join("")||"No submissions";}}new App();
