@@ -1,538 +1,825 @@
-import { db, collection, getDocs, doc, updateDoc } from './firebase-config.js';
-import { db } from "./firebase-config.js";
-import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp }from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-// Fetch all written submissions for the assessor view
-async function loadAssessorDashboard() {
-const querySnapshot = await getDocs(collection(db, "submissions"));
-
-querySnapshot.forEach((document) => {
-const item = document.data();
-const docId = document.id; // Unique Firebase document reference string
-
-// Render rows using this docId dynamically
-console.log(learner: ${item.learnerName}, Subject: ${item.subject});
-});
-}
-
-// Update a specific student submission with score and remarks
-async function markAssessmentInCloud(docId, scoreObtained, textFeedback) {
-const documentRef = doc(db, "submissions", docId);
-try {
-await updateDoc(documentRef, {
-status: "Marked",
-score: parseFloat(scoreObtained),
-feedback: textFeedback
-});
-alert("Marks successfully pushed to learner report card!");
-} catch (error) {
-console.error("Error updating document: ", error);
-}
-}
-
-import { db, collection, query, where, getDocs } from './firebase-config.js';
-
-async function viewMyResults(learnerNameInput) {
-// Filter database rows down to match only the searching student's name
-const q = query(collection(db, "submissions"), where("learnerName", "==", learnerNameInput));
-const querySnapshot = await getDocs(q);
-
-querySnapshot.forEach((document) => {
-const record = document.data();
-console.log(learner: ${record.learnerName} | Subject: ${record.subject} | Grade: ${record.score}% | Feedback: ${record.feedback});
-});
-}
-
-
-import { db, collection, addDoc } from './firebase-
-
-config.js';
-
-async function submitAssessmentToCloud(learnerName, subject, type, taskContent) {
-try {
-// 'addDoc' automatically creates a unique global ID for this entry
-const docRef = await addDoc(collection(db, "submissions"), {
-learnerName: learnerName,
-subject: subject, // Math, English, Robotics
-type: type, // Written, Not Written
-content: taskContent,
-status: "Pending", // Default un-marked state
-score: null,
-feedback: "",
-timestamp: new Date() // Stores exact submission date-time
-});
-
-console.log("Document successfully written with ID: ", docRef.id);
-alert("Assessment submitted successfully to the Assessor!");
-} catch (error) {
-console.error("Error adding document: ", error);
-}
-}
-
-import { auth, db, collection, addDoc } from './firebase-config.js';
-
-async function submitAssessmentToCloud(subject, type, taskContent) {
-// Get the currently logged-in user's unique ID
-const currentUser = auth.currentUser;
-
-if (!currentUser) return alert("You must be logged in!");
-
-
-try {
-await addDoc(collection(db, "submissions"), {
-studentUid: currentUser.uid, // <-- Save the unique user ID here
-studentEmail: currentUser.email,
-subject: subject, // Math, English, Robotics
-type: type, // Written, Not Written
-content: taskContent,
-status: "Pending",
-score: null,
-feedback: "",
-timestamp: new Date()
-});
-alert("Assessment submitted!");
-} catch (error) {
-console.error("Submission failed: ", error);
-}
-}
-
-
-
-// Application State (Initialize from localStorage or default to empty array)
-let assessments = JSON.parse(localStorage.getItem('assessments')) || [];
-
-// DOM Elements
-const form = document.getElementById('assessment-form');
-const titleInput = document.getElementById('title');
-const typeInput = document.getElementById('type');
-const scoreInput = document.getElementById('score');
-
-const writtenList = document.getElementById('written-list');
-
-const notWrittenList = document.getElementById('not-written-list');
-
-const overallAvgDisplay = document.getElementById('overall-average');
-const totalWrittenDisplay = document.getElementById('total-written');
-const totalNonWrittenDisplay = document.getElementById('total-non-written');
-
-// Handle Form Submission
-form.addEventListener('submit', (e) => {
-e.preventDefault();
-
-// Create unique assessment object
-const newAssessment = {
-id: Date.now(),
-title: titleInput.value.trim(),
-type: typeInput.value,
-score: parseFloat(scoreInput.value)
-
-};
-
-assessments.push(newAssessment);
-updateApp();
-form.reset();
-});
-
-// Delete an Assessment
-function deleteAssessment(id) {
-assessments = assessments.filter(item => item.id !== id);
-updateApp();
-}
-
-// Calculate and Update Dashboards Statistics
-function calculateStats() {
-const writtenCount = assessments.filter(item => item.type === 'Written').length;
-const nonWrittenCount = assessments.filter(item => item.type === 'Not 
-
-Written').length;
-
-// Overall Average calculation using Array.reduce
-let average = 0;
-if (assessments.length > 0) {
-const totalScore = assessments.reduce((sum, item) => sum + item.score, 0);
-average = Math.round(totalScore / assessments.length);
-}
-
-// Render Stats to DOM
-overallAvgDisplay.textContent = ${average}%`;
-totalWrittenDisplay.textContent = writtenCount;
-totalNonWrittenDisplay.textContent = nonWrittenCount;
-
-// Optional conditional styling for average
-if (average >= 75) {
-overallAvgDisplay.style.color = '#2ecc71'; // 
-
-Green for excellent performance
-} else if (average >= 50) {
-overallAvgDisplay.style.color = '#3498db'; // Blue for passing
-} else {
-overallAvgDisplay.style.color = '#e74c3c'; // Red for failing/at risk
-}
-}
-
-// Render Lists to DOM
-function renderLists() {
-// Clear both container elements first
-writtenList.innerHTML = '';
-notWrittenList.innerHTML = '';
-
-assessments.forEach(item => {
-const li = document.createElement('li');
-// Standardise class name strings for CSS compliance
-
-const safeClassName = item.type.replace(' ', '-');
-li.className = assessment-item${safeClassName}`;
-
-li.innerHTML = &lt;div class="item-info"&gt; &lt;span class="item-title"&gt;${item.title}</span>
-</div>
-<div style="display: flex; align-items: center; gap: 15px;">
-<span class="item-score">${item.score}%&lt;/span&gt; &lt;button class="btn-delete" onclick="deleteAssessment(${item.id})"&gt;❌&lt;/button&gt; &lt;/div&gt;;
-
-// Direct item routing based on category data type
-if (item.type === 'Written') {
-writtenList.appendChild(li);
-} else {
-notWrittenList.appendChild(li);
-
-}
-});
-}
-
-// Core Master Sync Pipeline
-function updateApp() {
-localStorage.setItem('assessments', JSON.stringify(assessments));
-renderLists();
-calculateStats();
-}
-
-// Initial Boot Cycle Run execution
-updateApp();
-
-// Application State Lifecycle
-let submissions = JSON.parse(localStorage.getItem('portal_submissions')) || [];
-
-
-// Action Router: Student registers an assessment
-function submitAssessment(learnerID) {
-const record = {
-id: Date.now(), // Unique lookup identifier
-learnerName: learnerID.name,
-subject: learnerID.subject, // Math, English, or Robotics
-type: learnerID.type, // Written or Not Written
-content: learnerID.text,
-status: 'Pending', // Changes to 'Marked' post-grading
-score: null,
-feedback: ''
-};
-submissions.push(record);
-localStorage.setItem('portal_submissions', JSON.stringify(submissions));
-}
-
-
-// Action Router: Assessor updates grading indices
-function gradeSubmission(submissionId, marks, textFeedback) {
-submissions = submissions.map(item => {
-if (item.id === submissionId) {
-return { ...item, status: 'Marked', score: marks, feedback: textFeedback };
-}
-return item;
-});
-localStorage.setItem('portal_submissions', JSON.stringify(submissions));
-}
 import {
-auth,
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged
+  isLearnerAllowed,
+  getLearners,
+  saveLearner,
+  deleteLearnerRecord,
+} from "./firestore-config.js";
 
-} from './firebase-config.js';
+const defaultTasks = [
+  {
+    id: 1,
+    title: "Research Project",
+    type: "Written",
+    description:
+      "Write a short report on your chosen topic and submit by Friday.",
+    dueDate: "2026-10-12",
+    totalMarks: 100,
+    status: "Not Started",
+  },
+  {
+    id: 2,
+    title: "Lab Practice",
+    type: "Practical",
+    description: "Complete and record the practical task in your workbook.",
+    dueDate: "2026-10-15",
+    totalMarks: 80,
+    status: "Written",
+  },
+  {
+    id: 3,
+    title: "Quiz Check",
+    type: "Test",
+    description: "Complete the short online quiz and review your score.",
+    dueDate: "2026-10-18",
+    totalMarks: 50,
+    status: "Submitted",
+  },
+];
 
-const authContainer = document.getElementById('auth-container');
-const appWorkspace = document.getElementById('app-workspace');
-const loginForm = document.getElementById('login-form');
-const logoutBtn = document.getElementById('btn-logout');
-const userDisplay = document.getElementById('user-display-email');
-const authError = document.getElementById('auth-error');
+const defaultSubmissions = [
+  {
+    id: 1,
+    learnerName: "Nandi",
+    taskTitle: "Research Project",
+    status: "Submitted",
+    score: 78,
+    feedback: "Good structure and clear evidence.",
+  },
+  {
+    id: 2,
+    learnerName: "Zain",
+    taskTitle: "Lab Practice",
+    status: "Graded",
+    score: 86,
+    feedback: "Well done; improve your conclusion.",
+  },
+];
 
-// 1. Process Account Login Form
-loginForm.addEventListener('submit', async (e) => {
-e.preventDefault();
-authError.textContent = ""; // Clear errors
+const defaultLearners = [];
 
+const defaultAttendance = [
+  { studentName: "Nandi", attended: 18, total: 20 },
+  { studentName: "Zain", attended: 16, total: 20 },
+  { studentName: "Admin User", attended: 20, total: 20 },
+];
 
-const email = document.getElementById('login-email').value.trim();
-const password = document.getElementById('login-password').value;
+const state = {
+  currentRole: "learner",
+  editingTaskId: null,
+  tasks: loadFromStorage("portalTasks", defaultTasks),
+  submissions: loadFromStorage("portalSubmissions", defaultSubmissions),
+  learners: loadFromStorage("portalLearners", defaultLearners),
+  attendance: loadFromStorage("portalAttendance", defaultAttendance),
+};
 
-try {
-await signInWithEmailAndPassword(auth, email, password);
-loginForm.reset();
-} catch (error) {
-authError.textContent = Authentication failed: ${error.message}`;
+const elements = {
+  app: document.getElementById("app"),
+  loginScreen: document.getElementById("loginScreen"),
+  authBox: document.getElementById("authBox"),
+  userInfo: document.getElementById("userInfo"),
+  userDisplay: document.getElementById("userDisplay"),
+  roleSelect: document.getElementById("roleSelect"),
+  userName: document.getElementById("userName"),
+  userId: document.getElementById("userId"),
+  loginBtn: document.getElementById("loginBtn"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  adminView: document.getElementById("adminView"),
+  assessorView: document.getElementById("assessorView"),
+  learnerView: document.getElementById("learnerView"),
+  taskTitle: document.getElementById("taskTitle"),
+  taskType: document.getElementById("taskType"),
+  taskDesc: document.getElementById("taskDesc"),
+  dueDate: document.getElementById("dueDate"),
+  totalMarks: document.getElementById("totalMarks"),
+  addTaskBtn: document.getElementById("addTaskBtn"),
+  cancelEditBtn: document.getElementById("cancelEditBtn"),
+  tasksList: document.getElementById("tasksList"),
+  submissionsList: document.getElementById("submissionsList"),
+  adminTasksList: document.getElementById("adminTasksList"),
+  availableTasks: document.getElementById("availableTasks"),
+  myTasks: document.getElementById("myTasks"),
+  learnerSteps: document.getElementById("learnerSteps"),
+  assessorLearnerSelect: document.getElementById("assessorLearnerSelect"),
+  assessorTaskSelect: document.getElementById("assessorTaskSelect"),
+  assessorMarks: document.getElementById("assessorMarks"),
+  assessorFeedback: document.getElementById("assessorFeedback"),
+  saveAssessmentBtn: document.getElementById("saveAssessmentBtn"),
+  totalTasks: document.getElementById("totalTasks"),
+  totalSubmissions: document.getElementById("totalSubmissions"),
+  avgResult: document.getElementById("avgResult"),
+  learnerTotal: document.getElementById("learnerTotal"),
+  learnerWritten: document.getElementById("learnerWritten"),
+  learnerSubmitted: document.getElementById("learnerSubmitted"),
+  learnerAvg: document.getElementById("learnerAvg"),
+  adminStudentName: document.getElementById("adminStudentName"),
+  adminStudentId: document.getElementById("adminStudentId"),
+  adminStudentRole: document.getElementById("adminStudentRole"),
+  adminStudentActive: document.getElementById("adminStudentActive"),
+  adminAddStudentBtn: document.getElementById("adminAddStudentBtn"),
+  adminUsersList: document.getElementById("adminUsersList"),
+  adminProgressList: document.getElementById("adminProgressList"),
+  adminTotalUsers: document.getElementById("adminTotalUsers"),
+  adminActiveUsers: document.getElementById("adminActiveUsers"),
+  adminAttendanceRate: document.getElementById("adminAttendanceRate"),
+  adminAverageGrade: document.getElementById("adminAverageGrade"),
+};
+
+function loadFromStorage(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (error) {
+    return fallback;
+  }
 }
+
+function saveToStorage() {
+  localStorage.setItem("portalTasks", JSON.stringify(state.tasks));
+  localStorage.setItem("portalSubmissions", JSON.stringify(state.submissions));
+  localStorage.setItem("portalLearners", JSON.stringify(state.learners));
+  localStorage.setItem("portalAttendance", JSON.stringify(state.attendance));
+}
+
+function showRoleView(role) {
+  const views = [
+    elements.adminView,
+    elements.assessorView,
+    elements.learnerView,
+  ];
+  views.forEach((view) => view.classList.add("hidden"));
+
+  if (role === "admin") {
+    elements.adminView.classList.remove("hidden");
+  } else if (role === "assessor") {
+    elements.assessorView.classList.remove("hidden");
+  } else {
+    elements.learnerView.classList.remove("hidden");
+  }
+}
+
+function getCurrentLearnerName() {
+  return elements.userDisplay.textContent?.split("(")[0].trim() || "Guest";
+}
+
+function getLearnerSubmissionForTask(
+  taskId,
+  learnerName = getCurrentLearnerName(),
+) {
+  const task = state.tasks.find((item) => item.id === taskId);
+  if (!task) return null;
+  return state.submissions.find(
+    (item) => item.taskTitle === task.title && item.learnerName === learnerName,
+  );
+}
+
+function applyLearnerStep(taskId, step) {
+  const learnerName = getCurrentLearnerName();
+  const task = state.tasks.find((item) => item.id === taskId);
+  if (!task) return;
+
+  let submission = getLearnerSubmissionForTask(taskId, learnerName);
+
+  if (step === "choose-task") {
+    if (!submission) {
+      submission = {
+        id: Date.now(),
+        learnerName,
+        taskTitle: task.title,
+        status: "Chosen",
+        score: null,
+        feedback: "",
+      };
+      state.submissions.push(submission);
+    } else {
+      submission.status = "Chosen";
+    }
+  }
+
+  if (step === "mark-written") {
+    if (!submission) {
+      alert("Choose this task before marking it as written.");
+      return;
+    }
+    submission.status = "Written";
+  }
+
+  if (step === "submit-task") {
+    if (!submission) {
+      alert("Choose the task and mark it as written before submitting.");
+      return;
+    }
+    if (submission.status === "Chosen") {
+      submission.status = "Written";
+    }
+    submission.status = "Submitted";
+  }
+
+  if (step === "view-result") {
+    if (!submission) {
+      alert("This task has not been chosen yet.");
+      return;
+    }
+    const resultText = submission.score ?? "Pending";
+    alert(`${task.title}: ${resultText}`);
+    return;
+  }
+
+  saveToStorage();
+  renderDashboard();
+}
+
+async function handleLogin() {
+  const role = elements.roleSelect.value;
+  const name = elements.userName.value.trim();
+  const id = elements.userId.value.trim();
+
+  if (!name || !id) {
+    alert("Please enter your full name and ID before continuing.");
+    return;
+  }
+
+  if (role === "learner") {
+    const isAllowed = await isLearnerAllowed(name, id);
+
+    if (!isAllowed) {
+      alert("Access denied. This Learner is not registered in Firestore.");
+      return;
+    }
+  }
+
+  state.currentRole = role;
+  elements.userDisplay.textContent = `${name} (${role})`;
+  elements.authBox.classList.add("hidden");
+  elements.userInfo.classList.remove("hidden");
+  elements.loginScreen.classList.add("hidden");
+  elements.app.classList.remove("hidden");
+
+  showRoleView(role);
+  renderDashboard();
+}
+
+function handleLogout() {
+  elements.userInfo.classList.add("hidden");
+  elements.authBox.classList.remove("hidden");
+  elements.loginScreen.classList.remove("hidden");
+  elements.app.classList.add("hidden");
+  elements.roleSelect.value = "learner";
+  elements.userName.value = "";
+  elements.userId.value = "";
+}
+
+function renderAdminDashboard() {
+  const activeLearners = state.learners.filter(
+    (learner) => learner.active !== false,
+  );
+  const attendanceTotal = state.attendance.reduce(
+    (sum, entry) => sum + Number(entry.total || 0),
+    0,
+  );
+  const attendancePresent = state.attendance.reduce(
+    (sum, entry) => sum + Number(entry.attended || 0),
+    0,
+  );
+  const attendanceRate = attendanceTotal
+    ? Math.round((attendancePresent / attendanceTotal) * 100)
+    : 0;
+  const submissionScores = state.submissions
+    .map((submission) => Number(submission.score))
+    .filter((score) => !Number.isNaN(score));
+  const averageGrade = submissionScores.length
+    ? Math.round(
+        submissionScores.reduce((sum, score) => sum + score, 0) /
+          submissionScores.length,
+      )
+    : 0;
+
+  elements.adminTotalUsers.textContent = `Total learners: ${state.learners.length}`;
+  elements.adminActiveUsers.textContent = `Active learners: ${activeLearners.length}`;
+  elements.adminAttendanceRate.textContent = `Attendance rate: ${attendanceRate}%`;
+  elements.adminAverageGrade.textContent = `Average task score: ${averageGrade}%`;
+
+  elements.adminUsersList.innerHTML = "";
+
+  if (!state.learners.length) {
+    elements.adminUsersList.innerHTML = "<p>No Learners registered yet.</p>";
+  } else {
+    state.learners.forEach((learner) => {
+      const row = document.createElement("div");
+      row.className = "submission-row";
+      row.innerHTML = `
+        <div>
+          <strong>${learner.fullName}</strong><br />
+          <span>${learner.learnerId || learner.studentId} • ${learner.role}</span>
+        </div>
+        <div>
+          <span class="badge ${learner.active === false ? "silver" : "navy"}">
+            ${learner.active === false ? "Inactive" : "Active"}
+          </span>
+          <button class="secondary" data-action="delete-user" data-user-id="${learner.learnerId || learner.studentId}">Remove</button>
+        </div>
+      `;
+      elements.adminUsersList.appendChild(row);
+    });
+  }
+
+  elements.adminProgressList.innerHTML = "";
+
+  const progressRows = state.learners.map((learner) => {
+    const userSubmissions = state.submissions.filter(
+      (entry) => entry.learnerName === learner.fullName,
+    );
+    const scores = userSubmissions
+      .map((entry) => Number(entry.score))
+      .filter((score) => !Number.isNaN(score));
+    const average = scores.length
+      ? Math.round(
+          scores.reduce((sum, score) => sum + score, 0) / scores.length,
+        )
+      : 0;
+    const attendance = state.attendance.find(
+      (entry) => entry.studentName === learner.fullName,
+    );
+
+    return { learner, average, attendance };
+  });
+
+  progressRows.forEach(({ learner, average, attendance }) => {
+    const item = document.createElement("div");
+    item.className = "submission-row";
+    item.innerHTML = `
+      <div>
+        <strong>${learner.fullName}</strong><br />
+        <span>${learner.role} • ID: ${learner.learnerId || learner.studentId}</span>
+      </div>
+      <div>
+        <span>Result: ${average}%</span><br />
+        <span>Attendance: ${attendance ? `${Math.round((attendance.attended / attendance.total) * 100)}%` : "0%"}</span>
+      </div>
+    `;
+    elements.adminProgressList.appendChild(item);
+  });
+}
+
+function renderDashboard() {
+  renderAssessorStats();
+  renderTaskLists();
+  renderLearnerPanels();
+  renderSubmissions();
+  renderAdminDashboard();
+  populateAssessorSelectors();
+}
+
+function populateAssessorSelectors() {
+  if (!elements.assessorLearnerSelect || !elements.assessorTaskSelect) return;
+
+  const learners = [
+    ...new Set([
+      ...state.learners.map((learner) => learner.fullName),
+      ...state.submissions.map((item) => item.learnerName),
+    ]),
+  ]
+    .filter(Boolean)
+    .sort();
+  const tasks = [...new Set(state.tasks.map((task) => task.title))].filter(
+    Boolean,
+  );
+
+  elements.assessorLearnerSelect.innerHTML =
+    '<option value="">Select learner</option>' +
+    learners
+      .map((learner) => `<option value="${learner}">${learner}</option>`)
+      .join("");
+
+  elements.assessorTaskSelect.innerHTML =
+    '<option value="">Select task</option>' +
+    tasks
+      .map((taskTitle) => `<option value="${taskTitle}">${taskTitle}</option>`)
+      .join("");
+}
+
+function renderAssessorStats() {
+  const total = state.tasks.length;
+  const totalSubmissions = state.submissions.length;
+  const scores = state.submissions
+    .map((submission) => Number(submission.score))
+    .filter((score) => !Number.isNaN(score));
+  const avg = scores.length
+    ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
+    : 0;
+
+  elements.totalTasks.textContent = `Total Tasks: ${total}`;
+  elements.totalSubmissions.textContent = `Total Submissions: ${totalSubmissions}`;
+  elements.avgResult.textContent = `Average Result: ${avg}%`;
+}
+
+function renderTaskLists() {
+  if (elements.tasksList) elements.tasksList.innerHTML = "";
+  if (elements.adminTasksList) elements.adminTasksList.innerHTML = "";
+  if (elements.availableTasks) elements.availableTasks.innerHTML = "";
+
+  if (!state.tasks.length) {
+    const empty = document.createElement("p");
+    empty.textContent = "No tasks created yet.";
+    if (elements.tasksList) elements.tasksList.appendChild(empty);
+    if (elements.adminTasksList) {
+      elements.adminTasksList.appendChild(empty.cloneNode(true));
+    }
+    return;
+  }
+
+  state.tasks.forEach((task) => {
+    const card = document.createElement("article");
+    card.className = "task-card";
+    card.innerHTML = `
+      <h4>${task.title}</h4>
+      <p><span class="badge navy">${task.type}</span></p>
+      <p>${task.description}</p>
+      <p>Due: ${task.dueDate || "No date"}</p>
+      <p>Marks: ${task.totalMarks || 0}</p>
+      <p>Status: ${task.status}</p>
+      <div class="task-actions">
+        <button class="secondary" data-action="edit-task" data-id="${task.id}">Edit</button>
+        <button class="secondary" data-action="delete-task" data-id="${task.id}">Delete</button>
+        <button class="primary" data-action="mark-written" data-id="${task.id}">Mark as Written</button>
+      </div>
+    `;
+
+    if (elements.tasksList)
+      elements.tasksList.appendChild(card.cloneNode(true));
+    if (elements.adminTasksList)
+      elements.adminTasksList.appendChild(card.cloneNode(true));
+
+    const availableCard = document.createElement("article");
+    availableCard.className = "task-card";
+    availableCard.innerHTML = `
+      <h4>${task.title}</h4>
+      <p><span class="badge light">${task.type}</span></p>
+      <p>${task.description}</p>
+      <p>${task.totalMarks} marks</p>
+      <div class="task-actions">
+        <button class="primary" data-action="choose-task" data-id="${task.id}">Choose Task</button>
+      </div>
+    `;
+    if (elements.availableTasks)
+      elements.availableTasks.appendChild(availableCard);
+  });
+}
+
+function renderSubmissions() {
+  if (!elements.submissionsList) return;
+
+  elements.submissionsList.innerHTML = "";
+
+  if (!state.submissions.length) {
+    elements.submissionsList.innerHTML = "<p>No submissions yet.</p>";
+    return;
+  }
+
+  state.submissions.forEach((submission) => {
+    const row = document.createElement("div");
+    row.className = "submission-row";
+    row.innerHTML = `
+      <div>
+        <strong>${submission.learnerName}</strong><br />
+        <span>${submission.taskTitle}</span>
+      </div>
+      <div>
+        <span class="badge silver">${submission.status}</span>
+        <span> Score: ${submission.score ?? "Pending"}</span>
+      </div>
+    `;
+    elements.submissionsList.appendChild(row);
+  });
+}
+
+function saveAssessment() {
+  const learnerName = elements.assessorLearnerSelect.value;
+  const taskTitle = elements.assessorTaskSelect.value;
+  const score = Number(elements.assessorMarks.value);
+  const feedback = elements.assessorFeedback.value.trim();
+
+  if (!learnerName || !taskTitle) {
+    alert("Please select a learner and task before saving the assessment.");
+    return;
+  }
+
+  if (Number.isNaN(score) || score < 0 || score > 100) {
+    alert("Please enter a valid mark between 0 and 100.");
+    return;
+  }
+
+  const submission = state.submissions.find(
+    (item) => item.learnerName === learnerName && item.taskTitle === taskTitle,
+  );
+
+  if (!submission) {
+    alert("This learner has not submitted that task yet.");
+    return;
+  }
+
+  submission.score = score;
+  submission.status = "Graded";
+  submission.feedback = feedback || "Marked by assessor.";
+
+  saveToStorage();
+  renderDashboard();
+  elements.assessorMarks.value = "";
+  elements.assessorFeedback.value = "";
+}
+
+function renderLearnerPanels() {
+  const name =
+    elements.userDisplay.textContent?.split("(")[0].trim() || "Guest";
+  const learnerSubmissions = state.submissions.filter(
+    (item) => item.learnerName === name,
+  );
+  const writtenCount = learnerSubmissions.filter(
+    (item) =>
+      item.status === "Submitted" ||
+      item.status === "Graded" ||
+      item.status === "Written",
+  ).length;
+  const submittedCount = learnerSubmissions.filter(
+    (item) => item.status === "Submitted",
+  ).length;
+  const scores = learnerSubmissions
+    .map((item) => Number(item.score))
+    .filter((score) => !Number.isNaN(score));
+  const average = scores.length
+    ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
+    : 0;
+
+  elements.learnerTotal.textContent = `Tasks Chosen: ${learnerSubmissions.length}`;
+  elements.learnerWritten.textContent = `Written: ${writtenCount}`;
+  elements.learnerSubmitted.textContent = `Submitted: ${submittedCount}`;
+  elements.learnerAvg.textContent = `My Average: ${average}%`;
+
+  if (elements.learnerSteps) {
+    elements.learnerSteps.innerHTML = "";
+
+    if (!state.tasks.length) {
+      elements.learnerSteps.innerHTML = "<p>No task steps available yet.</p>";
+    } else {
+      state.tasks.forEach((task) => {
+        const submission = getLearnerSubmissionForTask(task.id, name);
+        const currentStatus = submission?.status || "Not Started";
+
+        const buttons = [
+          {
+            step: "choose-task",
+            label: "Choose Task",
+            enabled: true,
+          },
+          {
+            step: "mark-written",
+            label: "Mark as Written",
+            enabled: Boolean(submission),
+          },
+          {
+            step: "submit-task",
+            label: "Submit to Assessor",
+            enabled: Boolean(submission),
+          },
+          {
+            step: "view-result",
+            label: "View Result",
+            enabled: Boolean(submission),
+          },
+        ];
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "submission-row step-row";
+        wrapper.innerHTML = `
+          <div>
+            <strong>${task.title}</strong><br />
+            <span>${currentStatus}</span>
+          </div>
+          <div class="task-actions">
+            ${buttons
+              .map(
+                (button) => `
+                  <button class="secondary" data-action="step-select" data-step="${button.step}" data-id="${task.id}" ${button.enabled ? "" : "disabled"}>
+                    ${button.label}
+                  </button>
+                `,
+              )
+              .join("")}
+          </div>
+        `;
+        elements.learnerSteps.appendChild(wrapper);
+      });
+    }
+  }
+
+  if (elements.myTasks) {
+    elements.myTasks.innerHTML = "";
+
+    if (!learnerSubmissions.length) {
+      elements.myTasks.innerHTML = "<p>No tasks chosen yet.</p>";
+      return;
+    }
+
+    learnerSubmissions.forEach((submission) => {
+      const card = document.createElement("article");
+      card.className = "task-card";
+      card.innerHTML = `
+        <h4>${submission.taskTitle}</h4>
+        <p><span class="badge light">${submission.status}</span></p>
+        <p>Result: ${submission.score ?? "Pending"}</p>
+        <p>${submission.feedback || "Awaiting assessor feedback."}</p>
+      `;
+      elements.myTasks.appendChild(card);
+    });
+  }
+}
+
+async function addSchoolUser() {
+  const fullName = elements.adminStudentName.value.trim();
+  const learnerId = elements.adminStudentId.value.trim();
+  const role = elements.adminStudentRole.value;
+  const active = elements.adminStudentActive.checked;
+
+  if (!fullName || !learnerId) {
+    alert(
+      "Add a full name and Learner ID before saving to the school database.",
+    );
+    return;
+  }
+
+  const newLearner = {
+    id: learnerId,
+    fullName,
+    learnerId,
+    studentId: learnerId,
+    role,
+    active,
+  };
+
+  const existingIndex = state.learners.findIndex(
+    (learner) =>
+      String(learner.learnerId || learner.studentId || "").toLowerCase() ===
+      learnerId.toLowerCase(),
+  );
+
+  if (existingIndex >= 0) {
+    state.learners[existingIndex] = {
+      ...state.learners[existingIndex],
+      ...newLearner,
+    };
+  } else {
+    state.learners.push(newLearner);
+  }
+
+  try {
+    await saveLearner(newLearner);
+  } catch (error) {
+    console.warn("Firestore save failed, using local storage fallback:", error);
+  }
+
+  saveToStorage();
+  elements.adminStudentName.value = "";
+  elements.adminStudentId.value = "";
+  elements.adminStudentRole.value = "learner";
+  elements.adminStudentActive.checked = true;
+  renderDashboard();
+}
+
+async function deleteSchoolUser(learnerId) {
+  const targetId = String(learnerId || "").trim();
+  if (!targetId) return;
+
+  state.learners = state.learners.filter(
+    (learner) =>
+      String(learner.learnerId || learner.studentId || "").toLowerCase() !==
+      targetId.toLowerCase(),
+  );
+
+  try {
+    await deleteLearnerRecord(targetId);
+  } catch (error) {
+    console.warn(
+      "Firestore delete failed, using local storage fallback:",
+      error,
+    );
+  }
+
+  saveToStorage();
+  renderDashboard();
+}
+
+function addTask() {
+  const title = elements.taskTitle.value.trim();
+  const type = elements.taskType.value;
+  const description = elements.taskDesc.value.trim();
+  const dueDate = elements.dueDate.value;
+  const totalMarks = Number(elements.totalMarks.value || 0);
+
+  if (!title || !description) {
+    alert("Task title and instructions are required.");
+    return;
+  }
+
+  if (state.editingTaskId) {
+    const taskIndex = state.tasks.findIndex(
+      (task) => task.id === state.editingTaskId,
+    );
+    if (taskIndex >= 0) {
+      state.tasks[taskIndex] = {
+        ...state.tasks[taskIndex],
+        title,
+        type,
+        description,
+        dueDate,
+        totalMarks,
+        status: "Not Started",
+      };
+    }
+  } else {
+    state.tasks.unshift({
+      id: Date.now(),
+      title,
+      type,
+      description,
+      dueDate,
+      totalMarks,
+      status: "Not Started",
+    });
+  }
+
+  state.editingTaskId = null;
+  saveToStorage();
+  clearTaskForm();
+  renderDashboard();
+}
+
+function clearTaskForm() {
+  elements.taskTitle.value = "";
+  elements.taskType.value = "Written";
+  elements.taskDesc.value = "";
+  elements.dueDate.value = "";
+  elements.totalMarks.value = "";
+  elements.cancelEditBtn.classList.add("hidden");
+}
+
+function deleteTask(taskId) {
+  state.tasks = state.tasks.filter((task) => task.id !== taskId);
+  saveToStorage();
+  renderDashboard();
+}
+
+function editTask(taskId) {
+  const task = state.tasks.find((item) => item.id === taskId);
+  if (!task) return;
+
+  state.editingTaskId = taskId;
+  elements.taskTitle.value = task.title;
+  elements.taskType.value = task.type;
+  elements.taskDesc.value = task.description;
+  elements.dueDate.value = task.dueDate || "";
+  elements.totalMarks.value = task.totalMarks || "";
+  elements.cancelEditBtn.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function markTaskAsWritten(taskId) {
+  applyLearnerStep(taskId, "mark-written");
+}
+
+function chooseTask(taskId) {
+  applyLearnerStep(taskId, "choose-task");
+}
+
+function submitTask(taskId) {
+  applyLearnerStep(taskId, "submit-task");
+}
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+
+  const action = button.dataset.action;
+  const id = Number(button.dataset.id);
+  const userId = button.dataset.userId;
+  const step = button.dataset.step;
+
+  if (!action) return;
+
+  if (action === "delete-task") deleteTask(id);
+  if (action === "edit-task") editTask(id);
+  if (action === "mark-written") markTaskAsWritten(id);
+  if (action === "choose-task") chooseTask(id);
+  if (action === "step-select") applyLearnerStep(id, step);
+  if (action === "submit-task") submitTask(id);
+  if (action === "delete-user") deleteSchoolUser(userId);
 });
 
-// 2. Monitor Active User Authentication State
-onAuthStateChanged(auth, (user) => {
-if (user) {
-
-// User logged in successfully
-authContainer.style.display = 'none';
-appWorkspace.style.display = 'block';
-userDisplay.textContent = Logged in as:${user.email}`;
-
-// Role Check Strategy
-if (user.email.includes('teacher') || user.email.includes('assessor')) {
-showAssessorView();
-} else {
-showStudentView(user.email); // Auto-load data for this student's account email
-}
-} else {
-// User is logged out
-authContainer.style.display = 'block';
-appWorkspace.style.display = 'none';
-}
-});
-
-
-// 3. Process Account Sign-out Action
-logoutBtn.addEventListener('click', () => {
-signOut(auth).then(() => {
-alert("Session terminated securely.");
-});
-});
-
-class subjects {
-    constructor(task, grade, learnerID) {
-        this.task = task;
-        this.grade = grade;
-        this.learnerID = learnerID
-    }// creating classes
-
- 
-displayInfo() {
-    console.log("Task:", this.task);
-    console.log("grade:", this.grade);
-    console.log("learner:", this.learnerID);
-    }
+elements.loginBtn.addEventListener("click", handleLogin);
+elements.logoutBtn.addEventListener("click", handleLogout);
+elements.addTaskBtn.addEventListener("click", addTask);
+elements.cancelEditBtn.addEventListener("click", clearTaskForm);
+elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
+if (elements.saveAssessmentBtn) {
+  elements.saveAssessmentBtn.addEventListener("click", saveAssessment);
 }
 
-
-//create a subject
-
-let maths = new subjects("Complete the square", 75, "nelly@gmail.com")
-
-maths.displayInfo()
-
-class subjects {
-    constructor(task, grade, learnerID) {
-        this.task = task;
-        this.grade = grade;
-        this.learnerID = learnerID
-    }// creating classes
-
- 
-displayInfo() {
-    console.log("Task:", this.task);
-    console.log("grade:", this.grade);
-    console.log("learner:", this.learnerID);
-    }
-}
-
-
-//create a subject
-
-let maths = new subjects("Complete the square", 10, "nelly@gmail.com")
-let physics = new subjects("Newton's Laws", 11, "john@gmail.com")
-let chemistry = new subjects("Chemical Reactions", 10, "jane@gmail.com")    
-
-maths.displayInfo()
-physics.displayInfo()
-chemistry.displayInfo()
-
-// create an array of subjects
-//let subjectsArray = [maths, physics, chemistry]
-
-// display all subjects in the array
-//function displayInfo() {
-//    for (let subject of subjectsArray) {
-//        subject.displayInfo();
-//    }
-//}
-
-//creating class roles
-class Role {
-    constructor(Admin, Assessor, Learner) {
-        this.Admin = Admin
-        this.Assessor = Assessor
-        this.Learner = Learner
-    }
-
-displayinfo(){
-    console.log("Admin:", this.Admin);
-    console.log("Assessor:", this.Assessor);
-    console.log("Learner:", this.Learner);
-    }
-}
-
-let Admin = new Role("Admin", "12345")
-let Assessor = new Role("Assessor", "Joe", "assessor@gmail.com");
-let learner = new Role("Learner", "Nelly", "nelly@learner.com");
-
-Admin.displayinfo();
-Assessor.displayinfo();
-learner.display();
-
-class Task {
-    constructor(taskName, taskDescription, taskDeadline) {
-        this.taskName = taskName;
-        this.taskDescription = taskDescription;
-        this.taskDeadline = taskDeadline;
-    }
-
-    displayTaskInfo() {
-        console.log("Task Name:", this.taskName);
-        console.log("Task Description:", this.taskDescription);
-        console.log("Task Deadline:", this.taskDeadline);
-    }
-}
-let task1 = new Task("Math Assignment", "Complete the square problems", "2024-06-30");
-task1.displayTaskInfo();
-let task2 = new Task("Physics Lab Report", "Write a report on Newton's Laws experiment", "2024-07-05");
-task2.displayTaskInfo();
-
-// ===== OOP: BASE CLASS =====
-class User {constructor(name, id, role) { 
-    this.name=name; 
-    this.id=id; 
-    this.role=role; 
-}
-getDisplayName(){ 
-    return `${this.name} (${this.role})`; 
-}
-canManageTasks(){ 
-    return false; 
-}
-}
-
-class Admin extends User {
-    constructor(name,id){ 
-        super(name,id,'admin'); 
-    }
-    canManageTasks(){ 
-        return true; 
-    }
-     canManageUsers(){ 
-       return true; 
-    }
-}
-
-class Assessor extends User {
-    constructor(name,id){ 
-        super(name,id,'assessor'); 
-    }
-    canManageTasks(){ r
-        eturn true; 
-    }
-}
-
-class Learner extends User {
-    constructor(name,id){ 
-        super(name,id,'learner'); 
-    }
-    canChooseTasks(){ 
-        return true; 
-    }
-}
-
-class Task {
-    constructor({title,type,desc,dueDate,totalMarks,createdBy}){
-        this.title=title; 
-        this.type=type; 
-        this.desc=desc; 
-        this.dueDate=dueDate;
-        this.totalMarks=totalMarks||100; 
-        this.createdBy=createdBy;
-        this.createdAt=serverTimestamp();
-    }
-    toFirestore(){ 
-        return{title:this.title,type:this.type,desc:this.desc,dueDate:this.dueDate,totalMarks:this.totalMarks,createdBy:this.createdBy,createdAt:this.createdAt} 
-    }
-}
-
-class TaskRepository {
-    static col = collection(db,"tasks");
-    static subCol = collection(db,"submissions");
-    static async create(task){ 
-        return await addDoc(this.col, task.toFirestore()); 
-    }
-    static async update(id, data){ 
-        return await updateDoc(doc(db,"tasks",id), data); 
-    }
-    static async delete(id){ 
-        return await deleteDoc(doc(db,"tasks",id)); 
-    }
-}
-
-class App {
-    constructor(){
-        this.currentUser=null; 
-        this.editId=null; 
-        this.allTasks=[]; 
-        this.allSubmissions=[];
-        this.cacheEls(); 
-        this.loadUser(); 
-        this.bindEvents(); 
-        this.listenData();
-    }
-    cacheEls(){ 
-        this.els = { roleSelect:document.getElementById("roleSelect"),userName:document.getElementById("userName"),userId:document.getElementById("userId"),loginBtn:document.getElementById("loginBtn"),authBox:document.getElementById("authBox"),userInfo:document.getElementById("userInfo"),userDisplay:document.getElementById("userDisplay"),
-            logoutBtn:document.getElementById("logoutBtn"),loginScreen:document.getElementById("loginScreen"),app:document.getElementById("app"),adminView:document.getElementById("adminView"),assessorView:document.getElementById("assessorView"),learnerView:document.getElementById("learnerView"),title:document.getElementById("taskTitle"), 
-            type:document.getElementById("taskType"),desc:document.getElementById("taskDesc"), due:document.getElementById("dueDate"),marks:document.getElementById("totalMarks"),addBtn:document.getElementById("addTaskBtn"),cancelBtn:document.getElementById("cancelEditBtn"),tasksList:document.getElementById("tasksList"),
-            submissionsList:document.getElementById("submissionsList"),availableTasks:document.getElementById("availableTasks"),myTasks:document.getElementById("myTasks") }; 
-    }
-    
-    loadUser(){ 
-        const data=JSON.parse(localStorage.getItem("portal_user")||"null"); 
-        if(!data)
-            return; this.setUserObject(data); this.showApp(); 
-        }
-
-        setUserObject(data){
-            if(data.role==='admin') this.currentUser=new Admin(data.name,data.id);
-            else if
-            (data.role==='assessor') this.currentUser=new Assessor(data.name,data.id);
-            else 
-                this.currentUser=new Learner(data.name,data.id);
-            }
-            
-            bindEvents(){
-                this.els.loginBtn.addEventListener("click",()=>this.login());this.els.logoutBtn.addEventListener("click",()=>{
-                    localStorage.removeItem("portal_user");location.reload();});this.els.addBtn.addEventListener("click",(e)=>this.saveTask(e));
-                    this.els.cancelBtn.addEventListener("click",()=>{this.editId=null; this.clearForm();     
-                    });window.editTask=(id)=>this.editTask(id); 
-                    window.deleteTask=(id)=>this.deleteTask(id);window.chooseTask=(id)=>this.chooseTask(id);
-                    window.updateStatus=(id,s)=>this.updateStatus(id,s); window.grade=(id)=>this.grade(id);
-}
-
-login(){
-    const name=this.els.userName.value.trim(), id=this.els.userId.value.trim(),role=this.els.roleSelect.value;
-    if(!name||!id) 
-        return alert("Enter name and ID");this.setUserObject({name,id,role});
-    localStorage.setItem("portal_user",JSON.stringify({name,id,role})); this.showApp();}showApp(){this.els.loginScreen.classList.add("hidden"); this.els.app.classList.remove("hidden");this.els.authBox.classList.add("hidden"); this.els.userInfo.classList.remove("hidden");this.els.userDisplay.textContent=this.currentUser.getDisplayName();this.els.assessorView.classList.add("hidden");this.els.learnerView.classList.add("hidden"); this.els.adminView.classList.add("hidden");
-        if(this.currentUser instanceof Admin) this.els.adminView.classList.remove("hidden");
-        if(this.currentUser instanceof Assessor || this.currentUser instanceof Admin)this.els.assessorView.classList.remove("hidden");
-        if(this.currentUser instanceof Learner) this.els.learnerView.classList.remove("hidden");}listenData(){onSnapshot(collection(db,"tasks"), snap=>{this.allTasks=snap.docs.map(d=>({id:d.id,...d.data()})); this.render(); });onSnapshot(collection(db,"submissions"), snap=>{this.allSubmissions=snap.docs.map(d=>({id:d.id,...d.data()})); this.render(); 
-});
-}
-
-async saveTask(e){e.preventDefault(); 
-    if(!this.currentUser.canManageTasks()) 
-        return alert("No permission");
-
-const taskObj=new Task({title:this.els.title.value.trim(), type:this.els.type.value,desc:this.els.desc.value.trim(), dueDate:this.els.due.value,totalMarks:Number(this.els.marks.value)||100, createdBy:this.currentUser.name});
-if(!taskObj.title) 
-    return alert("Title required");
-if(this.editId) await TaskRepository.update(this.editId, taskObj.toFirestore()); 
-else 
-    awaitTaskRepository.create(taskObj);this.editId=null; this.clearForm(); alert("Task saved!");}clearForm(){ this.els.title.value=""; this.els.desc.value=""; this.els.due.value="";this.els.marks.value=""; this.els.addBtn.textContent="Add Task";this.els.cancelBtn.classList.add("hidden"); }editTask(id){ const t=this.allTasks.find(x=>x.id===id); this.editId=id;this.els.title.value=t.title; this.els.type.value=t.type; this.els.desc.value=t.desc;this.els.due.value=t.dueDate||""; this.els.marks.value=t.totalMarks;this.els.addBtn.textContent="Update Task"; this.els.cancelBtn.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"}); }async deleteTask(id){ if(!confirm("Delete task?")) return; await TaskRepository.delete(id); }async chooseTask(taskId){ const task=this.allTasks.find(t=>t.id===taskId); awaitaddDoc(collection(db,"submissions"),{taskId,taskTitle:task.title,learnerId:this.currentUser.id,learnerName:this.currentUser.name,status:"NotStarted",result:null,feedback:"",chosenAt:serverTimestamp()}); }async updateStatus(subId,status){ awaitupdateDoc(doc(db,"submissions",subId),{status}); }async grade(subId){ const result=document.getElementById(`res-${subId}`).value,feedback=document.getElementById(`fb-${subId}`).value; awaitupdateDoc(doc(db,"submissions",subId),{result:Number(result),feedback,status:"Graded"}); }render(){if(this.els.tasksList) this.els.tasksList.innerHTML=this.allTasks.map(t=>`<divclass="task-card"><span class="badgenavy">${t.type}</span><h4>${t.title}</h4><p>${t.desc}</p><div class="task-actions"><button onclick="editTask('${t.id}')" class="secondary">Edit</button><button
-onclick="deleteTask('${t.id}')"class="secondary">Delete</button></div></div>`).join("")||"No tasks";if(this.els.availableTasks && this.currentUser instanceof Learner){constmyIds=this.allSubmissions.filter(s=>s.learnerId===this.currentUser.id).map(s=>s.taskId);this.els.availableTasks.innerHTML=this.allTasks.filter(t=>!myIds.includes(t.id)).map(t=>`<div class="task-card"><h4>${t.title}</h4><p>${t.desc}</p><buttononclick="chooseTask('${t.id}')" class="primary">Choose Task</button></div>`).join("")||"Allchosen";this.els.myTasks.innerHTML=this.allSubmissions.filter(s=>s.learnerId===this.currentUser.id).map(s=>`<div class="task-card"><span class="badge${s.status==="Graded"?"navy":"silver"}">${s.status}</span>${s.result!=null?`<spanclass="badgenavy">${s.result}%</span>`:""}<h4>${s.taskTitle}</h4>${s.feedback?`<p><b>Feedback:</b> ${s.feedback}</p>`:""}<div class="task-actions">${s.status==="Not Started"?`<buttononclick="updateStatus('${s.id}','Written')" class="secondary">MarkWritten</button>`:""}${s.status==="Written"?`<buttononclick="updateStatus('${s.id}','Submitted')"class="primary">Submit</button>`:""}${s.status==="Graded"?`Final:${s.result}%`:""}</div></div>`).join("")||"No tasks";}if(this.els.submissionsList)this.els.submissionsList.innerHTML=this.allSubmissions.map(s=>`<divclass="submission-row"><b>${s.learnerName}</b> - ${s.taskTitle} - ${s.status}${s.result!=null?`${s.result}%`:""} <input id="res-${s.id}" value="${s.result??""}"placeholder="%"><input id="fb-${s.id}" value="${s.feedback||""}"placeholder="feedback"><button onclick="grade('${s.id}')"class="primary">Save</button></div>`).join("")||"No submissions";}}new App();
+renderDashboard();
