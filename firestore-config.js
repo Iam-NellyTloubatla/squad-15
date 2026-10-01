@@ -22,6 +22,74 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
+export async function saveStaff(staff) {
+  const fullName = String(staff?.fullName || "").trim();
+  const staffId = String(
+    staff?.staffId || staff?.learnerId || staff?.studentId || "",
+  ).trim();
+
+  if (!fullName || !staffId) {
+    throw new Error("Staff full name and ID are required.");
+  }
+
+  const payload = {
+    ...staff,
+    fullName,
+    staffId,
+    learnerId: staffId,
+    studentId: staffId,
+    role: staff?.role || "assessor",
+    active: staff?.active !== false,
+    createdAt: staff?.createdAt || new Date().toISOString(),
+  };
+
+  try {
+    const stored = JSON.parse(localStorage.getItem("portalStaff") || "[]");
+    const existingIndex = stored.findIndex(
+      (item) =>
+        String(item.staffId || item.learnerId || item.studentId || "")
+          .trim()
+          .toLowerCase() === staffId.toLowerCase(),
+    );
+    if (existingIndex >= 0) {
+      stored[existingIndex] = payload;
+    } else {
+      stored.push(payload);
+    }
+    localStorage.setItem("portalStaff", JSON.stringify(stored));
+  } catch (error) {
+    console.warn("Local staff cache save failed:", error);
+  }
+
+  const staffRef = doc(db, "staff", staffId.toLowerCase());
+  await setDoc(staffRef, payload);
+  return payload;
+}
+
+export const saveStaffMember = saveStaff;
+
+export async function deleteStaffRecord(staffId) {
+  const id = String(staffId || "").trim();
+  if (!id) return;
+
+  try {
+    const stored = JSON.parse(localStorage.getItem("portalStaff") || "[]");
+    const filtered = stored.filter(
+      (item) =>
+        String(item.staffId || item.learnerId || item.studentId || "")
+          .trim()
+          .toLowerCase() !== id.toLowerCase(),
+    );
+    localStorage.setItem("portalStaff", JSON.stringify(filtered));
+  } catch (error) {
+    console.warn("Local staff cache removal failed:", error);
+  }
+
+  await deleteDoc(doc(db, "staff", id.toLowerCase()));
+}
+
+export const deleteStaffMemberRecord = deleteStaffRecord;
+
 export async function saveLearner(learner) {
   const fullName = String(learner?.fullName || "").trim();
   const learnerId = String(
@@ -98,6 +166,16 @@ export async function getLearners() {
 }
 
 export const getStudents = getLearners;
+
+export async function getStaff() {
+  const snapshot = await getDocs(collection(db, "staff"));
+  return snapshot.docs.map((staffDoc) => ({
+    id: staffDoc.id,
+    ...staffDoc.data(),
+  }));
+}
+
+export const getStaffMembers = getStaff;
 
 export async function isLearnerAllowed(fullName, learnerId) {
   const normalizedName = String(fullName || "")

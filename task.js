@@ -3,6 +3,8 @@ import {
   getLearners,
   saveLearner,
   deleteLearnerRecord,
+  saveStaff,
+  deleteStaffRecord,
 } from "./firestore-config.js";
 
 const defaultTasks = [
@@ -56,6 +58,7 @@ const defaultSubmissions = [
 ];
 
 const defaultLearners = [];
+const defaultStaff = [];
 
 const defaultAttendance = [
   { studentName: "Nandi", attended: 18, total: 20 },
@@ -69,6 +72,7 @@ const state = {
   tasks: loadFromStorage("portalTasks", defaultTasks),
   submissions: loadFromStorage("portalSubmissions", defaultSubmissions),
   learners: loadFromStorage("portalLearners", defaultLearners),
+  staff: loadFromStorage("portalStaff", defaultStaff),
   attendance: loadFromStorage("portalAttendance", defaultAttendance),
 };
 
@@ -116,9 +120,17 @@ const elements = {
   adminStudentRole: document.getElementById("adminStudentRole"),
   adminStudentActive: document.getElementById("adminStudentActive"),
   adminAddStudentBtn: document.getElementById("adminAddStudentBtn"),
+  adminStaffName: document.getElementById("adminStaffName"),
+  adminStaffId: document.getElementById("adminStaffId"),
+  adminStaffRole: document.getElementById("adminStaffRole"),
+  adminStaffActive: document.getElementById("adminStaffActive"),
+  adminAddStaffBtn: document.getElementById("adminAddStaffBtn"),
   adminUsersList: document.getElementById("adminUsersList"),
+  adminStaffList: document.getElementById("adminStaffList"),
   adminProgressList: document.getElementById("adminProgressList"),
-  adminTotalUsers: document.getElementById("adminTotalUsers"),
+  adminTotalLearners: document.getElementById("adminTotalLearners"),
+  adminTotalStaff: document.getElementById("adminTotalStaff"),
+  adminCompletedLearners: document.getElementById("adminCompletedLearners"),
   adminActiveUsers: document.getElementById("adminActiveUsers"),
   adminAttendanceRate: document.getElementById("adminAttendanceRate"),
   adminAverageGrade: document.getElementById("adminAverageGrade"),
@@ -137,6 +149,7 @@ function saveToStorage() {
   localStorage.setItem("portalTasks", JSON.stringify(state.tasks));
   localStorage.setItem("portalSubmissions", JSON.stringify(state.submissions));
   localStorage.setItem("portalLearners", JSON.stringify(state.learners));
+  localStorage.setItem("portalStaff", JSON.stringify(state.staff));
   localStorage.setItem("portalAttendance", JSON.stringify(state.attendance));
 }
 
@@ -269,9 +282,17 @@ function handleLogout() {
 }
 
 function renderAdminDashboard() {
-  const activeLearners = state.learners.filter(
-    (learner) => learner.active !== false,
+  const learners = state.learners.filter(
+    (learner) => String(learner.role || "").toLowerCase() === "learner",
   );
+  const staffMembers = state.staff.length
+    ? state.staff
+    : state.learners.filter((learner) =>
+        ["assessor", "admin"].includes(
+          String(learner.role || "").toLowerCase(),
+        ),
+      );
+  const activeLearners = learners.filter((learner) => learner.active !== false);
   const attendanceTotal = state.attendance.reduce(
     (sum, entry) => sum + Number(entry.total || 0),
     0,
@@ -293,7 +314,22 @@ function renderAdminDashboard() {
       )
     : 0;
 
-  elements.adminTotalUsers.textContent = `Total learners: ${state.learners.length}`;
+  const allTaskTitles = state.tasks.map((task) => task.title);
+  const learnersWhoCompletedAllTasks = learners.filter((learner) => {
+    if (!allTaskTitles.length) return false;
+
+    const learnerTaskTitles = new Set(
+      state.submissions
+        .filter((submission) => submission.learnerName === learner.fullName)
+        .map((submission) => submission.taskTitle),
+    );
+
+    return allTaskTitles.every((taskTitle) => learnerTaskTitles.has(taskTitle));
+  }).length;
+
+  elements.adminTotalLearners.textContent = `Total registered learners: ${learners.length}`;
+  elements.adminTotalStaff.textContent = `Total registered staff: ${staffMembers.length}`;
+  elements.adminCompletedLearners.textContent = `Learners who submitted all tasks: ${learnersWhoCompletedAllTasks}`;
   elements.adminActiveUsers.textContent = `Active learners: ${activeLearners.length}`;
   elements.adminAttendanceRate.textContent = `Attendance rate: ${attendanceRate}%`;
   elements.adminAverageGrade.textContent = `Average task score: ${averageGrade}%`;
@@ -320,6 +356,33 @@ function renderAdminDashboard() {
       `;
       elements.adminUsersList.appendChild(row);
     });
+  }
+
+  if (elements.adminStaffList) {
+    elements.adminStaffList.innerHTML = "";
+
+    if (!staffMembers.length) {
+      elements.adminStaffList.innerHTML =
+        "<p>No staff members registered yet.</p>";
+    } else {
+      staffMembers.forEach((staffMember) => {
+        const row = document.createElement("div");
+        row.className = "submission-row";
+        row.innerHTML = `
+          <div>
+            <strong>${staffMember.fullName}</strong><br />
+            <span>${staffMember.learnerId || staffMember.studentId} • ${staffMember.role}</span>
+          </div>
+          <div>
+            <span class="badge ${staffMember.active === false ? "silver" : "navy"}">
+              ${staffMember.active === false ? "Inactive" : "Active"}
+            </span>
+            <button class="secondary" data-action="delete-staff" data-user-id="${staffMember.learnerId || staffMember.studentId}">Remove</button>
+          </div>
+        `;
+        elements.adminStaffList.appendChild(row);
+      });
+    }
   }
 
   elements.adminProgressList.innerHTML = "";
@@ -634,7 +697,7 @@ function renderLearnerPanels() {
 }
 
 async function addSchoolUser() {
-  const fullName = elements.adminAssessorName.value.trim();
+  const fullName = elements.adminStudentName.value.trim();
   const learnerId = elements.adminStudentId.value.trim();
   const role = elements.adminStudentRole.value;
   const active = elements.adminStudentActive.checked;
@@ -707,72 +770,80 @@ async function deleteSchoolUser(learnerId) {
   renderDashboard();
 }
 
-async function addSchoolUser() {
-  const fullName = elements.adminAssessorName.value.trim();
-  const assessorId = elements.adminAssessorId.value.trim();
-  const role = elements.adminAssessorRole.value;
-  const active = elements.adminAssessorActive.checked;
+async function addStaffMember() {
+  const fullName = elements.adminStaffName.value.trim();
+  const staffId = elements.adminStaffId.value.trim();
+  const role = elements.adminStaffRole.value;
+  const active = elements.adminStaffActive.checked;
 
-  if (!fullName || !assessorId) {
-    alert(
-      "Add a full name and Learner ID before saving to the school database.",
-    );
+  if (!["assessor", "admin"].includes(role)) {
+    alert("Staff must be either an assessor or an admin.");
     return;
   }
 
-  const newAssessor = {
-    id: assessorId,
+  if (!fullName || !staffId) {
+    alert("Add a staff full name and staff ID before saving.");
+    return;
+  }
+
+  const newStaffMember = {
+    id: staffId,
     fullName,
-    assessorId,
-    staffId: assessorId,
+    learnerId: staffId,
+    studentId: staffId,
     role,
     active,
   };
 
-  const existingIndex = state.assessor.findIndex(
-    (assessor) =>
-      String(assessor.assessorId || assessor.staffId || "").toLowerCase() ===
-      assessorId.toLowerCase(),
+  const existingIndex = state.staff.findIndex(
+    (staff) =>
+      String(
+        staff.staffId || staff.learnerId || staff.studentId || "",
+      ).toLowerCase() === staffId.toLowerCase(),
   );
 
   if (existingIndex >= 0) {
-    state.assessor[existingIndex] = {
-      ...state.assessor[existingIndex],
-      ...newAssessor,
+    state.staff[existingIndex] = {
+      ...state.staff[existingIndex],
+      ...newStaffMember,
     };
   } else {
-    state.assessor.push(newAssessor);
+    state.staff.push(newStaffMember);
   }
 
   try {
-    await saveAssessor(newAssessor);
+    await saveStaff(newStaffMember);
   } catch (error) {
-    console.warn("Firestore save failed, using local storage fallback:", error);
+    console.warn(
+      "Firestore staff save failed, using local storage fallback:",
+      error,
+    );
   }
 
   saveToStorage();
-  elements.adminAssessorName.value = "";
-  elements.adminAssessorId.value = "";
-  elements.adminAssessorRole.value = "assessor";
-  elements.adminAssessorActive.checked = true;
+  elements.adminStaffName.value = "";
+  elements.adminStaffId.value = "";
+  elements.adminStaffRole.value = "assessor";
+  elements.adminStaffActive.checked = true;
   renderDashboard();
 }
 
-async function deleteSchoolUser(assessorId) {
-  const targetId = String(assessorId || "").trim();
+async function deleteStaffMember(staffId) {
+  const targetId = String(staffId || "").trim();
   if (!targetId) return;
 
-  state.assessor = state.assessors.filter(
-    (assessor) =>
-      String(assessor.assessorId || assessor.staffId || "").toLowerCase() !==
-      targetId.toLowerCase(),
-  );
+  state.staff = state.staff.filter((staff) => {
+    const staffIdentifier = String(
+      staff.staffId || staff.learnerId || staff.studentId || "",
+    ).trim();
+    return staffIdentifier.toLowerCase() !== targetId.toLowerCase();
+  });
 
   try {
-    await deleteAssessorRecord(targetId);
+    await deleteStaffRecord(targetId);
   } catch (error) {
     console.warn(
-      "Firestore delete failed, using local storage fallback:",
+      "Firestore staff delete failed, using local storage fallback:",
       error,
     );
   }
@@ -885,6 +956,7 @@ document.addEventListener("click", (event) => {
   if (action === "step-select") applyLearnerStep(id, step);
   if (action === "submit-task") submitTask(id);
   if (action === "delete-user") deleteSchoolUser(userId);
+  if (action === "delete-staff") deleteStaffMember(userId);
 });
 
 elements.loginBtn.addEventListener("click", handleLogin);
@@ -892,6 +964,7 @@ elements.logoutBtn.addEventListener("click", handleLogout);
 elements.addTaskBtn.addEventListener("click", addTask);
 elements.cancelEditBtn.addEventListener("click", clearTaskForm);
 elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
+elements.adminAddStaffBtn.addEventListener("click", addStaffMember);
 if (elements.saveAssessmentBtn) {
   elements.saveAssessmentBtn.addEventListener("click", saveAssessment);
 }

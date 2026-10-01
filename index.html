@@ -60,11 +60,37 @@
 
           <div class="card highlight">
             <h3>School Overview</h3>
-            <p id="adminTotalUsers">Total users: 0</p>
+            <p id="adminTotalLearners">Total registered learners: 0</p>
+            <p id="adminTotalStaff">Total registered staff: 0</p>
+            <p id="adminCompletedLearners">
+              Learners who submitted all tasks: 0
+            </p>
             <p id="adminActiveUsers">Active users: 0</p>
             <p id="adminAttendanceRate">Attendance rate: 0%</p>
             <p id="adminAverageGrade">Average task score: 0%</p>
           </div>
+        </div>
+
+        <div class="card">
+          <h3>Add / Remove Staff</h3>
+          <input
+            id="adminStaffName"
+            type="text"
+            placeholder="Staff full name"
+          />
+          <input id="adminStaffId" type="text" placeholder="Staff ID" />
+          <select id="adminStaffRole">
+            <option value="assessor">Assessor</option>
+            <option value="admin">Admin</option>
+          </select>
+          <label>
+            <input id="adminStaffActive" type="checkbox" checked />
+            Active account
+          </label>
+          <button id="adminAddStaffBtn" class="primary">
+            Save Staff Member
+          </button>
+          <div id="adminStaffList" class="tasks-grid"></div>
         </div>
 
         <div class="card">
