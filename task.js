@@ -634,7 +634,7 @@ function renderLearnerPanels() {
 }
 
 async function addSchoolUser() {
-  const fullName = elements.adminStudentName.value.trim();
+  const fullName = elements.adminAssessorName.value.trim();
   const learnerId = elements.adminStudentId.value.trim();
   const role = elements.adminStudentRole.value;
   const active = elements.adminStudentActive.checked;
@@ -696,6 +696,80 @@ async function deleteSchoolUser(learnerId) {
 
   try {
     await deleteLearnerRecord(targetId);
+  } catch (error) {
+    console.warn(
+      "Firestore delete failed, using local storage fallback:",
+      error,
+    );
+  }
+
+  saveToStorage();
+  renderDashboard();
+}
+
+async function addSchoolUser() {
+  const fullName = elements.adminAssessorName.value.trim();
+  const assessorId = elements.adminAssessorId.value.trim();
+  const role = elements.adminAssessorRole.value;
+  const active = elements.adminAssessorActive.checked;
+
+  if (!fullName || !assessorId) {
+    alert(
+      "Add a full name and Learner ID before saving to the school database.",
+    );
+    return;
+  }
+
+  const newAssessor = {
+    id: assessorId,
+    fullName,
+    assessorId,
+    staffId: assessorId,
+    role,
+    active,
+  };
+
+  const existingIndex = state.assessor.findIndex(
+    (assessor) =>
+      String(assessor.assessorId || assessor.staffId || "").toLowerCase() ===
+      assessorId.toLowerCase(),
+  );
+
+  if (existingIndex >= 0) {
+    state.assessor[existingIndex] = {
+      ...state.assessor[existingIndex],
+      ...newAssessor,
+    };
+  } else {
+    state.assessor.push(newAssessor);
+  }
+
+  try {
+    await saveAssessor(newAssessor);
+  } catch (error) {
+    console.warn("Firestore save failed, using local storage fallback:", error);
+  }
+
+  saveToStorage();
+  elements.adminAssessorName.value = "";
+  elements.adminAssessorId.value = "";
+  elements.adminAssessorRole.value = "assessor";
+  elements.adminAssessorActive.checked = true;
+  renderDashboard();
+}
+
+async function deleteSchoolUser(assessorId) {
+  const targetId = String(assessorId || "").trim();
+  if (!targetId) return;
+
+  state.assessor = state.assessors.filter(
+    (assessor) =>
+      String(assessor.assessorId || assessor.staffId || "").toLowerCase() !==
+      targetId.toLowerCase(),
+  );
+
+  try {
+    await deleteAssessorRecord(targetId);
   } catch (error) {
     console.warn(
       "Firestore delete failed, using local storage fallback:",
