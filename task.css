@@ -1,0 +1,276 @@
+:root {
+  --navy: #0a1931;
+  --navy2: #142850;
+  --light: #7fdbff;
+  --light2: #b6efff;
+  --silver: #c0c0c0;
+  --silverLight: #e8e8e8;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, var(--silverLight), white);
+  color: var(--navy);
+}
+
+.topbar {
+  background: white;
+  color: var(--navy);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 4px solid var(--navy);
+  box-shadow: 0 4px 20px rgba(10, 25, 49, 0.1);
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-circle {
+  width: 42px;
+  height: 42px;
+  background: var(--light);
+  color: var(--navy);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.topbar small {
+  color: var(--navy2);
+}
+
+#authBox,
+#userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  width: 100%;
+  margin: 6px 0;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+.primary {
+  background: var(--navy);
+  color: white;
+}
+
+.secondary {
+  background: var(--silverLight);
+  color: var(--navy);
+  border: 1px solid var(--silver);
+}
+
+.center-card {
+  max-width: 700px;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(10, 25, 49, 0.12);
+  border-top: 6px solid var(--navy);
+  text-align: center;
+}
+
+.logo-placeholder {
+  margin: 20px auto;
+  border: 2px dashed var(--silver);
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--light2), var(--silverLight));
+}
+
+.hidden {
+  display: none !important;
+}
+
+main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 18px rgba(10, 25, 49, 0.08);
+  border-left: 5px solid var(--navy);
+}
+
+.card.highlight {
+  border-left-color: var(--light);
+  background: linear-gradient(135deg, white, var(--light2));
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.task-card {
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 14px;
+  background: white;
+  position: relative;
+}
+
+.task-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--navy), var(--light), var(--silver));
+}
+
+.task-card h4 {
+  margin: 0 0 6px;
+}
+
+.task-card p {
+  margin: 6px 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 2px;
+}
+
+.badge.navy {
+  background: var(--navy);
+  color: white;
+}
+
+.badge.light {
+  background: var(--light2);
+  color: var(--navy);
+}
+
+.badge.silver {
+  background: var(--silverLight);
+  color: var(--navy);
+}
+
+.task-actions,
+.submission-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-row {
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.submission-row {
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.brand-logo {
+  height: 68px;
+  width: auto;
+  object-fit: contain;
+  background: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#userDisplay {
+  font-weight: 700;
+}
+
+@media (max-width: 800px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  #authBox,
+  #userInfo {
+    width: 100%;
+  }
+
+  #authBox input,
+  #authBox select,
+  #authBox button {
+    flex: 1 1 180px;
+  }
+}
