@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Assessor Management</title>
+<style>
+  :root{
+    --header-bg:#2b2b2b;
+    --page-bg:#e8e8e8;
+    --card-bg:#ffffff;
+    --field-bg:#d9d9d9;
+    --text-dark:#1a1a1a;
+    --btn-bg:#1a1a1a;
+    --btn-text:#ffffff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--page-bg);
+    color:var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  header{
+    width:100%;
+    background:var(--header-bg);
+    color:#fff;
+    display:flex;
+    align-items:centre;
+    justify-content:center;
+    position:relative;
+    padding:18px 16px;
+  }
+  header h1{
+    font-size:1.4rem;
+    letter-spacing:2px;
+    font-weight:600;
+  }
+  .menu-icon{
+    position:absolute;
+    left:18px;
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  main{
+    width:100%;
+    max-width:480px;
+    background:var(--card-bg);
+    margin:20px auto;
+    padding:20px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .block h3{
+    font-size:0.82rem;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .panel{
+    background:var(--field-bg);
+    border-radius:var(--radius);
+    padding:16px 12px;
+    min-height:34px;
+  }
+  .field-list{
+    list-style:disc;
+    padding-left:18px;
+    font-size:0.75rem;
+    font-weight:600;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+  }
+  .btn{
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:none;
+    border-radius:4px;
+    padding:7px 18px;
+    font-size:0.75rem;
+    cursor:pointer;
+  }
+  .btn:hover{opacity:0.85;}
+  footer{
+    width:100%;
+    max-width:480px;
+    text-align:center;
+    font-size:0.65rem;
+    color:#555;
+    background:#d4d4d4;
+    padding:8px 0 24px;
+  }
+
+  h3 a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.timetable {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 600px;
+    margin: 18px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.timetable th {
+    background-color: #2563eb;
+    color: white;
+    padding: 1px;
+    border: 1px solid #ccc;
+}
+
+.timetable td {
+    padding: 1px;
+    border: 1px solid #ccc;
+    background-color: #f8fafc;
+}
+
+.timetable td:hover {
+    background-color: #e0ecff;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="menu-icon">&#9776;</span>
+  <h1>NEMOSA</h1>
+</header>
+
+<main>
+  <div class="grid-2">
+    <div class="block">
+      <h3>Manage</h3>
+        <div class="panel">
+        <ul class="field-list">
+          <li>View update</li>
+          <li>View assigned classes</li>
+          <li>View attendance</li>
+          <li></li>
+        </ul>
+      </div>
+      <br>
+      <h3>Assign Teachers to each subject</h3>  
+      <div class="panel">
+        <ul class="field-list">
+          <li>Ma'am Mahlangu - IsiNdebele</li>
+          <li>Ma'am Tloubatla - Sepedi</li>
+          <li>Sir Hlatshwayo - Gen Studies</li>
+          <li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Timetable</h3>
+       <div class="panel">
+        <table class="timetable">
+    <tr>
+        <th>M</th>
+        <th>Tw</th>
+        <th>W</th>
+        <th>T</th>
+        <th>F</th>
+    </tr>
+
+    <tr>
+        <td>Eng</td>
+        <td>Lo</td>
+        <td>LS</td>
+        <td>G.S</td>
+        <td>GS</td>
+    </tr>
+
+    <tr>
+        <td>G. St</td>
+        <td>Eng</td>
+        <td>Sep</td>
+        <td>Lo</td>
+        <td>LS</td>
+    </tr>
+
+    <tr>
+        <td>Sep</td>
+        <td>G. St</td>
+        <td>Eng</td>
+        <td>Lo</td>
+        <td>LS</td>
+    </tr>
+</table>
+      </div>
+      <br>
+      <h3>Class</h3> 
+      <div class="panel">
+        <ul class="field-list">
+          <li>Grade - 8A</li>
+          <li>Grade - 9A</li>
+          <li>Grade - 10A</li>
+          <li>Grade - 11A</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="window.history.back('Admin.html')">Previous</button>
+    <button class="btn" onclick="alert('Please go to the previous page')">Next</button>
+  </div>
+</main>
+
+<footer>All Rights Reserved NEMOSA 2026</footer>
+
+</body>
+</html>
