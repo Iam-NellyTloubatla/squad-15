@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEMOSA Task Portal</title>
+    <link rel="stylesheet" href="task.css" />
+  </head>
+  <body>
+    <div id="loginScreen" class="center-card">
+      <img src="nemosa-logo.png.jpg" alt="NEMOSA logo" class="brand-logo" />
+      <h2>NEMOSA Task Management</h2>
+      <p><strong>INNOVATE • CREATE • EVOLVE</strong></p>
+    </div>
+    <header class="topbar">
+      <div class="logo-area">
+        <div class="logo-circle">TM</div>
+        <div>
+          <h1>Task Management System</h1>
+        </div>
+      </div>
+
+      <div id="authBox">
+        <select id="roleSelect">
+          <option value="learner">Learner</option>
+          <option value="assessor">Assessor</option>
+          <option value="admin">Admin</option>
+        </select>
+        <input id="userName" type="text" placeholder="Full name" />
+        <input id="userId" type="text" placeholder="Learner ID" />
+        <button id="loginBtn" class="primary">Enter Portal</button>
+      </div>
+
+      <div id="userInfo" class="hidden">
+        <span id="userDisplay"></span>
+        <button id="logoutBtn" class="secondary">Logout</button>
+      </div>
+    </header>
+
+    <main id="app" class="hidden">
+      <section id="adminView" class="hidden">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Add / Remove Learners</h3>
+            <input id="adminStudentName" type="text" placeholder="Full name" />
+            <input id="adminStudentId" type="text" placeholder="Learner ID" />
+            <select id="adminStudentRole">
+              <option value="learner">Learner</option>
+              <option value="assessor">Assessor</option>
+              <option value="admin">Admin</option>
+            </select>
+            <label>
+              <input id="adminStudentActive" type="checkbox" checked />
+              Active account
+            </label>
+            <button id="adminAddStudentBtn" class="primary">
+              Save to School Database
+            </button>
+          </div>
+
+          <div class="card highlight">
+            <h3>School Overview</h3>
+            <p id="adminTotalLearners">Total registered learners: 0</p>
+            <p id="adminTotalStaff">Total registered staff: 0</p>
+            <p id="adminCompletedLearners">
+              Learners who submitted all tasks: 0
+            </p>
+            <p id="adminActiveUsers">Active users: 0</p>
+            <p id="adminAttendanceRate">Attendance rate: 0%</p>
+            <p id="adminAverageGrade">Average task score: 0%</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Add / Remove Staff</h3>
+          <input
+            id="adminStaffName"
+            type="text"
+            placeholder="Staff full name"
+          />
+          <input id="adminStaffId" type="text" placeholder="Staff ID" />
+          <select id="adminStaffRole">
+            <option value="assessor">Assessor</option>
+            <option value="admin">Admin</option>
+          </select>
+          <label>
+            <input id="adminStaffActive" type="checkbox" checked />
+            Active account
+          </label>
+          <button id="adminAddStaffBtn" class="primary">
+            Save Staff Member
+          </button>
+          <div id="adminStaffList" class="tasks-grid"></div>
+        </div>
+
+        <div class="card">
+          <h3>Admin Task Overview</h3>
+          <div id="adminTasksList" class="tasks-grid"></div>
+        </div>
+
+        <div class="card">
+          <h3>Registered Users</h3>
+          <div id="adminUsersList" class="tasks-grid"></div>
+        </div>
+
+        <div class="card">
+          <h3>Attendance and Progress</h3>
+          <div id="adminProgressList" class="tasks-grid"></div>
+        </div>
+      </section>
+
+      <section id="assessorView" class="hidden">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Add || Edit Task</h3>
+            <input id="taskTitle" type="text" placeholder="Task Title" />
+            <select id="taskType">
+              <option value="Written">Written</option>
+              <option value="Practical">Practical</option>
+              <option value="Assignment">Assignment</option>
+              <option value="Test">Test</option>
+            </select>
+            <textarea id="taskDesc" placeholder="Instructions"></textarea>
+            <input id="dueDate" type="date" />
+            <input id="totalMarks" type="number" placeholder="Total Marks" />
+            <div class="action-row">
+              <button id="addTaskBtn" class="primary">Add Task</button>
+              <button id="cancelEditBtn" class="secondary hidden">
+                Cancel Edit
+              </button>
+            </div>
+          </div>
+
+          <div class="card highlight">
+            <h3>Stats</h3>
+            <p id="totalTasks">Total Tasks: 0</p>
+            <p id="totalSubmissions">Total Submissions: 0</p>
+            <p id="avgResult">Average Result: -</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Allocate Marks</h3>
+          <select id="assessorLearnerSelect">
+            <option value="">Select learner</option>
+          </select>
+          <select id="assessorTaskSelect">
+            <option value="">Select task</option>
+          </select>
+          <input
+            id="assessorMarks"
+            type="number"
+            min="0"
+            max="100"
+            placeholder="Marks (0 - 100)"
+          />
+          <textarea
+            id="assessorFeedback"
+            placeholder="Add assessor feedback"
+          ></textarea>
+          <button id="saveAssessmentBtn" class="primary">
+            Save Assessment
+          </button>
+        </div>
+
+        <div class="card">
+          <h3>All Tasks</h3>
+          <div id="tasksList" class="tasks-grid"></div>
+        </div>
+
+        <div class="card">
+          <h3>Submissions</h3>
+          <div id="submissionsList"></div>
+        </div>
+      </section>
+
+      <section id="learnerView" class="hidden">
+        <div class="grid-2">
+          <div class="card highlight">
+            <h3>My Task Progress</h3>
+            <p id="learnerTotal">Tasks Chosen: 0</p>
+            <p id="learnerWritten">Written: 0</p>
+            <p id="learnerSubmitted">Submitted: 0</p>
+            <p id="learnerAvg">My Average: -</p>
+          </div>
+
+          <div class="card">
+            <h3>Steps</h3>
+            <div id="learnerSteps" class="step-list"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Available Tasks to Choose</h3>
+          <div id="availableTasks" class="tasks-grid"></div>
+        </div>
+
+        <div class="card">
+          <h3>My Tasks &amp; Results</h3>
+          <div id="myTasks" class="tasks-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="task.js"></script>
+  </body>
+</html>
