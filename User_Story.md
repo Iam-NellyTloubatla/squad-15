@@ -1,0 +1,8 @@
+# NEMOSA User Story
+
+| Title | User Story | Acceptance Criteria | Priority | Estimation | Description |
+|---|---|---|---|---|---|
+| **User Login Page** | Users need to make sure the information they capture is valid. | 1. Assessor and Learner have their own dashboards.<br>2. Login/Sign-up is available for first-time users or when changing login details.<br>3. Name and email should not be the same as those of other users. Passwords should contain different characters.<br>4. There should be a status message indicating whether login was successful or unsuccessful. | **High** | **13 story points** | The user will be able to register an account quickly and can also change their details as they wish. |
+| **Admin Page** | Only the Admin can access this page and make changes to the timetable or announcements. | The Admin can manage profiles, change timetables, record attendance, assign teachers to subjects, and manage classes. | **High** | **8 story points** | The Admin can change the personal details of Assessors and Learners when requested by the Learner or Assessor. |
+| **Assessor** | The Assessor can only view information. | Limited permissions are provided, while the Admin has full access. | **Medium** | **5 story points** | The Assessor can view subjects, qualifications, contact details, and classes. |
+| **Learner** | The Learner can view information and play a mini-game. | Limited permissions are provided, while the Admin has full access. | **Medium** | **7 story points** | The Learner can view their results and play a mini-game. |

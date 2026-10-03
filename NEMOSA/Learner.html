@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Learner Management</title>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  :root{
+    --header-bg:#2b2b2b;
+    --page-bg:#e8e8e8;
+    --card-bg:#ffffff;
+    --field-bg:#d9d9d9;
+    --text-dark:#1a1a1a;
+    --btn-bg:#1a1a1a;
+    --btn-text:#ffffff;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--page-bg);
+    color:var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  header{
+    width:100%;
+    background:var(--header-bg);
+    color:#fff;
+    display:flex;
+    align-items:centre;
+    justify-content:center;
+    position:relative;
+    padding:18px 16px;
+  }
+  header h1{
+    font-size:1.4rem;
+    letter-spacing:2px;
+    font-weight:600;
+  }
+  .menu-icon{
+    position:absolute;
+    left:18px;
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  main{
+    width:100%;
+    max-width:480px;
+    background:var(--card-bg);
+    margin:20px auto;
+    padding:20px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .block h3{
+    font-size:0.82rem;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .panel{
+    background:var(--field-bg);
+    border-radius:var(--radius);
+    padding:16px 12px;
+    min-height:34px;
+  }
+  .field-list{
+    list-style:disc;
+    padding-left:18px;
+    font-size:0.75rem;
+    font-weight:600;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+  }
+  .btn{
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:none;
+    border-radius:4px;
+    padding:7px 18px;
+    font-size:0.75rem;
+    cursor:pointer;
+  }
+  .btn:hover{opacity:0.85;}
+  footer{
+    width:100%;
+    max-width:480px;
+    text-align:center;
+    font-size:0.65rem;
+    color:#555;
+    background:#d4d4d4;
+    padding:8px 0 24px;
+  }
+
+  h3 a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.whatsapp-btn:hover {
+    background-color: #128C7E;
+}
+
+.whatsapp-btn i {
+    font-size: 22px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <span class="menu-icon">&#9776;</span>
+  <h1>NEMOSA</h1>
+</header>
+
+<main>
+  <div class="grid-2">
+    <div class="block">
+      <h3>Learner Management</h3>
+        <p>Name: Nomsa </li></p> 
+        <p>Class: 8A</p>
+        <p>Date of Birth: 14/07/2025</p>
+        <p>Parent name and number: <br>Helen - 012 345 6789</p>
+        <p>Learner ID: 250714 345 6789</p>
+        <br>
+    
+      <h3>Results</h3>  
+      <div class="panel">
+        <ul class="field-list">
+          <li>English - 90%</li>
+          <li>IsiZulu - 70%</li>
+          <li>History - 50%</li>
+          <li>B. Studies - 40%</li>
+          <li>Geography - 35%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3><a href="Admin.html">Admin Management</a></h3>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+      <h3>Mini Game</h3> 
+      <div class="panel">
+        <ul class="field-list">
+          <li><a href="Quiz.html" onclick="alert('Please load the quiz game...')">Quiz</a> or <a href="Palindrome.html">Palindrome</a></li>
+          <br>
+          <br>
+          <a href="https://wa.me/27640246008?text=Hello%20NEMOSA%20Support%2C%20I%20need%20help."
+   target="_blank"
+   class="whatsapp-btn">
+
+    <i class="fa-brands fa-whatsapp"></i>
+    WhatsApp Support
+
+</a>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="window.history.back('Login.html')">Previous</button>
+    <button class="btn" onclick="alert('Select a game or go to the previous page')">Next</button>
+  </div>
+</main>
+
+<footer>All Rights Reserved NEMOSA 2026</footer>
+
+</body>
+</html>
