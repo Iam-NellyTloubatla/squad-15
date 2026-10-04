@@ -30,7 +30,7 @@
     background:var(--header-bg);
     color:#fff;
     display:flex;
-    align-items:center;
+    align-items:centre;
     justify-content:center;
     position:relative;
     padding:18px 16px;
@@ -68,7 +68,7 @@
     background:var(--field-bg);
     border-radius:var(--radius);
     padding:16px 12px;
-    min-height:340px;
+    min-height:34px;
   }
   .field-list{
     list-style:disc;
@@ -109,6 +109,38 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+li a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.timetable {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 600px;
+    margin: 18px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.timetable th {
+    background-color: #2563eb;
+    color: white;
+    padding: 1px;
+    border: 1px solid #ccc;
+}
+
+.timetable td {
+    padding: 1px;
+    border: 1px solid #ccc;
+    background-color: #f8fafc;
+}
+
+.timetable td:hover {
+    background-color: #e0ecff;
+}
 </style>
 </head>
 <body>
@@ -121,35 +153,80 @@
 <main>
   <div class="grid-2">
     <div class="block">
-      <h3>Assessor Management</h3>
+      <h3>Manage</h3>
+        <div class="panel">
+        <ul class="field-list">
+          <li>View update</li>
+          <li>View assigned classes</li>
+          <li>View attendance</li>
+          <li></li>
+        </ul>
+      </div>
+      <br>
+      <h3>Assign Teachers to each subject</h3>  
       <div class="panel">
         <ul class="field-list">
-          <li>Assessor name</li>
-          <li>Subject</li>
-          <li>Qualification</li>
-          <li>Experience</li>
-          <li>Contact details</li>
+          <li>Ma'am Mahlangu - IsiNdebele</li>
+          <li>Ma'am Tloubatla - Sepedi</li>
+          <li>Sir Hlatshwayo - Gen Studies</li>
+          <li>
         </ul>
       </div>
     </div>
-    
+
     <div class="block">
-      <h3><a href="admin.html">Admin Management</a></h3>
+      <h3>Timetable</h3>
+       <div class="panel">
+        <table class="timetable">
+    <tr>
+        <th>M</th>
+        <th>Tw</th>
+        <th>W</th>
+        <th>T</th>
+        <th>F</th>
+    </tr>
+
+    <tr>
+        <td>Eng</td>
+        <td>Lo</td>
+        <td>LS</td>
+        <td>G.S</td>
+        <td>GS</td>
+    </tr>
+
+    <tr>
+        <td>G. St</td>
+        <td>Eng</td>
+        <td>Sep</td>
+        <td>Lo</td>
+        <td>LS</td>
+    </tr>
+
+    <tr>
+        <td>Sep</td>
+        <td>G. St</td>
+        <td>Eng</td>
+        <td>Lo</td>
+        <td>LS</td>
+    </tr>
+</table>
+      </div>
+      <br>
+      <h3>Class</h3> 
       <div class="panel">
-        <p class="font-size:0.75rem;font-weight:700;margin-bottom:12px;">Assessor can:</p>
         <ul class="field-list">
-          <li>Update profiles</li>
-          <li>View assigned classes</li>
-          <li>Record attendance</li>
-          <li>Update Marks</li>
+          <li>Grade - 8A</li>
+          <li>Grade - 9A</li>
+          <li>Grade - 10A</li>
+          <li>Grade - 11A</li>
         </ul>
       </div>
     </div>
   </div>
-  
+
   <div class="actions">
-    <button class="btn" onclick="window.history.back('index.html.html')">Previous</button>
-    <button class="btn" onclick="alert('Go to previous page')">Next</button>
+    <button class="btn" onclick="window.history.back('Admin.html')">Previous</button>
+    <button class="btn" onclick="alert('Please go to the previous page')">Next</button>
   </div>
 </main>
 

@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEMOSA - Learner Management</title>
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<title>NEMOSA - Palindrome</title>
 <style>
   :root{
     --header-bg:#2b2b2b;
@@ -15,7 +13,7 @@
     --text-dark:#1a1a1a;
     --btn-bg:#1a1a1a;
     --btn-text:#ffffff;
-    --radius:6px;
+    --radius:14px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -32,7 +30,7 @@
     background:var(--header-bg);
     color:#fff;
     display:flex;
-    align-items:centre;
+    align-items:center;
     justify-content:center;
     position:relative;
     padding:18px 16px;
@@ -70,7 +68,7 @@
     background:var(--field-bg);
     border-radius:var(--radius);
     padding:16px 12px;
-    min-height:34px;
+    min-height:340px;
   }
   .field-list{
     list-style:disc;
@@ -112,33 +110,113 @@
     cursor: pointer;
 }
 
-li a {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+/* Page background and general styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
 }
 
-.whatsapp-btn {
+/* Main heading */
+h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Quote box */
+#quote {
+    background-color: white;
+    color: #333;
+
+    width: 60%;
+    max-width: 600px;
+
+    padding: 30px;
+    margin-bottom: 25px;
+
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    font-size: 22px;
+    font-style: italic;
+    text-align: center;
+
+    min-height: 50px;
+}
+
+/* Generate Quote button */
+button {
+    background-color: #ffcc00;
+    color: #333;
+
+    border: none;
+    padding: 15px 30px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #ffaa00;
+    transform: scale(1.05);
+}
+
+/* Button click effect */
+button:active {
+    transform: scale(0.98);
+}
+
+/* Mobile-friendly design */
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 30px;
+    }
+
+    #quote {
+        width: 75%;
+        font-size: 18px;
+        padding: 20px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+}
+
+
+    .whatsapp-icon {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
     background-color: #25D366;
     color: white;
+    border-radius: 50%;
     text-decoration: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 28px;
 }
 
-.whatsapp-btn:hover {
+.whatsapp-icon:hover {
     background-color: #128C7E;
 }
-
-.whatsapp-btn i {
-    font-size: 22px;
-}
-
 </style>
 </head>
 <body>
@@ -149,61 +227,44 @@ li a {
 </header>
 
 <main>
-  <div class="grid-2">
+   <div>
     <div class="block">
-      <h3>Learner Management</h3>
-        <p>Name: Nomsa </li></p> 
-        <p>Class: 8A</p>
-        <p>Date of Birth: 14/07/2025</p>
-        <p>Parent name and number: <br>Helen - 012 345 6789</p>
-        <p>Learner ID: 250714 345 6789</p>
-        <br>
+      <h3 style="text-align: center;">Palindrome Game</h3>
+      <div class="panel">
+        <ul class="field-list">
+          <input id="input" type="text" placeholder="Type something">
+    <button onclick="check()">Check</button>
+        </ul>
+      </div>
+    </div>
     
-      <h3>Results</h3>  
-      <div class="panel">
-        <ul class="field-list">
-          <li>English - 90%</li>
-          <li>IsiZulu - 70%</li>
-          <li>History - 50%</li>
-          <li>B. Studies - 40%</li>
-          <li>Geography - 35%</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="block">
-      <h3><a href="Admin.html">Admin Management</a></h3>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-      <h3>Mini Game</h3> 
-      <div class="panel">
-        <ul class="field-list">
-          <li><a href="Quiz.html" onclick="alert('Please load the quiz game...')">Quiz</a> or <a href="Palindrome.html">Palindrome</a></li>
-          <br>
-          <br>
-          <a href="https://wa.me/27640246008?text=Hello%20NEMOSA%20Support%2C%20I%20need%20help."
-   target="_blank"
-   class="whatsapp-btn">
-
-    <i class="fa-brands fa-whatsapp"></i>
-    WhatsApp Support
-
-</a>
-        </ul>
-      </div>
-    </div>
-  </div>
-
+   </div>
+  
   <div class="actions">
-    <button class="btn" onclick="window.history.back('index.html.html')">Previous</button>
-    <button class="btn" onclick="alert('Select a game or go to the previous page')">Next</button>
+    <button class="btn" onclick="window.history.back()">Previous</button>
+    <button class="btn" onclick="alert('Please go to previous page')">Next</button>
   </div>
 </main>
+<script>
+    const input = document.getElementById("input")
+
+function reverseString(str) {
+    return str.split("").reverse().join("")
+}
+
+function check() {
+    const value = input.value
+    const reverse = reverseString(value)
+    
+    if (value === reverse) {
+        alert("P A L I N D R O M E")
+    } else {
+        alert("Not today!")
+    }
+
+    input.value = ""
+}
+</script>
 
 <footer>All Rights Reserved NEMOSA 2026</footer>
 
