@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEMOSA - Assessor Management</title>
+<title>NEMOSA - Admin</title>
 <style>
   :root{
     --header-bg:#2b2b2b;
@@ -149,22 +149,36 @@ li a {
   <span class="menu-icon">&#9776;</span>
   <h1>NEMOSA</h1>
 </header>
-
-<main>
+<div class="task-container">
+<main id="app" class="hidden">
+  <section id="adminView" class="hidden">
   <div class="grid-2">
-    <div class="block">
-      <h3>Manage</h3>
-        <div class="panel">
+    <div class="card">
+      <h3>Add / Remove Learners</h3>
+      <div class="panel">
         <ul class="field-list">
-          <li>View update</li>
-          <li>View assigned classes</li>
-          <li>View attendance</li>
-          <li></li>
+         
+          <input id="adminStaffId" type="text" placeholder="Staff ID" />
+          <select id="adminStaffRole">
+            <option value="assessor">Assessor</option>
+            <option value="admin">Admin</option>
+          </select>
+          <label>
+            <input id="adminStaffActive" type="checkbox" checked />
+            Active account
+          </label>
+          <button id="adminAddStaffBtn" class="primary">
+            Save Staff Member
+          </button>
+          <div id="adminStaffList" class="tasks-grid"></div>
+        </d
+          
         </ul>
       </div>
-      <br>
-      <h3>Assign Teachers to each subject</h3>  
-      <div class="panel">
+      <
+  <div class="task-container">
+      <h3>Admin Task Overview</h3>  
+      <div id="adminTasksList" class="panel">
         <ul class="field-list">
           <li>Ma'am Mahlangu - IsiNdebele</li>
           <li>Ma'am Tloubatla - Sepedi</li>
@@ -173,10 +187,11 @@ li a {
         </ul>
       </div>
     </div>
-
-    <div class="block">
-      <h3>Timetable</h3>
-       <div class="panel">
+    </div>
+  
+    <div class="task-container">
+      <h3>Registered Users</h3>
+       <div id="adminUsersList" class="panel">
         <table class="timetable">
     <tr>
         <th>M</th>
@@ -209,11 +224,13 @@ li a {
         <td>Lo</td>
         <td>LS</td>
     </tr>
+    <br>
 </table>
       </div>
       <br>
-      <h3>Class</h3> 
-      <div class="panel">
+      <div class="task-container">
+      <h3>Attendance & Progress</h3>
+      <div id="adminProgressList" class="panel">
         <ul class="field-list">
           <li>Grade - 8A</li>
           <li>Grade - 9A</li>
@@ -223,14 +240,31 @@ li a {
       </div>
     </div>
   </div>
+</div>
+
+<div class="card highlight">
+    <h3>School Overview</h3>
+
+    <div id="taskList">
+    <p id="adminTotalLearners">Total registered learners: 0</p>
+            <p id="adminTotalStaff">Total registered staff: 0</p>
+            <p id="adminCompletedLearners">
+              Learners who submitted all tasks: 0
+            </p>
+            <p id="adminActiveUsers">Active users: 0</p>
+            <p id="adminAttendanceRate">Attendance rate: 0%</p>
+            <p id="adminAverageGrade">Average task score: 0%</p>
+    </div>
+</div>
+
 
   <div class="actions">
-    <button class="btn" onclick="window.history.back('Admin.html')">Previous</button>
-    <button class="btn" onclick="alert('Please go to the previous page')">Next</button>
+    <button class="btn" onclick="window.history.back('index.html')">Logout</button>
+    <button class="btn" onclick="alert('Please Logout')">Next</button>
   </div>
 </main>
 
 <footer>All Rights Reserved NEMOSA 2026</footer>
-
+<script type="module" src="task.js"></script>
 </body>
 </html>

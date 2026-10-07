@@ -119,41 +119,76 @@
 </header>
 
 <main>
+  <section id="assessorView" class="hidden">
   <div class="grid-2">
-    <div class="block">
-      <h3>Assessor Management</h3>
+    <div class="card">
+      <h3>Add || Edit Task</h3>
       <div class="panel">
-        <ul class="field-list">
-          <li>Assessor name</li>
-          <li>Subject</li>
-          <li>Qualification</li>
-          <li>Experience</li>
-          <li>Contact details</li>
-        </ul>
+        <input id="taskTitle" type="text" placeholder="Task Title" />
+        <select id="taskType">
+          <option value="Written">Written</option>
+              <option value="Practical">Practical</option>
+              <option value="Assignment">Assignment</option>
+              <option value="Test">Test</option>
+        </select>
+        <textarea id="taskDesc" placeholder="Instructions"></textarea>
+        <input id="dueDate" type="date" />
+        <input id="totalMarks" type="number" placeholder="Total Marks" />
+        <button id="addTaskBtn" class="primary">Add Task</button>
+        <button id="cancelEditBtn" class="secondary hidden">
+                Cancel Edit
+              </button>
+        <h3>Stats</h3>
+            <p id="totalTasks">Total Tasks: 0</p>
+            <p id="totalSubmissions">Total Submissions: 0</p>
+            <p id="avgResult">Average Result: -</p>
       </div>
     </div>
     
     <div class="block">
-      <h3><a href="admin.html">Admin Management</a></h3>
+      <h3>Allocate Marks</h3>
       <div class="panel">
-        <p class="font-size:0.75rem;font-weight:700;margin-bottom:12px;">Assessor can:</p>
-        <ul class="field-list">
-          <li>Update profiles</li>
-          <li>View assigned classes</li>
-          <li>Record attendance</li>
-          <li>Update Marks</li>
-        </ul>
+        <select id="assessorLearnerSelect">
+          <option value="">Select learner</option>
+        </select>
+        <select id="assessorTaskSelect">
+            <option value="">Select task</option>
+        </select>
+        <input
+            id="assessorMarks"
+            type="number"
+            min="0"
+            max="100"
+            placeholder="Marks (0 - 100)"
+          />
+          <textarea
+            id="assessorFeedback"
+            placeholder="Add assessor feedback"
+          ></textarea>
+          <button id="saveAssessmentBtn" class="primary">
+            Save Assessment
+          </button>
+          <div class="card">
+          <h3>All Tasks</h3>
+          <div id="tasksList" class="tasks-grid"></div>
+        </div>
+        <div class="card">
+          <h3>Submissions</h3>
+          <div id="submissionsList"></div>
+        </div>
+      </section>
+        
       </div>
     </div>
   </div>
   
   <div class="actions">
-    <button class="btn" onclick="window.history.back('Login.html')">Previous</button>
-    <button class="btn" onclick="alert('Go to previous page')">Next</button>
+    <button class="btn" onclick="window.history.back('index.html')">Logout</button>
+    <button class="btn" onclick="alert('Please Logout')">Next</button>
   </div>
 </main>
 
 <footer>All Rights Reserved NEMOSA 2026</footer>
-
+<script type="module" src="task.js"></script>
 </body>
 </html>

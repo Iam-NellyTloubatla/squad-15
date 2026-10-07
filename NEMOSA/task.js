@@ -270,7 +270,17 @@ async function handleLogin() {
   showRoleView(role);
   renderDashboard();
 }
-
+document.getElementById('submitQueryBtn').addEventListener('click', 
+  function() {
+    const queryText =document.getElementById('queryInput').value.trim();
+    const message =document.getElementById('queryMessage');
+    if (queryText === "") {message.textContent = "Please enter a queryfirst!";message.style.color = "red";
+      return;}
+    }
+// Simulate saving/submitting queryconsole.log("Query Submitted:", queryText);message.textContent = "Query submittedsuccessfully! We will be in touch.";message.style.color = "green";// Clear input after submitdocument.getElementById('queryInput').value= "";
+// let queries =JSON.parse(localStorage.getItem('queries')) ||[];
+// // queries.push({ text: queryText, date: newDate().toLocaleString() });
+// // localStorage.setItem('queries',JSON.stringify(queries));})
 function handleLogout() {
   elements.userInfo.classList.add("hidden");
   elements.authBox.classList.remove("hidden");

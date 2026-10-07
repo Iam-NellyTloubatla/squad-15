@@ -1,207 +1,223 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEMOSA Task Portal</title>
-    <link rel="stylesheet" href="task.css" />
-  </head>
-  <body>
-    <div id="loginScreen" class="center-card">
-      <img src="nemosa-logo.png.jpg" alt="NEMOSA logo" class="brand-logo" />
-      <h2>NEMOSA Task Management</h2>
-      <p><strong>INNOVATE • CREATE • EVOLVE</strong></p>
-    </div>
-    <header class="topbar">
-      <div class="logo-area">
-        <div class="logo-circle">TM</div>
-        <div>
-          <h1>Task Management System</h1>
-        </div>
-      </div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Login</title>
+<style>
+  :root{
+    --header-bg:#2b2b2b;
+    --page-bg:#e8e8e8;
+    --card-bg:#ffffff;
+    --field-bg:#d9d9d9;
+    --text-dark:#1a1a1a;
+    --btn-bg:#1a1a1a;
+    --btn-text:#ffffff;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--page-bg);
+    color:var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  header{
+    width:100%;
+    background:var(--header-bg);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    padding:18px 16px;
+  }
+  header h1{
+    font-size:1.4rem;
+    letter-spacing:2px;
+    font-weight:600;
+  }
+  .menu-icon{
+    position:absolute;
+    left:18px;
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  main{
+    width:100%;
+    max-width:420px;
+    background:var(--card-bg);
+    margin:20px auto;
+    padding:24px 20px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .authBox{
+    list-style:disc;
+    padding-left:20px;
+    font-size:0.85rem;
+    font-weight:600;
+    margin-bottom:24px;
+  }
+  .authBox option{margin-bottom:4px;}
+  .logo-area{
+    text-align:center;
+    margin-bottom:24px;
+  }
+  .logo {
+    position: relative;
+    justify-content: 40px;
+    left: 150px;
+    width: 120px;
+    height: auto;
+  }
 
-      <div id="authBox">
-        <select id="roleSelect">
-          <option value="learner">Learner</option>
-          <option value="assessor">Assessor</option>
+  form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .form-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .form-row label{
+    width:70px;
+    font-size:0.8rem;
+    font-weight:600;
+  }
+  .form-row input{
+    flex:1;
+    background:var(--field-bg);
+    border:none;
+    border-radius:var(--radius);
+    padding:10px 12px;
+    font-size:0.85rem;
+  }
+  .status-section{
+    margin-top:16px;
+    text-align:center;
+  }
+  .status-section label{
+    display:block;
+    font-weight:700;
+    font-size:0.85rem;
+    margin-bottom:6px;
+  }
+  .status-box{
+    background:var(--field-bg);
+    border-radius:var(--radius);
+    height:20px;
+  }
+  .actions{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:20px;
+  }
+  .btn{
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:none;
+    border-radius:4px;
+    padding:8px 20px;
+    font-size:0.8rem;
+    cursor:pointer;
+  }
+  .btn:hover{opacity:0.85;}
+  footer{
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    font-size:0.65rem;
+    color:#555;
+    background:#d4d4d4;
+    padding:8px 0 24px;
+  }
+
+  option a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="menu-icon">&#9776;</span>
+  <h1>NEMOSA</h1>
+</header>
+
+<main>
+  
+  <div id="authBox">
+      <select id="roleSelect">
           <option value="admin">Admin</option>
-        </select>
-        <input id="userName" type="text" placeholder="Full name" />
-        <input id="userId" type="text" placeholder="Learner ID" />
-        <button id="loginBtn" class="primary">Enter Portal</button>
-      </div>
+          <option value="assessor">Assessor</option>
+          <option value="learner">Learner</option>
+      </select>
+  <</div>
+<img class="logo" src="images\Transparent.png" alt="NEMOSA Logo">
 
-      <div id="userInfo" class="hidden">
+  <form onsubmit="return handleLogin(event)">
+    <div class="form-row">
+      <label for="userName">Name:</label>
+      <input type="text" id="userName" name="userName" placeholder="Full name">
+    </div>
+
+    <div class="form-row">
+      <label for="userId">User ID:</label>
+      <input type="userId" id="userId" name="userId" min="0" max="13" placeholder="Enter your ID">
+    </div>
+
+    <div class="form-row">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email">
+    </div>
+    <div class="form-row">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" min="6" max="13">
+    </div>
+
+    <div class="status-section">
+      <label for="status">Login Status!</label>
+      <div class="status-box" id="status"></div>
+    </div>
+
+    <div id="userInfo" class="hidden">
         <span id="userDisplay"></span>
-        <button id="logoutBtn" class="secondary">Logout</button>
+    
       </div>
-    </header>
 
-    <main id="app" class="hidden">
-      <section id="adminView" class="hidden">
-        <div class="grid-2">
-          <div class="card">
-            <h3>Add / Remove Learners</h3>
-            <input id="adminStudentName" type="text" placeholder="Full name" />
-            <input id="adminStudentId" type="text" placeholder="Learner ID" />
-            <select id="adminStudentRole">
-              <option value="learner">Learner</option>
-              <option value="assessor">Assessor</option>
-              <option value="admin">Admin</option>
-            </select>
-            <label>
-              <input id="adminStudentActive" type="checkbox" checked />
-              Active account
-            </label>
-            <button id="adminAddStudentBtn" class="primary">
-              Save to School Database
-            </button>
-          </div>
+    <div class="actions">
+      <button id="loginBtn" type="submit" class="btn">Login</button>
+    </div>
+  </form>
+</main>
 
-          <div class="card highlight">
-            <h3>School Overview</h3>
-            <p id="adminTotalLearners">Total registered learners: 0</p>
-            <p id="adminTotalStaff">Total registered staff: 0</p>
-            <p id="adminCompletedLearners">
-              Learners who submitted all tasks: 0
-            </p>
-            <p id="adminActiveUsers">Active users: 0</p>
-            <p id="adminAttendanceRate">Attendance rate: 0%</p>
-            <p id="adminAverageGrade">Average task score: 0%</p>
-          </div>
-        </div>
+<footer>All Rights Reserved NEMOSA 2026</footer>
 
-        <div class="card">
-          <h3>Add / Remove Staff</h3>
-          <input
-            id="adminStaffName"
-            type="text"
-            placeholder="Staff full name"
-          />
-          <input id="adminStaffId" type="text" placeholder="Staff ID" />
-          <select id="adminStaffRole">
-            <option value="assessor">Assessor</option>
-            <option value="admin">Admin</option>
-          </select>
-          <label>
-            <input id="adminStaffActive" type="checkbox" checked />
-            Active account
-          </label>
-          <button id="adminAddStaffBtn" class="primary">
-            Save Staff Member
-          </button>
-          <div id="adminStaffList" class="tasks-grid"></div>
-        </div>
-
-        <div class="card">
-          <h3>Admin Task Overview</h3>
-          <div id="adminTasksList" class="tasks-grid"></div>
-        </div>
-
-        <div class="card">
-          <h3>Registered Users</h3>
-          <div id="adminUsersList" class="tasks-grid"></div>
-        </div>
-
-        <div class="card">
-          <h3>Attendance and Progress</h3>
-          <div id="adminProgressList" class="tasks-grid"></div>
-        </div>
-      </section>
-
-      <section id="assessorView" class="hidden">
-        <div class="grid-2">
-          <div class="card">
-            <h3>Add || Edit Task</h3>
-            <input id="taskTitle" type="text" placeholder="Task Title" />
-            <select id="taskType">
-              <option value="Written">Written</option>
-              <option value="Practical">Practical</option>
-              <option value="Assignment">Assignment</option>
-              <option value="Test">Test</option>
-            </select>
-            <textarea id="taskDesc" placeholder="Instructions"></textarea>
-            <input id="dueDate" type="date" />
-            <input id="totalMarks" type="number" placeholder="Total Marks" />
-            <div class="action-row">
-              <button id="addTaskBtn" class="primary">Add Task</button>
-              <button id="cancelEditBtn" class="secondary hidden">
-                Cancel Edit
-              </button>
-            </div>
-          </div>
-
-          <div class="card highlight">
-            <h3>Stats</h3>
-            <p id="totalTasks">Total Tasks: 0</p>
-            <p id="totalSubmissions">Total Submissions: 0</p>
-            <p id="avgResult">Average Result: -</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Allocate Marks</h3>
-          <select id="assessorLearnerSelect">
-            <option value="">Select learner</option>
-          </select>
-          <select id="assessorTaskSelect">
-            <option value="">Select task</option>
-          </select>
-          <input
-            id="assessorMarks"
-            type="number"
-            min="0"
-            max="100"
-            placeholder="Marks (0 - 100)"
-          />
-          <textarea
-            id="assessorFeedback"
-            placeholder="Add assessor feedback"
-          ></textarea>
-          <button id="saveAssessmentBtn" class="primary">
-            Save Assessment
-          </button>
-        </div>
-
-        <div class="card">
-          <h3>All Tasks</h3>
-          <div id="tasksList" class="tasks-grid"></div>
-        </div>
-
-        <div class="card">
-          <h3>Submissions</h3>
-          <div id="submissionsList"></div>
-        </div>
-      </section>
-
-      <section id="learnerView" class="hidden">
-        <div class="grid-2">
-          <div class="card highlight">
-            <h3>My Task Progress</h3>
-            <p id="learnerTotal">Tasks Chosen: 0</p>
-            <p id="learnerWritten">Written: 0</p>
-            <p id="learnerSubmitted">Submitted: 0</p>
-            <p id="learnerAvg">My Average: -</p>
-          </div>
-
-          <div class="card">
-            <h3>Steps</h3>
-            <div id="learnerSteps" class="step-list"></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Available Tasks to Choose</h3>
-          <div id="availableTasks" class="tasks-grid"></div>
-        </div>
-
-        <div class="card">
-          <h3>My Tasks &amp; Results</h3>
-          <div id="myTasks" class="tasks-grid"></div>
-        </div>
-      </section>
-    </main>
-
-    <script type="module" src="task.js"></script>
-  </body>
+<script>
+  function handleLogin(e){
+    e.preventDefault();
+    const statusBox = document.getElementById('status');
+    statusBox.textContent = "Logged in successfully";
+    statusBox.style.display = "flex";
+    statusBox.style.alignItems = "center";
+    statusBox.style.paddingLeft = "8px";
+    statusBox.style.fontSize = "0.75rem";
+    // Replace with real navigation once pages are linked, e.g.:
+    // window.location.href = "2-admin.html";
+    window.location.href = "Admin.html";
+    window.location.href = "Assessor.html";
+    window.location.href = "Learner.html";
+    return false;
+  }
+  
+</script>
+<script type="module" src="task.js"></script>
+</body>
 </html>

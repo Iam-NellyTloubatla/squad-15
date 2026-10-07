@@ -122,7 +122,7 @@ li a {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 20px;
+    padding: 15px 20px;
     background-color: #25D366;
     color: white;
     text-decoration: none;
@@ -136,7 +136,7 @@ li a {
 }
 
 .whatsapp-btn i {
-    font-size: 22px;
+    font-size: 30px;
 }
 
 </style>
@@ -149,43 +149,25 @@ li a {
 </header>
 
 <main>
+  <section id="learnerView" class="hidden">
   <div class="grid-2">
-    <div class="block">
-      <h3>Learner Management</h3>
-        <p>Name: Nomsa </li></p> 
-        <p>Class: 8A</p>
-        <p>Date of Birth: 14/07/2025</p>
-        <p>Parent name and number: <br>Helen - 012 345 6789</p>
-        <p>Learner ID: 250714 345 6789</p>
-        <br>
-    
-      <h3>Results</h3>  
+    <div class="card highlight">
+      <h3>My Task Progress</h3>
       <div class="panel">
-        <ul class="field-list">
-          <li>English - 90%</li>
-          <li>IsiZulu - 70%</li>
-          <li>History - 50%</li>
-          <li>B. Studies - 40%</li>
-          <li>Geography - 35%</li>
-        </ul>
-      </div>
+        <p id="learnerTotal">Tasks Chosen: 0</p>
+            <p id="learnerWritten">Written: 0</p>
+            <p id="learnerSubmitted">Submitted: 0</p>
+            <p id="learnerAvg">My Average: -</p>
+            <p>-</p>
+            
+      </div>      
     </div>
-
-    <div class="block">
-      <h3><a href="Admin.html">Admin Management</a></h3>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-      <h3>Mini Game</h3> 
+      
+    <div class="grid-3">
+      <h3>Mini Game</h3>
       <div class="panel">
         <ul class="field-list">
           <li><a href="Quiz.html" onclick="alert('Please load the quiz game...')">Quiz</a> or <a href="Palindrome.html">Palindrome</a></li>
-          <br>
-          <br>
           <a href="https://wa.me/27640246008?text=Hello%20NEMOSA%20Support%2C%20I%20need%20help."
    target="_blank"
    class="whatsapp-btn">
@@ -197,15 +179,39 @@ li a {
         </ul>
       </div>
     </div>
+
+    <div class="card">
+      <h3>Steps</h3>  
+      <div class="panel">
+        <div id="learnerSteps" class="step-list"></div>
+      </div>
+    
+  
+  </div>
+  <div class="card">
+          <h3>My Tasks &amp; Results</h3>
+          <div class="panel">
+          <div id="myTasks" class="tasks-grid"></div>
+        </div>
+  </div>
+
+  <div class="card">
+          <h3>Available Tasks to Choose</h3>
+          <div class="panel">
+          <div id="availableTasks" class="tasks-grid"></div>
+        </div>
+      </div>
   </div>
 
   <div class="actions">
-    <button class="btn" onclick="window.history.back('Login.html')">Previous</button>
-    <button class="btn" onclick="alert('Select a game or go to the previous page')">Next</button>
+    <button class="btn" onclick="window.history.back('index.html')">Logout</button>
+    <button class="btn" onclick="alert('Select a game or Logout')">Next</button>
   </div>
+</div>
+</section>
 </main>
 
 <footer>All Rights Reserved NEMOSA 2026</footer>
-
+<script type="module" src="task.js"></script>
 </body>
 </html>
