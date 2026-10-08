@@ -1,23 +1,13 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEMOSA - Learner Management</title>
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Learner</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-  :root{
-    --header-bg:#2b2b2b;
-    --page-bg:#e8e8e8;
-    --card-bg:#ffffff;
-    --field-bg:#d9d9d9;
-    --text-dark:#1a1a1a;
-    --btn-bg:#1a1a1a;
-    --btn-text:#ffffff;
-    --radius:6px;
-  }
+  :root{--header-bg:#2b2b2b;--page-bg:#e8e8e8;--card-bg:#fff;--field-bg:#d9d9d9;--btn-bg:#1a1a1a;--btn-text:#fff;--radius:6px;}
   *{box-sizing:border-box;margin:0;padding:0;}
+<<<<<<< HEAD
   body{
     font-family:'Segoe UI', Arial, sans-serif;
     background:var(--page-bg);
@@ -139,18 +129,26 @@ li a {
     font-size: 30px;
 }
 
+=======
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--page-bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+  header{width:100%;background:var(--header-bg);color:#fff;display:flex;align-items:center;justify-content:center;padding:18px 16px;position:relative;}
+  main{width:100%;max-width:560px;background:var(--card-bg);margin:20px auto;padding:20px 18px;box-shadow:0 2px 6px rgba(0,0,0,0.15);}
+  .hidden{display:none!important;}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .panel{background:var(--field-bg);border-radius:6px;padding:16px 12px;min-height:30px;}
+  .btn{background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:4px;padding:7px 14px;cursor:pointer;font-size:0.8rem;margin:2px;}
+  .actions{display:flex;justify-content:space-between;margin-top:18px;}
+  .whatsapp-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:#25D366;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;margin-top:8px;}
+  footer{width:100%;max-width:560px;text-align:center;font-size:0.65rem;color:#555;background:#d4d4d4;padding:8px 0 24px;}
+>>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
 </style>
 </head>
 <body>
-
-<header>
-  <span class="menu-icon">&#9776;</span>
-  <h1>NEMOSA</h1>
-</header>
-
+<header><h1>NEMOSA - Learner</h1><span id="userDisplay" style="position:absolute;right:12px;font-size:0.7rem;"></span></header>
 <main>
   <section id="learnerView" class="hidden">
   <div class="grid-2">
+<<<<<<< HEAD
     <div class="card highlight">
       <h3>My Task Progress</h3>
       <div class="panel">
@@ -178,6 +176,37 @@ li a {
 </a>
         </ul>
       </div>
+=======
+    <div>
+      <h3>My Task Progress</h3>
+      <div class="panel">
+        <p id="learnerTotal">Tasks Chosen: 0</p>
+        <p id="learnerWritten">Written: 0</p>
+        <p id="learnerSubmitted">Submitted: 0</p>
+        <p id="learnerAvg">My Average: -</p>
+      </div>
+      <h3 style="margin-top:12px;">Mini Game - Squad 15</h3>
+      <div class="panel" style="display:flex;flex-direction:column;gap:8px;">
+        
+        
+        <a href="Palindrome.html" style="text-decoration:none;">
+          <button class="btn" style="width:100%;background:#2563eb;padding:12px;">🎮 Play Palindrome Quiz Game</button>
+        </a>
+        
+        <div style="font-size:0.7rem;color:#333;background:#fff;padding:8px;border-radius:4px;margin-top:4px;">
+          <b>Game Features:</b><br>
+          • 60 sec timer (JS setInterval animation)<br>
+          • 5 questions, 10 pts each<br>
+          • saveScoreToFirebase() → Firebase<br>
+          • Final score alert (ethical popup)
+        </div>
+        <a href="https://wa.me/27640246008?text=Hello%20NEMOSA%20Support%2C%20I%20need%20help." target="_blank" class="whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp Support</a>
+      </div>
+    </div>
+    <div>
+      <h3>Steps</h3>
+      <div id="learnerSteps" class="panel"></div>
+>>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
     </div>
 
     <div class="card">
@@ -202,6 +231,7 @@ li a {
         </div>
       </div>
   </div>
+<<<<<<< HEAD
 
   <div class="actions">
     <button class="btn" onclick="window.history.back('index.html')">Logout</button>
@@ -209,9 +239,21 @@ li a {
   </div>
 </div>
 </section>
+=======
+  <div style="margin-top:14px;">
+    <h3>My Tasks & Results</h3>
+    <div id="myTasks" class="panel"></div>
+    <h3 style="margin-top:12px;">Available Tasks to Choose</h3>
+    <div id="availableTasks" class="panel"></div>
+  </div>
+  <div class="actions"><button class="btn" onclick="logoutUser()">Logout</button><button class="btn" onclick="window.print()">Print My Progress</button></div>
+>>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
 </main>
-
 <footer>All Rights Reserved NEMOSA 2026</footer>
+<<<<<<< HEAD
 <script type="module" src="task.js"></script>
+=======
+<script type="module" src="app.js"></script>
+>>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
 </body>
 </html>
