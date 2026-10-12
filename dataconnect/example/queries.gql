@@ -1,0 +1,161 @@
+mutation CreateUser($fullName: String!, $email: String!, $role: String!) @auth(level: USER) {
+  user_insert(data: {
+    id_expr: "auth.uid",
+    fullName: $fullName,
+    email: $email,
+    role: $role
+  })
+}
+
+mutation UpdateMyUser($fullName: String, $email: String) @auth(level: USER) {
+  user_update(key: {id_expr: "auth.uid"}, data: {
+    fullName: $fullName,
+    email: $email
+  })
+}
+
+mutation DeleteMyUser @auth(level: USER) {
+  user_delete(key: {id_expr: "auth.uid"})
+}
+
+query GetMyUser @auth(level: USER) {
+  user(key: {id_expr: "auth.uid"}) {
+    fullName
+    email
+    role
+  }
+}
+
+query ListUsers @auth(level: USER) {
+  users {
+    fullName
+    email
+    role
+  }
+}
+
+mutation CreateClass($className: String!, $gradeLevel: Int!) @auth(level: USER) {
+  class_insert(data: {
+    className: $className,
+    gradeLevel: $gradeLevel
+  })
+}
+
+mutation UpdateClass($id: UUID!, $className: String) @auth(level: USER) {
+  class_update(id: $id, data: {className: $className})
+}
+
+mutation DeleteClass($id: UUID!) @auth(level: USER) {
+  class_delete(id: $id)
+}
+
+query GetClass($id: UUID!) @auth(level: USER) {
+  class(id: $id) {
+    className
+    gradeLevel
+    leadTeacher { fullName }
+  }
+}
+
+query ListClasses @auth(level: USER) {
+  classes {
+    className
+    gradeLevel
+  }
+}
+
+mutation CreateAssessment($title: String!, $description: String!, $dueDate: Date!) @auth(level: USER) {
+  assessment_insert(data: {
+    title: $title,
+    description: $description,
+    dueDate: $dueDate,
+    authorId_expr: "auth.uid"
+  })
+}
+
+mutation UpdateAssessment($id: UUID!, $title: String) @auth(level: USER) {
+  assessment_update(id: $id, data: {title: $title})
+}
+
+mutation DeleteAssessment($id: UUID!) @auth(level: USER) {
+  assessment_delete(id: $id)
+}
+
+query GetAssessment($id: UUID!) @auth(level: USER) {
+  assessment(id: $id) {
+    title
+    dueDate
+    author { fullName }
+  }
+}
+
+query ListAssessments @auth(level: USER) {
+  assessments {
+    title
+    dueDate
+  }
+}
+
+mutation CreateSubmission($assessmentId: UUID!, $codeContent: String!) @auth(level: USER) {
+  submission_insert(data: {
+    assessmentId: $assessmentId,
+    learnerId_expr: "auth.uid",
+    codeContent: $codeContent,
+    submissionDate_expr: "request.time"
+  })
+}
+
+mutation UpdateSubmission($id: UUID!, $codeContent: String) @auth(level: USER) {
+  submission_update(id: $id, data: {codeContent: $codeContent})
+}
+
+mutation DeleteSubmission($id: UUID!) @auth(level: USER) {
+  submission_delete(id: $id)
+}
+
+query GetSubmission($id: UUID!) @auth(level: USER) {
+  submission(id: $id) {
+    score
+    feedbackComments
+    codeContent
+  }
+}
+
+query ListMySubmissions @auth(level: USER) {
+  submissions(where: {learnerId: {eq_expr: "auth.uid"}}) {
+    submissionDate
+    score
+  }
+}
+
+mutation CreateResult($assessmentId: UUID!, $learnerId: UUID!, $finalScore: Int!, $status: String!) @auth(level: USER) {
+  result_insert(data: {
+    assessmentId: $assessmentId,
+    learnerId: $learnerId,
+    finalScore: $finalScore,
+    status: $status
+  })
+}
+
+mutation UpdateResult($id: UUID!, $finalScore: Int) @auth(level: USER) {
+  result_update(id: $id, data: {finalScore: $finalScore})
+}
+
+mutation DeleteResult($id: UUID!) @auth(level: USER) {
+  result_delete(id: $id)
+}
+
+query GetResult($id: UUID!) @auth(level: USER) {
+  result(id: $id) {
+    finalScore
+    status
+    learner { fullName }
+  }
+}
+
+query ListResults @auth(level: USER) {
+  results {
+    finalScore
+    status
+  }
+}

@@ -1,0 +1,22 @@
+mutation CreateSeedData @transaction {
+  user_insertMany(data: [
+    { fullName: "Alice Smith", email: "alice@example.com", role: "Admin" },
+    { fullName: "Bob Jones", email: "bob@example.com", role: "Assessor" },
+    { fullName: "Charlie Brown", email: "charlie@example.com", role: "Learner" }
+  ])
+  class_insertMany(data: [
+    { className: "Math 101", gradeLevel: 9, leadTeacher: { id: "00000000-0000-0000-0000-000000000001" } },
+    { className: "History 201", gradeLevel: 10, leadTeacher: { id: "00000000-0000-0000-0000-000000000002" } }
+  ])
+  assessment_insertMany(data: [
+    { title: "Algebra Quiz", description: "Basic linear equations", dueDate: "2023-12-01", author: { id: "00000000-0000-0000-0000-000000000001" } },
+    { title: "World War II Essay", description: "Write 500 words", dueDate: "2023-12-15", author: { id: "00000000-0000-0000-0000-000000000002" } }
+  ])
+  submission_insertMany(data: [
+    { submissionDate: "2023-11-20T10:00:00Z", codeContent: "x = 5", score: 95, assessment: { id: "00000000-0000-0000-0000-000000000001" }, learner: { id: "00000000-0000-0000-0000-000000000003" } },
+    { submissionDate: "2023-11-22T14:30:00Z", codeContent: "y = 10", score: 88, assessment: { id: "00000000-0000-0000-0000-000000000001" }, learner: { id: "00000000-0000-0000-0000-000000000003" } }
+  ])
+  result_insertMany(data: [
+    { finalScore: 95, status: "Pass", learner: { id: "00000000-0000-0000-0000-000000000003" }, assessment: { id: "00000000-0000-0000-0000-000000000001" } }
+  ])
+}

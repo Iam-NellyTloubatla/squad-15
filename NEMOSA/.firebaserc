@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "task-management-5d376"
+  },
+  "targets": {},
+  "etags": {}
+}
+{
+  "hosting":{
+    "site": "task-management-5d376-23bcc",
+    "public": "public",
+    ...
+  }
+}

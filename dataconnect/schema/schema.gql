@@ -1,0 +1,35 @@
+type User @table {
+  fullName: String!
+  email: String!
+  role: String! # "Admin", "Assessor", or "Learner"
+  classGroup: Class
+}
+
+type Class @table {
+  className: String!
+  gradeLevel: Int!
+  leadTeacher: User
+}
+
+type Assessment @table {
+  title: String!
+  description: String!
+  dueDate: Date!
+  author: User!
+}
+
+type Submission @table {
+  submissionDate: Timestamp!
+  codeContent: String!
+  score: Int
+  feedbackComments: String
+  assessment: Assessment!
+  learner: User!
+}
+
+type Result @table {
+  finalScore: Int!
+  status: String! # "Pass" or "Fail"
+  learner: User!
+  assessment: Assessment!
+}
