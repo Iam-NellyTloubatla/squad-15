@@ -237,6 +237,22 @@ li a {
     <button class="btn" onclick="window.history.back('index.html')">Logout</button>
     <button class="btn" onclick="alert('Select a game or Logout')">Next</button>
   </div>
+
+  <div class="panel" style="margin-top:18px; background:#fff7e8; border:1px solid #f0c36d;">
+    <h3>Support Ticket</h3>
+    <div class="field-list">
+      <div>
+        <label for="learnerSupportEmail">Email address</label>
+        <input id="learnerSupportEmail" type="email" placeholder="Enter your email" />
+      </div>
+      <div>
+        <label for="learnerSupportReport">Report details</label>
+        <textarea id="learnerSupportReport" rows="4" placeholder="Describe the issue or report"></textarea>
+      </div>
+      <button class="btn" onclick="submitSupportTicket('learnerSupportEmail','learnerSupportReport','learnerSupportTicketMsg')">Submit ticket</button>
+      <p id="learnerSupportTicketMsg" style="margin-top:10px; font-weight:700; color:#2b2b2b;">Ticket status: waiting for your report.</p>
+    </div>
+  </div>
 </div>
 </section>
 =======
@@ -250,10 +266,47 @@ li a {
 >>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
 </main>
 <footer>All Rights Reserved NEMOSA 2026</footer>
-<<<<<<< HEAD
+<script>
+  function submitSupportTicket(emailId, reportId, messageId) {
+    const emailInput = document.getElementById(emailId);
+    const reportInput = document.getElementById(reportId);
+    const message = document.getElementById(messageId);
+
+    if (!emailInput || !reportInput || !message) return;
+
+    const email = emailInput.value.trim();
+    const report = reportInput.value.trim();
+
+    if (!email || !report) {
+      message.textContent = "Ticket status: Please add both your email and a report before submitting.";
+      message.style.color = "#b42318";
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      message.textContent = "Ticket status: Please enter a valid email address.";
+      message.style.color = "#b42318";
+      return;
+    }
+
+    const ticketId = `NEM-${Date.now().toString().slice(-6)}`;
+    const tickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+    tickets.push({
+      id: ticketId,
+      email,
+      report,
+      createdAt: new Date().toISOString(),
+      status: "Submitted",
+    });
+    localStorage.setItem("supportTickets", JSON.stringify(tickets));
+
+    message.textContent = `Ticket status: Your report was submitted successfully. Ticket ${ticketId} has been sent to ${email}. You will receive feedback soon.`;
+    message.style.color = "#0f766e";
+    emailInput.value = "";
+    reportInput.value = "";
+  }
+</script>
 <script type="module" src="task.js"></script>
-=======
-<script type="module" src="app.js"></script>
->>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
 </body>
 </html>

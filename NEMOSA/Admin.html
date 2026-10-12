@@ -80,6 +80,7 @@
 
     .field input,
     .field select,
+    textarea,
     input,
     select,
     button {
@@ -88,6 +89,25 @@
       border-radius: 6px;
       background: #fff;
       font: inherit;
+    }
+
+    .ticket-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .ticket-item {
+      background: #fff;
+      border: 1px solid #d7d7d7;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .ticket-item strong {
+      display: block;
+      margin-bottom: 6px;
     }
 
     .btn {
@@ -191,9 +211,98 @@
       <button class="btn" onclick="logoutUser()">Logout</button>
       <button class="btn" onclick="window.print()">Print Summary</button>
     </div>
+
+    <div class="panel" style="margin-top:18px; background:#fff7e8; border:1px solid #f0c36d;">
+      <h3>Support Ticket</h3>
+      <div class="field">
+        <label for="adminSupportEmail">Email address</label>
+        <input id="adminSupportEmail" type="email" placeholder="Enter your email" />
+      </div>
+      <div class="field">
+        <label for="adminSupportReport">Report details</label>
+        <textarea id="adminSupportReport" rows="4" placeholder="Describe the issue or report"></textarea>
+      </div>
+      <button class="btn" onclick="submitSupportTicket('adminSupportEmail','adminSupportReport','adminSupportTicketMsg')">Submit ticket</button>
+      <p id="adminSupportTicketMsg" style="margin-top:10px; font-weight:700; color:#2b2b2b;">Ticket status: waiting for your report.</p>
+    </div>
+
+    <div class="panel" style="margin-top:18px;">
+      <h3>Submitted Tickets</h3>
+      <div id="adminSupportTickets" class="ticket-list"></div>
+    </div>
   </main>
 
   <footer>All Rights Reserved NEMOSA 2026</footer>
+  <script>
+    function renderSupportTickets() {
+      const list = document.getElementById("adminSupportTickets");
+      if (!list) return;
+
+      const tickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+
+      if (!tickets.length) {
+        list.innerHTML = "<p>No tickets submitted yet.</p>";
+        return;
+      }
+
+      list.innerHTML = tickets
+        .slice()
+        .reverse()
+        .map((ticket) => `
+          <div class="ticket-item">
+            <strong>${ticket.id}</strong>
+            <p><b>Email:</b> ${ticket.email}</p>
+            <p><b>Report:</b> ${ticket.report}</p>
+            <p><b>Status:</b> ${ticket.status}</p>
+            <p><b>Date:</b> ${new Date(ticket.createdAt).toLocaleString()}</p>
+          </div>
+        `)
+        .join("");
+    }
+
+    function submitSupportTicket(emailId, reportId, messageId) {
+      const emailInput = document.getElementById(emailId);
+      const reportInput = document.getElementById(reportId);
+      const message = document.getElementById(messageId);
+
+      if (!emailInput || !reportInput || !message) return;
+
+      const email = emailInput.value.trim();
+      const report = reportInput.value.trim();
+
+      if (!email || !report) {
+        message.textContent = "Ticket status: Please add both your email and a report before submitting.";
+        message.style.color = "#b42318";
+        return;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        message.textContent = "Ticket status: Please enter a valid email address.";
+        message.style.color = "#b42318";
+        return;
+      }
+
+      const ticketId = `NEM-${Date.now().toString().slice(-6)}`;
+      const tickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+      tickets.push({
+        id: ticketId,
+        email,
+        report,
+        createdAt: new Date().toISOString(),
+        status: "Submitted",
+      });
+      localStorage.setItem("supportTickets", JSON.stringify(tickets));
+
+      message.textContent = `Ticket status: Your report was submitted successfully. Ticket ${ticketId} has been sent to ${email}. You will receive feedback soon.`;
+      message.style.color = "#0f766e";
+      emailInput.value = "";
+      reportInput.value = "";
+      renderSupportTickets();
+    }
+
+    document.addEventListener("DOMContentLoaded", renderSupportTickets);
+  </script>
   <script type="module" src="app.js"></script>
 </body>
 </html>

@@ -53,6 +53,19 @@
         <button id="registerBtn" class="secondary" type="button">Register</button>
       </div>
     </div>
+
+    <div class="card support-card" style="margin-top: 20px;">
+      <h3>Support Ticket</h3>
+      <p>Report a problem and include your email so we can send your ticket and feedback.</p>
+      <label for="supportEmail">Email address</label>
+      <input id="supportEmail" type="email" placeholder="Enter your email" />
+      <label for="supportReport">Report details</label>
+      <textarea id="supportReport" rows="4" placeholder="Describe the issue or report"></textarea>
+      <div class="action-row">
+        <button id="submitSupportTicketBtn" class="primary" type="button">Submit ticket</button>
+      </div>
+      <p id="supportTicketMessage" class="support-ticket-message">Ticket status: waiting for your report.</p>
+    </div>
   </div>
 
   <main id="app" class="hidden">
@@ -191,6 +204,7 @@
         <h3>Task Steps</h3>
         <div id="learnerSteps"></div>
       </div>
+
     </section>
   </main>
 

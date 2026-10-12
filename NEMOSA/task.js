@@ -119,6 +119,10 @@ const elements = {
   palindromeInput: document.getElementById("palindromeInput"),
   checkPalindromeBtn: document.getElementById("checkPalindromeBtn"),
   palindromeResult: document.getElementById("palindromeResult"),
+  supportEmail: document.getElementById("supportEmail"),
+  supportReport: document.getElementById("supportReport"),
+  submitSupportTicketBtn: document.getElementById("submitSupportTicketBtn"),
+  supportTicketMessage: document.getElementById("supportTicketMessage"),
   adminStudentName: document.getElementById("adminStudentName"),
   adminStudentId: document.getElementById("adminStudentId"),
   adminStudentRole: document.getElementById("adminStudentRole"),
@@ -315,6 +319,44 @@ function handleLogout() {
   elements.roleSelect.value = "learner";
   elements.userName.value = "";
   elements.userId.value = "";
+}
+
+function submitSupportTicket() {
+  if (!elements.supportEmail || !elements.supportReport || !elements.supportTicketMessage) return;
+
+  const email = elements.supportEmail.value.trim();
+  const report = elements.supportReport.value.trim();
+
+  if (!email || !report) {
+    elements.supportTicketMessage.textContent = "Ticket status: Please add both your email and a report before submitting.";
+    elements.supportTicketMessage.style.color = "#b42318";
+    return;
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    elements.supportTicketMessage.textContent = "Ticket status: Please enter a valid email address.";
+    elements.supportTicketMessage.style.color = "#b42318";
+    return;
+  }
+
+  const ticketId = `NEM-${Date.now().toString().slice(-6)}`;
+  const ticket = {
+    id: ticketId,
+    email,
+    report,
+    createdAt: new Date().toISOString(),
+    status: "Submitted",
+  };
+
+  const existingTickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+  existingTickets.push(ticket);
+  localStorage.setItem("supportTickets", JSON.stringify(existingTickets));
+
+  elements.supportTicketMessage.textContent = `Ticket status: Your report was submitted successfully. Ticket ${ticketId} has been sent to ${email}. You will receive feedback soon.`;
+  elements.supportTicketMessage.style.color = "#0f766e";
+  elements.supportEmail.value = "";
+  elements.supportReport.value = "";
 }
 
 function renderAdminDashboard() {
@@ -1049,6 +1091,7 @@ if (elements.logoutBtn) elements.logoutBtn.addEventListener("click", handleLogou
 if (elements.addTaskBtn) elements.addTaskBtn.addEventListener("click", addTask);
 if (elements.cancelEditBtn) elements.cancelEditBtn.addEventListener("click", clearTaskForm);
 if (elements.checkPalindromeBtn) elements.checkPalindromeBtn.addEventListener("click", checkPalindrome);
+if (elements.submitSupportTicketBtn) elements.submitSupportTicketBtn.addEventListener("click", submitSupportTicket);
 if (elements.palindromeInput) {
   elements.palindromeInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") checkPalindrome();
