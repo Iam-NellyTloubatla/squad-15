@@ -2,7 +2,7 @@
 import {
   saveLearner, saveStaff, deleteLearnerRecord, deleteStaffRecord,
   saveTask, getTasks, deleteTaskRecord, db
-} from "./firestore-config.js";
+} from "../firestore-config.js";
 
 // OOP Requirement - PDF Q10
 class Task {
@@ -272,7 +272,7 @@ window.addSchoolUser=async function(){
   const role=document.getElementById("adminStudentRole")?.value||"learner";
   const active=document.getElementById("adminStudentActive")?.checked;
   if(!fullName||!learnerId){ alert("Name and ID required"); return; }
-  const { saveLearner } = await import("./firestore-config.js");
+  const { saveLearner } = await import("../firestore-config.js");
   await saveLearner({fullName, learnerId, studentId:learnerId, role, active});
   renderAll();
   document.getElementById("adminStudentName").value=""; document.getElementById("adminStudentId").value="";
@@ -283,7 +283,7 @@ window.addStaffMember=async function(){
   const role=document.getElementById("adminStaffRole")?.value||"assessor";
   const active=document.getElementById("adminStaffActive")?.checked;
   if(!fullName||!staffId){ alert("Staff name and ID required"); return; }
-  const { saveStaff } = await import("./firestore-config.js");
+  const { saveStaff } = await import("../firestore-config.js");
   await saveStaff({fullName, staffId, learnerId:staffId, studentId:staffId, role, active});
   renderAll();
   document.getElementById("adminStaffName").value=""; document.getElementById("adminStaffId").value="";
@@ -312,8 +312,8 @@ document.addEventListener("click", (e)=>{
   if(action==="edit-task") window.editTask(id);
   if(action==="choose-task") window.applyLearnerStep(id,"choose-task");
   if(action==="step-select") window.applyLearnerStep(id, step);
-  if(action==="delete-user"){ if(confirm("Remove learner?")){ import("./firestore-config.js").then(m=>m.deleteLearnerRecord(userId).then(()=>renderAll())); } }
-  if(action==="delete-staff"){ if(confirm("Remove staff?")){ import("./firestore-config.js").then(m=>m.deleteStaffRecord(userId).then(()=>renderAll())); } }
+  if(action==="delete-user"){ if(confirm("Remove learner?")){ import("../firestore-config.js").then(m=>m.deleteLearnerRecord(userId).then(()=>renderAll())); } }
+  if(action==="delete-staff"){ if(confirm("Remove staff?")){ import("../firestore-config.js").then(m=>m.deleteStaffRecord(userId).then(()=>renderAll())); } }
 });
 
 window.addEventListener("DOMContentLoaded", ()=>{ window.loadDashboard(); });
