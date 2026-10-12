@@ -1,215 +1,261 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEMOSA - Login</title>
-  <link rel="stylesheet" href="task.css" />
-  <img src="nemosa-logo.png" alt="NEMOSA logo" />
-</head>
-<body>
-  <header class="topbar">
-    <div class="logo-area">
-      <div class="logo-circle">N</div>
-      <div>
-        <h1>NEMOSA</h1>
-        <small>Skills Tracker</small>
-      </div>
-    </div>
-
-    <div id="userInfo" class="hidden">
-      <span id="userDisplay"></span>
-      <button id="logoutBtn" class="secondary" type="button">Logout</button>
-    </div>
-  </header>
-
-  <div id="loginScreen" class="center-card">
-    <div class="logo-placeholder">NEMOSA Portal</div>
-    <h2>Welcome</h2>
-    <p>Choose your role to continue.</p>
-
-    <div id="authBox" class="card">
-      <div class="field">
-        <label for="roleSelect">Select role</label>
-        <select id="roleSelect">
-          <option value="assessor">Assessor</option>
-          <option value="learner">Learner</option>
-          <option value="admin">Admin</option>
-        </select>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEMOSA - Login</title>
+    <link rel="stylesheet" href="task.css" />
+    <img src="transparent.png" alt="NEMOSA logo" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="logo-area">
+        <div class="logo-circle">N</div>
+        <div>
+          <h1>NEMOSA</h1>
+          <small>Skills Tracker</small>
+        </div>
       </div>
 
-      <div class="field">
-        <label for="userName">Full name</label>
-        <input id="userName" type="text" placeholder="Enter your full name" />
+      <div id="userInfo" class="hidden">
+        <span id="userDisplay"></span>
+        <button id="logoutBtn" class="secondary" type="button">Logout</button>
       </div>
+    </header>
 
-      <div class="field">
-        <label for="userId">User ID</label>
-        <input id="userId" type="text" placeholder="Enter your ID" />
-      </div>
+    <div id="loginScreen" class="center-card">
+      <div class="logo-placeholder">NEMOSA Portal</div>
+      <h2>Welcome</h2>
+      <p>Choose your role to continue.</p>
 
-      <div class="actions">
-        <button id="loginBtn" class="primary" type="button">Login</button>
-        <button id="registerBtn" class="secondary" type="button">Register</button>
-      </div>
-    </div>
-
-    <div class="card support-card" style="margin-top: 20px;">
-      <h3>Support Ticket</h3>
-      <p>Report a problem and include your email so we can send your ticket and feedback.</p>
-      <label for="supportEmail">Email address</label>
-      <input id="supportEmail" type="email" placeholder="Enter your email" />
-      <label for="supportReport">Report details</label>
-      <textarea id="supportReport" rows="4" placeholder="Describe the issue or report"></textarea>
-      <div class="action-row">
-        <button id="submitSupportTicketBtn" class="primary" type="button">Submit ticket</button>
-      </div>
-      <p id="supportTicketMessage" class="support-ticket-message">Ticket status: waiting for your report.</p>
-    </div>
-  </div>
-
-  <main id="app" class="hidden">
-    <section id="adminView" class="hidden">
-      <div class="card">
-        <h3>Admin Dashboard</h3>
-        <p id="adminTotalLearners">Total registered learners: 0</p>
-        <p id="adminTotalStaff">Total registered staff: 0</p>
-        <p id="adminCompletedLearners">Learners who submitted all tasks: 0</p>
-        <p id="adminActiveUsers">Active learners: 0</p>
-        <p id="adminAttendanceRate">Attendance rate: 0%</p>
-        <p id="adminAverageGrade">Average task score: 0%</p>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Add Learner</h3>
-          <input id="adminStudentName" placeholder="Full name" />
-          <input id="adminStudentId" placeholder="Learner ID" />
-          <select id="adminStudentRole">
+      <div id="authBox" class="card">
+        <div class="field">
+          <label for="roleSelect">Select role</label>
+          <select id="roleSelect">
+            <option value="assessor">Assessor</option>
             <option value="learner">Learner</option>
-            <option value="assessor">Assessor</option>
             <option value="admin">Admin</option>
           </select>
-          <label><input id="adminStudentActive" type="checkbox" checked /> Active</label>
-          <button id="adminAddStudentBtn" class="primary" type="button">Add Learner</button>
+        </div>
+
+        <div class="field">
+          <label for="userName">Full name</label>
+          <input id="userName" type="text" placeholder="Enter your full name" />
+        </div>
+
+        <div class="field">
+          <label for="userId">User ID</label>
+          <input id="userId" type="text" placeholder="Enter your ID" />
+        </div>
+
+        <div class="actions">
+          <button id="loginBtn" class="primary" type="button">Login</button>
+          <button id="registerBtn" class="secondary" type="button">
+            Register
+          </button>
+        </div>
+      </div>
+
+      <div class="card support-card" style="margin-top: 20px">
+        <h3>Support Ticket</h3>
+        <p>
+          Report a problem and include your email so we can send your ticket and
+          feedback.
+        </p>
+        <label for="supportEmail">Email address</label>
+        <input id="supportEmail" type="email" placeholder="Enter your email" />
+        <label for="supportReport">Report details</label>
+        <textarea
+          id="supportReport"
+          rows="4"
+          placeholder="Describe the issue or report"
+        ></textarea>
+        <div class="action-row">
+          <button id="submitSupportTicketBtn" class="primary" type="button">
+            Submit ticket
+          </button>
+        </div>
+        <p id="supportTicketMessage" class="support-ticket-message">
+          Ticket status: waiting for your report.
+        </p>
+      </div>
+    </div>
+
+    <main id="app" class="hidden">
+      <section id="adminView" class="hidden">
+        <div class="card">
+          <h3>Admin Dashboard</h3>
+          <p id="adminTotalLearners">Total registered learners: 0</p>
+          <p id="adminTotalStaff">Total registered staff: 0</p>
+          <p id="adminCompletedLearners">Learners who submitted all tasks: 0</p>
+          <p id="adminActiveUsers">Active learners: 0</p>
+          <p id="adminAttendanceRate">Attendance rate: 0%</p>
+          <p id="adminAverageGrade">Average task score: 0%</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Add Learner</h3>
+            <input id="adminStudentName" placeholder="Full name" />
+            <input id="adminStudentId" placeholder="Learner ID" />
+            <select id="adminStudentRole">
+              <option value="learner">Learner</option>
+              <option value="assessor">Assessor</option>
+              <option value="admin">Admin</option>
+            </select>
+            <label
+              ><input id="adminStudentActive" type="checkbox" checked />
+              Active</label
+            >
+            <button id="adminAddStudentBtn" class="primary" type="button">
+              Add Learner
+            </button>
+          </div>
+
+          <div class="card">
+            <h3>Add Staff</h3>
+            <input id="adminStaffName" placeholder="Staff full name" />
+            <input id="adminStaffId" placeholder="Staff ID" />
+            <select id="adminStaffRole">
+              <option value="assessor">Assessor</option>
+              <option value="admin">Admin</option>
+            </select>
+            <label
+              ><input id="adminStaffActive" type="checkbox" checked />
+              Active</label
+            >
+            <button id="adminAddStaffBtn" class="primary" type="button">
+              Add Staff
+            </button>
+          </div>
         </div>
 
         <div class="card">
-          <h3>Add Staff</h3>
-          <input id="adminStaffName" placeholder="Staff full name" />
-          <input id="adminStaffId" placeholder="Staff ID" />
-          <select id="adminStaffRole">
-            <option value="assessor">Assessor</option>
-            <option value="admin">Admin</option>
+          <h3>Registered Learners</h3>
+          <div id="adminUsersList"></div>
+        </div>
+
+        <div class="card">
+          <h3>Staff List</h3>
+          <div id="adminStaffList"></div>
+        </div>
+
+        <div class="card">
+          <h3>Progress Summary</h3>
+          <div id="adminProgressList"></div>
+        </div>
+      </section>
+
+      <section id="assessorView" class="hidden">
+        <div class="card">
+          <h3>Add / Edit Task</h3>
+          <input id="taskTitle" placeholder="Task title" />
+          <select id="taskType">
+            <option value="Written">Written</option>
+            <option value="Practical">Practical</option>
+            <option value="Assignment">Assignment</option>
+            <option value="Test">Test</option>
           </select>
-          <label><input id="adminStaffActive" type="checkbox" checked /> Active</label>
-          <button id="adminAddStaffBtn" class="primary" type="button">Add Staff</button>
+          <textarea id="taskDesc" placeholder="Task description"></textarea>
+          <input id="dueDate" type="date" />
+          <input id="totalMarks" type="number" placeholder="Total marks" />
+          <div class="action-row">
+            <button id="addTaskBtn" class="primary" type="button">
+              Add Task
+            </button>
+            <button id="cancelEditBtn" class="secondary hidden" type="button">
+              Cancel Edit
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h3>Registered Learners</h3>
-        <div id="adminUsersList"></div>
-      </div>
-
-      <div class="card">
-        <h3>Staff List</h3>
-        <div id="adminStaffList"></div>
-      </div>
-
-      <div class="card">
-        <h3>Progress Summary</h3>
-        <div id="adminProgressList"></div>
-      </div>
-    </section>
-
-    <section id="assessorView" class="hidden">
-      <div class="card">
-        <h3>Add / Edit Task</h3>
-        <input id="taskTitle" placeholder="Task title" />
-        <select id="taskType">
-          <option value="Written">Written</option>
-          <option value="Practical">Practical</option>
-          <option value="Assignment">Assignment</option>
-          <option value="Test">Test</option>
-        </select>
-        <textarea id="taskDesc" placeholder="Task description"></textarea>
-        <input id="dueDate" type="date" />
-        <input id="totalMarks" type="number" placeholder="Total marks" />
-        <div class="action-row">
-          <button id="addTaskBtn" class="primary" type="button">Add Task</button>
-          <button id="cancelEditBtn" class="secondary hidden" type="button">Cancel Edit</button>
-        </div>
-      </div>
-
-      <div class="card highlight">
-        <h3>Dashboard</h3>
-        <p id="totalTasks">Total Tasks: 0</p>
-        <p id="totalSubmissions">Total Submissions: 0</p>
-        <p id="avgResult">Average Result: -</p>
-      </div>
-
-      <div class="card">
-        <h3>All Tasks</h3>
-        <div id="tasksList" class="tasks-grid"></div>
-      </div>
-
-      <div class="card">
-        <h3>Submissions</h3>
-        <div id="submissionsList"></div>
-      </div>
-
-      <div class="card">
-        <h3>Allocate Marks</h3>
-        <select id="assessorLearnerSelect">
-          <option value="">Select learner</option>
-        </select>
-        <select id="assessorTaskSelect">
-          <option value="">Select task</option>
-        </select>
-        <input id="assessorMarks" type="number" min="0" max="100" placeholder="Marks (0-100)" />
-        <textarea id="assessorFeedback" placeholder="Add assessor feedback"></textarea>
-        <button id="saveAssessmentBtn" class="primary" type="button">Save Assessment</button>
-      </div>
-    </section>
-
-    <section id="learnerView" class="hidden">
-      <div class="grid-2">
         <div class="card highlight">
-          <h3>My Progress</h3>
-          <p id="learnerTotal">Tasks Chosen: 0</p>
-          <p id="learnerWritten">Written: 0</p>
-          <p id="learnerSubmitted">Submitted: 0</p>
-          <p id="learnerAvg">My Average: 0%</p>
+          <h3>Dashboard</h3>
+          <p id="totalTasks">Total Tasks: 0</p>
+          <p id="totalSubmissions">Total Submissions: 0</p>
+          <p id="avgResult">Average Result: -</p>
         </div>
 
-        <div class="card palindrome-card">
-          <h3>Palindrome Game</h3>
-          <p>Play the existing NEMOSA palindrome quiz from your learner dashboard.</p>
-          <a class="game-link" href="Palindrome.html" target="_blank" rel="noopener noreferrer">Open Palindrome Game</a>
+        <div class="card">
+          <h3>All Tasks</h3>
+          <div id="tasksList" class="tasks-grid"></div>
         </div>
-      </div>
 
-      <div class="card">
-        <h3>Available Tasks</h3>
-        <div id="availableTasks" class="tasks-grid"></div>
-      </div>
+        <div class="card">
+          <h3>Submissions</h3>
+          <div id="submissionsList"></div>
+        </div>
 
-      <div class="card">
-        <h3>My Tasks</h3>
-        <div id="myTasks"></div>
-      </div>
+        <div class="card">
+          <h3>Allocate Marks</h3>
+          <select id="assessorLearnerSelect">
+            <option value="">Select learner</option>
+          </select>
+          <select id="assessorTaskSelect">
+            <option value="">Select task</option>
+          </select>
+          <input
+            id="assessorMarks"
+            type="number"
+            min="0"
+            max="100"
+            placeholder="Marks (0-100)"
+          />
+          <textarea
+            id="assessorFeedback"
+            placeholder="Add assessor feedback"
+          ></textarea>
+          <button id="saveAssessmentBtn" class="primary" type="button">
+            Save Assessment
+          </button>
+        </div>
+      </section>
 
-      <div class="card">
-        <h3>Task Steps</h3>
-        <div id="learnerSteps"></div>
-      </div>
+      <section id="learnerView" class="hidden">
+        <div class="grid-2">
+          <div class="card highlight">
+            <h3>My Progress</h3>
+            <p id="learnerTotal">Tasks Chosen: 0</p>
+            <p id="learnerWritten">Written: 0</p>
+            <p id="learnerSubmitted">Submitted: 0</p>
+            <p id="learnerAvg">My Average: 0%</p>
+          </div>
 
-    </section>
-  </main>
+          <div class="card palindrome-card">
+            <h3>Palindrome Game</h3>
+            <p>
+              Play the existing NEMOSA palindrome quiz from your learner
+              dashboard.
+            </p>
+            <a
+              class="game-link"
+              href="Palindrome.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Open Palindrome Game</a
+            >
+          </div>
+        </div>
 
-  <footer>All Rights Reserved NEMOSA 2026</footer>
+        <div class="card">
+          <h3>Available Tasks</h3>
+          <div id="availableTasks" class="tasks-grid"></div>
+        </div>
 
-  <script type="module" src="./task.js"></script>
-</body>
+        <div class="card">
+          <h3>My Tasks</h3>
+          <div id="myTasks"></div>
+        </div>
+
+        <div class="card">
+          <h3>Task Steps</h3>
+          <div id="learnerSteps"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>All Rights Reserved NEMOSA 2026</footer>
+
+    <script type="module" src="./task.js"></script>
+  </body>
 </html>
