@@ -1,203 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<< HEAD
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< Updated upstream
-=======
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
->>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
-<title>NEMOSA - Admin</title>
-=======
-<title>NEMOSA - Admin Management</title>
-<a href="Admin.html">Welcome admin!</a>
->>>>>>> Stashed changes
-<style>
-  :root{--header-bg:#2b2b2b;--page-bg:#e8e8e8;--card-bg:#fff;--field-bg:#d9d9d9;--btn-bg:#1a1a1a;--btn-text:#fff;--radius:14px;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--page-bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
-  header{width:100%;background:var(--header-bg);color:#fff;display:flex;align-items:center;justify-content:center;padding:18px 16px;position:relative;}
-  header h1{font-size:1.4rem;letter-spacing:2px;}
-  main{width:100%;max-width:560px;background:var(--card-bg);margin:20px auto;padding:20px 18px;box-shadow:0 2px 6px rgba(0,0,0,0.15);}
-  .hidden{display:none!important;}
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .panel{background:var(--field-bg);border-radius:var(--radius);padding:16px 12px;min-height:40px;}
-  .field{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
-  .field input, .field select{padding:8px;border:none;border-radius:6px;background:#fff;}
-  .btn{background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:4px;padding:7px 14px;cursor:pointer;font-size:0.8rem;}
-  .actions{display:flex;justify-content:space-between;margin-top:18px;}
-  footer{width:100%;max-width:560px;text-align:center;font-size:0.65rem;color:#555;background:#d4d4d4;padding:8px 0 24px;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEMOSA - Admin Dashboard</title>
+  <style>
+    :root {
+      --header-bg: #2b2b2b;
+      --page-bg: #e8e8e8;
+      --card-bg: #ffffff;
+      --field-bg: #d9d9d9;
+      --btn-bg: #1a1a1a;
+      --btn-text: #ffffff;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--page-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: var(--header-bg);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 16px;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+
+    #userDisplay {
+      position: absolute;
+      right: 12px;
+      font-size: 0.7rem;
+    }
+
+    main {
+      width: 100%;
+      max-width: 960px;
+      background: var(--card-bg);
+      margin: 20px auto;
+      padding: 20px 18px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .panel,
+    .card {
+      background: var(--field-bg);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      min-height: 40px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .field input,
+    .field select,
+    input,
+    select,
+    button {
+      padding: 8px;
+      border: none;
+      border-radius: 6px;
+      background: #fff;
+      font: inherit;
+    }
+
+    .btn {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 18px;
+      gap: 12px;
+    }
+
+    footer {
+      width: 100%;
+      max-width: 960px;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #555;
+      background: #d4d4d4;
+      padding: 8px 0 24px;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-<<<<<<< HEAD
+  <header>
+    <h1>NEMOSA - Admin Dashboard</h1>
+    <span id="userDisplay">Welcome admin</span>
+  </header>
 
-<header>
-  <span class="menu-icon">&#9776;</span>
-  <h1>NEMOSA</h1>
-</header>
-<div class="task-container">
-<main id="app" class="hidden">
-  <section id="adminView" class="hidden">
-  <div class="grid-2">
-    <div class="card">
-      <h3>Add / Remove Learners</h3>
-      <div class="panel">
-        <ul class="field-list">
-         
-          <input id="adminStaffId" type="text" placeholder="Staff ID" />
-          <select id="adminStaffRole">
-            <option value="assessor">Assessor</option>
-            <option value="admin">Admin</option>
-          </select>
-          <label>
-            <input id="adminStaffActive" type="checkbox" checked />
-            Active account
-          </label>
-          <button id="adminAddStaffBtn" class="primary">
-            Save Staff Member
-          </button>
-          <div id="adminStaffList" class="tasks-grid"></div>
-        </d
-          
-        </ul>
-      </div>
-      <
-  <div class="task-container">
-      <h3>Admin Task Overview</h3>  
-      <div id="adminTasksList" class="panel">
-        <ul class="field-list">
-          <li>Ma'am Mahlangu - IsiNdebele</li>
-          <li>Ma'am Tloubatla - Sepedi</li>
-          <li>Sir Hlatshwayo - Gen Studies</li>
-          <li>
-        </ul>
-      </div>
-    </div>
-    </div>
-  
-    <div class="task-container">
-      <h3>Registered Users</h3>
-       <div id="adminUsersList" class="panel">
-        <table class="timetable">
-    <tr>
-        <th>M</th>
-        <th>Tw</th>
-        <th>W</th>
-        <th>T</th>
-        <th>F</th>
-    </tr>
+  <main id="app">
+    <div class="grid-2">
+      <div>
+        <h3>Add Learner</h3>
+        <div class="panel">
+          <div class="field"><input id="adminStudentName" placeholder="Full Name" /></div>
+          <div class="field"><input id="adminStudentId" placeholder="Learner ID (e.g. L001)" /></div>
+          <div class="field">
+            <select id="adminStudentRole">
+              <option value="learner">Learner</option>
+              <option value="assessor">Assessor</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="field">
+            <label><input id="adminStudentActive" type="checkbox" checked /> Active</label>
+          </div>
+          <button class="btn" onclick="addSchoolUser()">Save Learner</button>
+        </div>
 
-    <tr>
-        <td>Eng</td>
-        <td>Lo</td>
-        <td>LS</td>
-        <td>G.S</td>
-        <td>GS</td>
-    </tr>
-
-    <tr>
-        <td>G. St</td>
-        <td>Eng</td>
-        <td>Sep</td>
-        <td>Lo</td>
-        <td>LS</td>
-    </tr>
-
-    <tr>
-        <td>Sep</td>
-        <td>G. St</td>
-        <td>Eng</td>
-        <td>Lo</td>
-        <td>LS</td>
-    </tr>
-    <br>
-</table>
+        <h3 style="margin-top:12px;">Add Staff</h3>
+        <div class="panel">
+          <div class="field"><input id="adminStaffName" placeholder="Staff Full Name" /></div>
+          <div class="field"><input id="adminStaffId" placeholder="Staff ID (e.g. S001)" /></div>
+          <div class="field">
+            <select id="adminStaffRole">
+              <option value="assessor">Assessor</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="field">
+            <label><input id="adminStaffActive" type="checkbox" checked /> Active</label>
+          </div>
+          <button class="btn" onclick="addStaffMember()">Save Staff</button>
+        </div>
       </div>
-      <br>
-      <div class="task-container">
-      <h3>Attendance & Progress</h3>
-      <div id="adminProgressList" class="panel">
-        <ul class="field-list">
-          <li>Grade - 8A</li>
-          <li>Grade - 9A</li>
-          <li>Grade - 10A</li>
-          <li>Grade - 11A</li>
-        </ul>
-=======
-<header><h1>NEMOSA - Admin Dashboard</h1><span id="userDisplay" style="position:absolute;right:12px;font-size:0.7rem;"></span></header>
-<main id="app">
-  <div class="grid-2">
-    <div>
-      <h3>Add Learner</h3>
-      <div class="panel">
-        <div class="field"><input id="adminStudentName" placeholder="Full Name"></div>
-        <div class="field"><input id="adminStudentId" placeholder="Learner ID (e.g. L001)"></div>
-        <div class="field"><select id="adminStudentRole"><option value="learner">Learner</option><option value="assessor">Assessor</option><option value="admin">Admin</option></select></div>
-        <div class="field"><label><input id="adminStudentActive" type="checkbox" checked> Active</label></div>
-        <button class="btn" onclick="addSchoolUser()">Save Learner</button>
-      </div>
-      <h3 style="margin-top:12px;">Add Staff</h3>
-      <div class="panel">
-        <div class="field"><input id="adminStaffName" placeholder="Staff Full Name"></div>
-        <div class="field"><input id="adminStaffId" placeholder="Staff ID (e.g. S001)"></div>
-        <div class="field"><select id="adminStaffRole"><option value="assessor">Assessor</option><option value="admin">Admin</option></select></div>
-        <div class="field"><label><input id="adminStaffActive" type="checkbox" checked> Active</label></div>
-        <button class="btn" onclick="addStaffMember()">Save Staff</button>
+
+      <div>
+        <h3>School Overview</h3>
+        <div class="panel">
+          <p id="adminTotalLearners">Total learners: 0</p>
+          <p id="adminTotalStaff">Total staff: 0</p>
+          <p id="adminCompletedLearners">Learners all tasks: 0</p>
+          <p id="adminActiveUsers">Active: 0</p>
+          <p id="adminAttendanceRate">Attendance: 0%</p>
+          <p id="adminAverageGrade">Avg: 0%</p>
+        </div>
+
+        <h3 style="margin-top:12px;">Registered Users</h3>
+        <div id="adminUsersList" class="panel"></div>
+
+        <h3 style="margin-top:12px;">Staff List</h3>
+        <div id="adminStaffList" class="panel"></div>
+
+        <h3 style="margin-top:12px;">Task Overview</h3>
+        <div id="adminTasksList" class="panel"></div>
       </div>
     </div>
-    <div>
-      <h3>School Overview</h3>
-      <div class="panel">
-        <p id="adminTotalLearners">Total learners: 0</p>
-        <p id="adminTotalStaff">Total staff: 0</p>
-        <p id="adminCompletedLearners">Learners all tasks: 0</p>
-        <p id="adminActiveUsers">Active: 0</p>
-        <p id="adminAttendanceRate">Attendance: 0%</p>
-        <p id="adminAverageGrade">Avg: 0%</p>
->>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
-      </div>
-      <h3 style="margin-top:12px;">Registered Users</h3>
-      <div id="adminUsersList" class="panel"></div>
-      <h3 style="margin-top:12px;">Staff List</h3>
-      <div id="adminStaffList" class="panel"></div>
-      <h3 style="margin-top:12px;">Task Overview</h3>
-      <div id="adminTasksList" class="panel"></div>
+
+    <div class="actions">
+      <button class="btn" onclick="logoutUser()">Logout</button>
+      <button class="btn" onclick="window.print()">Print Summary</button>
     </div>
-  </div>
-<<<<<<< HEAD
-</div>
+  </main>
 
-<div class="card highlight">
-    <h3>School Overview</h3>
-
-    <div id="taskList">
-    <p id="adminTotalLearners">Total registered learners: 0</p>
-            <p id="adminTotalStaff">Total registered staff: 0</p>
-            <p id="adminCompletedLearners">
-              Learners who submitted all tasks: 0
-            </p>
-            <p id="adminActiveUsers">Active users: 0</p>
-            <p id="adminAttendanceRate">Attendance rate: 0%</p>
-            <p id="adminAverageGrade">Average task score: 0%</p>
-    </div>
-</div>
-
-
-  <div class="actions">
-    <button class="btn" onclick="window.history.back('index.html')">Logout</button>
-    <button class="btn" onclick="alert('Please Logout')">Next</button>
-  </div>
-=======
-  <div class="actions"><button class="btn" onclick="logoutUser()">Logout</button><button class="btn" onclick="window.print()">Print Summary</button></div>
->>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
-</main>
-<footer>All Rights Reserved NEMOSA 2026</footer>
-<<<<<<< HEAD
-<script type="module" src="task.js"></script>
-=======
-<script type="module" src="app.js"></script>
->>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
+  <footer>All Rights Reserved NEMOSA 2026</footer>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

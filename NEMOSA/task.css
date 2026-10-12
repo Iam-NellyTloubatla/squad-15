@@ -1,7 +1,7 @@
 :root {
   --navy: #0a1931;
   --navy2: #142850;
-  --light: #7fdbff;
+  --light: #5881f3;
   --light2: #b6efff;
   --silver: #c0c0c0;
   --silverLight: #e8e8e8;
@@ -70,7 +70,7 @@ select,
 textarea {
   padding: 10px;
   border-radius: 10px;
-  border: 1.5px solid #ddd;
+  border: 1.5px solid #3d3b3b;
   width: 100%;
   margin: 6px 0;
   font: inherit;
@@ -91,7 +91,7 @@ button:hover {
 
 .primary {
   background: var(--navy);
-  color: white;
+  color: rgb(104, 96, 96);
 }
 
 .secondary {
@@ -103,7 +103,7 @@ button:hover {
 .center-card {
   max-width: 700px;
   margin: 40px auto;
-  background: white;
+  background: rgb(108, 155, 241);
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(10, 25, 49, 0.12);
@@ -140,13 +140,34 @@ main {
 
 .card.highlight {
   border-left-color: var(--light);
-  background: linear-gradient(135deg, white, var(--light2));
+  background: linear-gradient(135deg, rgb(97, 120, 197), var(--light2));
 }
 
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+}
+
+.palindrome-card {
+  background: linear-gradient(135deg, #eef4ff, #f7f7ff);
+  border-left-color: #3d6ae5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.game-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #0a1931;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  width: 100%;
 }
 
 .action-row {
