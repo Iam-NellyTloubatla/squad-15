@@ -84,6 +84,8 @@ const elements = {
   userDisplay: document.getElementById("userDisplay"),
   roleSelect: document.getElementById("roleSelect"),
   userName: document.getElementById("userName"),
+  userEmail: document.getElementById("userEmail"),
+  userPassword: document.getElementById("userPassword"),
   userId: document.getElementById("userId"),
   loginBtn: document.getElementById("loginBtn"),
   registerBtn: document.getElementById("registerBtn"),
@@ -260,6 +262,14 @@ function navigateToDashboard(role, userName) {
     elements.userName?.value?.trim() ||
     localStorage.getItem("currentUserName") ||
     "Learner";
+  const email =
+    elements.userEmail?.value?.trim() ||
+    localStorage.getItem("currentUserEmail") ||
+    "";
+  const password =
+    elements.userPassword?.value?.trim() ||
+    localStorage.getItem("currentUserPassword") ||
+    "";
   const userId =
     elements.userId?.value?.trim() ||
     localStorage.getItem("currentUserId") ||
@@ -268,11 +278,17 @@ function navigateToDashboard(role, userName) {
   state.currentRole = selectedRole;
   localStorage.setItem("currentUserName", displayName);
   localStorage.setItem("currentUserRole", selectedRole);
+  if (email) {
+    localStorage.setItem("currentUserEmail", email);
+  }
+  if (password) {
+    localStorage.setItem("currentUserPassword", password);
+  }
   if (userId) {
     localStorage.setItem("currentUserId", userId);
   }
 
-  elements.userDisplay.textContent = `${displayName} (${selectedRole})${userId ? ` - ${userId}` : ""}`;
+  elements.userDisplay.textContent = `${displayName} (${selectedRole})${email ? ` - ${email}` : ""}`;
   elements.authBox.classList.add("hidden");
   elements.userInfo.classList.remove("hidden");
   elements.loginScreen.classList.add("hidden");
@@ -312,18 +328,25 @@ function restoreLearnerViewFromQuery() {
 async function handleLogin() {
   const role = elements.roleSelect.value;
   const name = elements.userName.value.trim();
-  const id = elements.userId.value.trim();
+  const email = elements.userEmail?.value?.trim() || "";
+  const password = elements.userPassword?.value?.trim() || "";
 
-  if (!name || !id) {
-    alert("Please enter your full name and ID before continuing.");
+  if (!name || !email || !password) {
+    alert("Please enter your full name, email and password before continuing.");
     return;
   }
 
   if (role === "learner") {
-    const isAllowed = await isLearnerAllowed(name, id);
+    const isAllowed = state.learners.some(
+      (learner) =>
+        String(learner.fullName || "").toLowerCase() === name.toLowerCase() &&
+        String(learner.email || "").toLowerCase() === email.toLowerCase(),
+    );
 
     if (!isAllowed) {
-      alert("Access denied. This Learner is not registered in Firestore.");
+      alert(
+        "Access denied. This learner is not registered with that name and email.",
+      );
       return;
     }
   }
@@ -334,11 +357,19 @@ async function handleLogin() {
 async function handleRegister() {
   const role = elements.roleSelect.value;
   const name = elements.userName.value.trim();
-  const id = elements.userId.value.trim();
+  const email = elements.userEmail?.value?.trim() || "";
+  const password = elements.userPassword?.value?.trim() || "";
+  let id = elements.userId?.value?.trim() || "";
 
-  if (!name || !id) {
-    alert("Please enter your full name and ID before registering.");
+  if (!name || !email || !password) {
+    alert(
+      "Please enter your full name, email and password before registering.",
+    );
     return;
+  }
+
+  if (!id) {
+    id = `${name.replace(/\s+/g, "").toLowerCase()}-${Date.now().toString().slice(-6)}`;
   }
 
   state.currentRole = role;
@@ -346,6 +377,8 @@ async function handleRegister() {
     fullName: name,
     learnerId: id,
     studentId: id,
+    email,
+    password,
     role,
     active: true,
   };
@@ -361,6 +394,9 @@ async function handleRegister() {
   }
 
   alert(`Registration successful! ${name} has been created as ${role}.`);
+  localStorage.setItem("currentUserId", id);
+  localStorage.setItem("currentUserEmail", email);
+  localStorage.setItem("currentUserPassword", password);
   navigateToDashboard(role, name);
 }
 
@@ -368,6 +404,8 @@ function handleLogout() {
   localStorage.removeItem("currentUserName");
   localStorage.removeItem("currentUserId");
   localStorage.removeItem("currentUserRole");
+  localStorage.removeItem("currentUserEmail");
+  localStorage.removeItem("currentUserPassword");
 
   elements.userInfo.classList.add("hidden");
   elements.authBox.classList.remove("hidden");
@@ -375,7 +413,9 @@ function handleLogout() {
   elements.app.classList.add("hidden");
   elements.roleSelect.value = "learner";
   elements.userName.value = "";
-  elements.userId.value = "";
+  elements.userEmail.value = "";
+  elements.userPassword.value = "";
+  if (elements.userId) elements.userId.value = "";
 }
 
 function submitSupportTicket() {

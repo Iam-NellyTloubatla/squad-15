@@ -26,7 +26,7 @@ function showTab(which) {
   setStatus(
     which === "register"
       ? "Register: Choose role and create account."
-      : "Login: Enter name and ID.",
+      : "Login: Enter name, email and password.",
     "",
   );
 }
@@ -65,12 +65,12 @@ if (registerForm) {
 
     if (!name || !id) {
       setStatus("Name and ID required", "error");
-      alert("⚠️ Registration failed!\n\nPlease enter Full Name and User ID.");
+      alert(" Registration failed!\n\nPlease enter Full Name and User ID.");
       return;
     }
     if (pass && pass.length < 6) {
       setStatus("Password min 6", "error");
-      alert("⚠️ Password too short! Min 6 chars.");
+      alert(" Password too short! Min 6 chars.");
       return;
     }
 
@@ -104,7 +104,7 @@ if (registerForm) {
 
       // Ethical popup + redirect by role
       alert(
-        `✅ User Registered Successfully!\n\nName: ${name}\nID: ${id}\nRole: ${role.toUpperCase()}\n\nYou will now go to ${role} dashboard.`,
+        `User Registered Successfully!\n\nName: ${name}\nID: ${id}\nRole: ${role.toUpperCase()}\n\nYou will now go to ${role} dashboard.`,
       );
 
       const target = getRolePage(role);
@@ -119,7 +119,7 @@ if (registerForm) {
       localStorage.setItem("currentUserRole", role);
 
       alert(
-        `⚠️ Registered locally (Firestore: ${err.message})\n\nName: ${name}\nID: ${id}\nRole: ${role}\n\nRedirecting to dashboard...`,
+        `Registered locally (Firestore: ${err.message})\n\nName: ${name}\nID: ${id}\nRole: ${role}\n\nRedirecting to dashboard...`,
       );
       window.location.href = getRolePage(role);
     }
@@ -135,35 +135,26 @@ if (loginForm) {
       .toLowerCase()
       .trim();
     const name = (document.getElementById("userName")?.value || "").trim();
-    const id = (document.getElementById("userId")?.value || "").trim();
+    const email = (document.getElementById("userEmail")?.value || "").trim();
+    const password = (document.getElementById("userPassword")?.value || "").trim();
 
-    if (!name || !id) {
-      setStatus("Enter name and ID", "error");
-      alert("Please enter Full Name and User ID");
+    if (!name || !email || !password) {
+      setStatus("Enter name, email and password", "error");
+      alert("Please enter Full Name, Email and Password");
       return;
     }
 
     setStatus(`Checking access for ${name}...`, "");
 
     try {
-      if (role === "learner") {
-        const allowed = await isLearnerAllowed(name, id);
-        if (!allowed) {
-          setStatus("Access denied. Please register first.", "error");
-          alert(
-            `❌ Access Denied!\n\nLearner "${name}" ID "${id}" not found.\n\nGo to Register tab first.`,
-          );
-          return;
-        }
-      }
-
       localStorage.setItem("currentUserName", name);
-      localStorage.setItem("currentUserId", id);
+      localStorage.setItem("currentUserEmail", email);
+      localStorage.setItem("currentUserPassword", password);
       localStorage.setItem("currentUserRole", role);
 
       setStatus(`Login successful as ${role}!`, "success");
       alert(
-        `✅ Login Successful!\nWelcome ${name} (${role.toUpperCase()})\n\nRedirecting to ${role} dashboard.`,
+        ` Login Successful!\nWelcome ${name} (${role.toUpperCase()})\n\nRedirecting to ${role} dashboard.`,
       );
 
       window.location.href = getRolePage(role);

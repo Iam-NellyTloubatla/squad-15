@@ -84,6 +84,8 @@ const elements = {
   userDisplay: document.getElementById("userDisplay"),
   roleSelect: document.getElementById("roleSelect"),
   userName: document.getElementById("userName"),
+  userEmail: document.getElementById("userEmail"),
+  userPassword: document.getElementById("userPassword"),
   userId: document.getElementById("userId"),
   loginBtn: document.getElementById("loginBtn"),
   registerBtn: document.getElementById("registerBtn"),
@@ -252,9 +254,19 @@ function applyLearnerStep(taskId, step) {
 function navigateToDashboard(role, userName) {
   const selectedRole = role || state.currentRole || "learner";
   const displayName = userName || elements.userName?.value?.trim() || "Guest";
+  const email =
+    elements.userEmail?.value?.trim() ||
+    localStorage.getItem("currentUserEmail") ||
+    "";
+  const password =
+    elements.userPassword?.value?.trim() ||
+    localStorage.getItem("currentUserPassword") ||
+    "";
 
   state.currentRole = selectedRole;
-  elements.userDisplay.textContent = `${displayName} (${selectedRole})`;
+  if (email) localStorage.setItem("currentUserEmail", email);
+  if (password) localStorage.setItem("currentUserPassword", password);
+  elements.userDisplay.textContent = `${displayName} (${selectedRole})${email ? ` - ${email}` : ""}`;
   elements.authBox.classList.add("hidden");
   elements.userInfo.classList.remove("hidden");
   elements.loginScreen.classList.add("hidden");
@@ -267,18 +279,25 @@ function navigateToDashboard(role, userName) {
 async function handleLogin() {
   const role = elements.roleSelect.value;
   const name = elements.userName.value.trim();
-  const id = elements.userId.value.trim();
+  const email = elements.userEmail?.value?.trim() || "";
+  const password = elements.userPassword?.value?.trim() || "";
 
-  if (!name || !id) {
-    alert("Please enter your full name and ID before continuing.");
+  if (!name || !email || !password) {
+    alert("Please enter your full name, email and password before continuing.");
     return;
   }
 
   if (role === "learner") {
-    const isAllowed = await isLearnerAllowed(name, id);
+    const isAllowed = state.learners.some(
+      (learner) =>
+        String(learner.fullName || "").toLowerCase() === name.toLowerCase() &&
+        String(learner.email || "").toLowerCase() === email.toLowerCase(),
+    );
 
     if (!isAllowed) {
-      alert("Access denied. This Learner is not registered in Firestore.");
+      alert(
+        "Access denied. This learner is not registered with that name and email.",
+      );
       return;
     }
   }
@@ -289,17 +308,35 @@ async function handleLogin() {
 async function handleRegister() {
   const role = elements.roleSelect.value;
   const name = elements.userName.value.trim();
-  const id = elements.userId.value.trim();
+  const email = elements.userEmail?.value?.trim() || "";
+  const password = elements.userPassword?.value?.trim() || "";
+  let id = elements.userId?.value?.trim() || "";
 
-  if (!name || !id) {
-    alert("Please enter your full name and ID before registering.");
+  if (!name || !email || !password) {
+    alert(
+      "Please enter your full name, email and password before registering.",
+    );
     return;
   }
 
+  if (!id) {
+    id = `${name.replace(/\s+/g, "").toLowerCase()}-${Date.now().toString().slice(-6)}`;
+  }
+
   state.currentRole = role;
-  const current = { fullName: name, learnerId: id, studentId: id, role, active: true };
+  const current = {
+    fullName: name,
+    learnerId: id,
+    studentId: id,
+    email,
+    password,
+    role,
+    active: true,
+  };
   const existing = state.learners.find(
-    (learner) => String(learner.learnerId || learner.studentId).toLowerCase() === id.toLowerCase(),
+    (learner) =>
+      String(learner.learnerId || learner.studentId).toLowerCase() ===
+      id.toLowerCase(),
   );
 
   if (!existing) {
@@ -307,35 +344,53 @@ async function handleRegister() {
     saveToStorage();
   }
 
+  localStorage.setItem("currentUserId", id);
+  localStorage.setItem("currentUserEmail", email);
+  localStorage.setItem("currentUserPassword", password);
   alert(`Registration successful! ${name} has been created as ${role}.`);
   navigateToDashboard(role, name);
 }
 
 function handleLogout() {
+  localStorage.removeItem("currentUserName");
+  localStorage.removeItem("currentUserId");
+  localStorage.removeItem("currentUserRole");
+  localStorage.removeItem("currentUserEmail");
+  localStorage.removeItem("currentUserPassword");
+
   elements.userInfo.classList.add("hidden");
   elements.authBox.classList.remove("hidden");
   elements.loginScreen.classList.remove("hidden");
   elements.app.classList.add("hidden");
   elements.roleSelect.value = "learner";
   elements.userName.value = "";
-  elements.userId.value = "";
+  elements.userEmail.value = "";
+  elements.userPassword.value = "";
+  if (elements.userId) elements.userId.value = "";
 }
 
 function submitSupportTicket() {
-  if (!elements.supportEmail || !elements.supportReport || !elements.supportTicketMessage) return;
+  if (
+    !elements.supportEmail ||
+    !elements.supportReport ||
+    !elements.supportTicketMessage
+  )
+    return;
 
   const email = elements.supportEmail.value.trim();
   const report = elements.supportReport.value.trim();
 
   if (!email || !report) {
-    elements.supportTicketMessage.textContent = "Ticket status: Please add both your email and a report before submitting.";
+    elements.supportTicketMessage.textContent =
+      "Ticket status: Please add both your email and a report before submitting.";
     elements.supportTicketMessage.style.color = "#b42318";
     return;
   }
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
-    elements.supportTicketMessage.textContent = "Ticket status: Please enter a valid email address.";
+    elements.supportTicketMessage.textContent =
+      "Ticket status: Please enter a valid email address.";
     elements.supportTicketMessage.style.color = "#b42318";
     return;
   }
@@ -349,7 +404,9 @@ function submitSupportTicket() {
     status: "Submitted",
   };
 
-  const existingTickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+  const existingTickets = JSON.parse(
+    localStorage.getItem("supportTickets") || "[]",
+  );
   existingTickets.push(ticket);
   localStorage.setItem("supportTickets", JSON.stringify(existingTickets));
 
@@ -516,7 +573,8 @@ function checkPalindrome() {
   const text = elements.palindromeInput.value.trim();
 
   if (!text) {
-    elements.palindromeResult.textContent = "Result: Please enter a word or phrase.";
+    elements.palindromeResult.textContent =
+      "Result: Please enter a word or phrase.";
     elements.palindromeResult.style.color = "#b42318";
     return;
   }
@@ -564,7 +622,10 @@ class AdminManager {
     try {
       await saveLearner(learner);
     } catch (error) {
-      console.warn("Firestore learner save failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore learner save failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -592,8 +653,9 @@ class AdminManager {
 
     const index = state.staff.findIndex(
       (item) =>
-        String(item.staffId || item.learnerId || item.studentId || "").toLowerCase() ===
-        safeId.toLowerCase(),
+        String(
+          item.staffId || item.learnerId || item.studentId || "",
+        ).toLowerCase() === safeId.toLowerCase(),
     );
 
     if (index >= 0) {
@@ -605,7 +667,10 @@ class AdminManager {
     try {
       await saveStaff(staffMember);
     } catch (error) {
-      console.warn("Firestore staff save failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore staff save failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -626,7 +691,10 @@ class AdminManager {
     try {
       await deleteLearnerRecord(targetId);
     } catch (error) {
-      console.warn("Firestore learner delete failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore learner delete failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -639,14 +707,19 @@ class AdminManager {
     if (!targetId) return false;
 
     state.staff = state.staff.filter((staff) => {
-      const id = String(staff.staffId || staff.learnerId || staff.studentId || "").trim();
+      const id = String(
+        staff.staffId || staff.learnerId || staff.studentId || "",
+      ).trim();
       return id.toLowerCase() !== targetId.toLowerCase();
     });
 
     try {
       await deleteStaffRecord(targetId);
     } catch (error) {
-      console.warn("Firestore staff delete failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore staff delete failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -928,7 +1001,9 @@ async function addSchoolUser() {
   const active = elements.adminStudentActive.checked;
 
   if (!fullName || !learnerId) {
-    alert("Add a full name and Learner ID before saving to the school database.");
+    alert(
+      "Add a full name and Learner ID before saving to the school database.",
+    );
     return;
   }
 
@@ -1086,19 +1161,29 @@ document.addEventListener("click", (event) => {
 });
 
 if (elements.loginBtn) elements.loginBtn.addEventListener("click", handleLogin);
-if (elements.registerBtn) elements.registerBtn.addEventListener("click", handleRegister);
-if (elements.logoutBtn) elements.logoutBtn.addEventListener("click", handleLogout);
+if (elements.registerBtn)
+  elements.registerBtn.addEventListener("click", handleRegister);
+if (elements.logoutBtn)
+  elements.logoutBtn.addEventListener("click", handleLogout);
 if (elements.addTaskBtn) elements.addTaskBtn.addEventListener("click", addTask);
-if (elements.cancelEditBtn) elements.cancelEditBtn.addEventListener("click", clearTaskForm);
-if (elements.checkPalindromeBtn) elements.checkPalindromeBtn.addEventListener("click", checkPalindrome);
-if (elements.submitSupportTicketBtn) elements.submitSupportTicketBtn.addEventListener("click", submitSupportTicket);
+if (elements.cancelEditBtn)
+  elements.cancelEditBtn.addEventListener("click", clearTaskForm);
+if (elements.checkPalindromeBtn)
+  elements.checkPalindromeBtn.addEventListener("click", checkPalindrome);
+if (elements.submitSupportTicketBtn)
+  elements.submitSupportTicketBtn.addEventListener(
+    "click",
+    submitSupportTicket,
+  );
 if (elements.palindromeInput) {
   elements.palindromeInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") checkPalindrome();
   });
 }
-if (elements.adminAddStudentBtn) elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
-if (elements.adminAddStaffBtn) elements.adminAddStaffBtn.addEventListener("click", addStaffMember);
+if (elements.adminAddStudentBtn)
+  elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
+if (elements.adminAddStaffBtn)
+  elements.adminAddStaffBtn.addEventListener("click", addStaffMember);
 if (elements.saveAssessmentBtn) {
   elements.saveAssessmentBtn.addEventListener("click", saveAssessment);
 }
