@@ -1094,7 +1094,6 @@ if (elements.checkPalindromeBtn) elements.checkPalindromeBtn.addEventListener("c
 if (elements.submitSupportTicketBtn) elements.submitSupportTicketBtn.addEventListener("click", submitSupportTicket);
 if (elements.palindromeInput) {elements.palindromeInput.addEventListener("keydown", (event) => {
 if (event.key === "Enter") checkPalindrome();
-if (elements.BackToLearnerDashboardBtn) elements.BackToLearnerDashboardBtn.addEventListener("click", () => {navigateToDashboard("learner");});
 });
 }
 if (elements.adminAddStudentBtn) elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
