@@ -179,7 +179,11 @@ function showRoleView(role) {
 }
 
 function getCurrentLearnerName() {
-  return elements.userDisplay.textContent?.split("(")[0].trim() || "Guest";
+  return (
+    localStorage.getItem("currentUserName") ||
+    elements.userDisplay.textContent?.split("(")[0].trim() ||
+    "Learner"
+  );
 }
 
 function getLearnerSubmissionForTask(
@@ -251,16 +255,57 @@ function applyLearnerStep(taskId, step) {
 
 function navigateToDashboard(role, userName) {
   const selectedRole = role || state.currentRole || "learner";
-  const displayName = userName || elements.userName?.value?.trim() || "Guest";
+  const displayName =
+    userName ||
+    elements.userName?.value?.trim() ||
+    localStorage.getItem("currentUserName") ||
+    "Learner";
+  const userId =
+    elements.userId?.value?.trim() ||
+    localStorage.getItem("currentUserId") ||
+    "";
 
   state.currentRole = selectedRole;
-  elements.userDisplay.textContent = `${displayName} (${selectedRole})`;
+  localStorage.setItem("currentUserName", displayName);
+  localStorage.setItem("currentUserRole", selectedRole);
+  if (userId) {
+    localStorage.setItem("currentUserId", userId);
+  }
+
+  elements.userDisplay.textContent = `${displayName} (${selectedRole})${userId ? ` - ${userId}` : ""}`;
   elements.authBox.classList.add("hidden");
   elements.userInfo.classList.remove("hidden");
   elements.loginScreen.classList.add("hidden");
   elements.app.classList.remove("hidden");
 
+  const url = new URL(window.location.href);
+  url.searchParams.set("view", selectedRole);
+  window.history.replaceState({}, "", url);
+
   showRoleView(selectedRole);
+  renderDashboard();
+}
+
+function restoreLearnerViewFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const requestedView = params.get("view");
+  const learnerName = localStorage.getItem("currentUserName");
+
+  if (requestedView !== "learner" || !learnerName) {
+    return;
+  }
+
+  const learnerRole = localStorage.getItem("currentUserRole") || "learner";
+  const learnerId = localStorage.getItem("currentUserId") || "";
+
+  state.currentRole = learnerRole;
+  elements.userDisplay.textContent = `${learnerName} (${learnerRole})${learnerId ? ` - ${learnerId}` : ""}`;
+  elements.authBox.classList.add("hidden");
+  elements.userInfo.classList.remove("hidden");
+  elements.loginScreen.classList.add("hidden");
+  elements.app.classList.remove("hidden");
+
+  showRoleView("learner");
   renderDashboard();
 }
 
@@ -297,9 +342,17 @@ async function handleRegister() {
   }
 
   state.currentRole = role;
-  const current = { fullName: name, learnerId: id, studentId: id, role, active: true };
+  const current = {
+    fullName: name,
+    learnerId: id,
+    studentId: id,
+    role,
+    active: true,
+  };
   const existing = state.learners.find(
-    (learner) => String(learner.learnerId || learner.studentId).toLowerCase() === id.toLowerCase(),
+    (learner) =>
+      String(learner.learnerId || learner.studentId).toLowerCase() ===
+      id.toLowerCase(),
   );
 
   if (!existing) {
@@ -312,6 +365,10 @@ async function handleRegister() {
 }
 
 function handleLogout() {
+  localStorage.removeItem("currentUserName");
+  localStorage.removeItem("currentUserId");
+  localStorage.removeItem("currentUserRole");
+
   elements.userInfo.classList.add("hidden");
   elements.authBox.classList.remove("hidden");
   elements.loginScreen.classList.remove("hidden");
@@ -322,20 +379,27 @@ function handleLogout() {
 }
 
 function submitSupportTicket() {
-  if (!elements.supportEmail || !elements.supportReport || !elements.supportTicketMessage) return;
+  if (
+    !elements.supportEmail ||
+    !elements.supportReport ||
+    !elements.supportTicketMessage
+  )
+    return;
 
   const email = elements.supportEmail.value.trim();
   const report = elements.supportReport.value.trim();
 
   if (!email || !report) {
-    elements.supportTicketMessage.textContent = "Ticket status: Please add both your email and a report before submitting.";
+    elements.supportTicketMessage.textContent =
+      "Ticket status: Please add both your email and a report before submitting.";
     elements.supportTicketMessage.style.color = "#b42318";
     return;
   }
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
-    elements.supportTicketMessage.textContent = "Ticket status: Please enter a valid email address.";
+    elements.supportTicketMessage.textContent =
+      "Ticket status: Please enter a valid email address.";
     elements.supportTicketMessage.style.color = "#b42318";
     return;
   }
@@ -349,7 +413,9 @@ function submitSupportTicket() {
     status: "Submitted",
   };
 
-  const existingTickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+  const existingTickets = JSON.parse(
+    localStorage.getItem("supportTickets") || "[]",
+  );
   existingTickets.push(ticket);
   localStorage.setItem("supportTickets", JSON.stringify(existingTickets));
 
@@ -516,7 +582,8 @@ function checkPalindrome() {
   const text = elements.palindromeInput.value.trim();
 
   if (!text) {
-    elements.palindromeResult.textContent = "Result: Please enter a word or phrase.";
+    elements.palindromeResult.textContent =
+      "Result: Please enter a word or phrase.";
     elements.palindromeResult.style.color = "#b42318";
     return;
   }
@@ -564,7 +631,10 @@ class AdminManager {
     try {
       await saveLearner(learner);
     } catch (error) {
-      console.warn("Firestore learner save failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore learner save failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -592,8 +662,9 @@ class AdminManager {
 
     const index = state.staff.findIndex(
       (item) =>
-        String(item.staffId || item.learnerId || item.studentId || "").toLowerCase() ===
-        safeId.toLowerCase(),
+        String(
+          item.staffId || item.learnerId || item.studentId || "",
+        ).toLowerCase() === safeId.toLowerCase(),
     );
 
     if (index >= 0) {
@@ -605,7 +676,10 @@ class AdminManager {
     try {
       await saveStaff(staffMember);
     } catch (error) {
-      console.warn("Firestore staff save failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore staff save failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -626,7 +700,10 @@ class AdminManager {
     try {
       await deleteLearnerRecord(targetId);
     } catch (error) {
-      console.warn("Firestore learner delete failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore learner delete failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -639,14 +716,19 @@ class AdminManager {
     if (!targetId) return false;
 
     state.staff = state.staff.filter((staff) => {
-      const id = String(staff.staffId || staff.learnerId || staff.studentId || "").trim();
+      const id = String(
+        staff.staffId || staff.learnerId || staff.studentId || "",
+      ).trim();
       return id.toLowerCase() !== targetId.toLowerCase();
     });
 
     try {
       await deleteStaffRecord(targetId);
     } catch (error) {
-      console.warn("Firestore staff delete failed, using local storage fallback:", error);
+      console.warn(
+        "Firestore staff delete failed, using local storage fallback:",
+        error,
+      );
     }
 
     saveToStorage();
@@ -817,7 +899,9 @@ function saveAssessment() {
 
 function renderLearnerPanels() {
   const name =
-    elements.userDisplay.textContent?.split("(")[0].trim() || "Guest";
+    localStorage.getItem("currentUserName") ||
+    elements.userDisplay.textContent?.split("(")[0].trim() ||
+    "Learner";
   const learnerSubmissions = state.submissions.filter(
     (item) => item.learnerName === name,
   );
@@ -928,7 +1012,9 @@ async function addSchoolUser() {
   const active = elements.adminStudentActive.checked;
 
   if (!fullName || !learnerId) {
-    alert("Add a full name and Learner ID before saving to the school database.");
+    alert(
+      "Add a full name and Learner ID before saving to the school database.",
+    );
     return;
   }
 
@@ -1086,21 +1172,32 @@ document.addEventListener("click", (event) => {
 });
 
 if (elements.loginBtn) elements.loginBtn.addEventListener("click", handleLogin);
-if (elements.registerBtn) elements.registerBtn.addEventListener("click", handleRegister);
-if (elements.logoutBtn) elements.logoutBtn.addEventListener("click", handleLogout);
+if (elements.registerBtn)
+  elements.registerBtn.addEventListener("click", handleRegister);
+if (elements.logoutBtn)
+  elements.logoutBtn.addEventListener("click", handleLogout);
 if (elements.addTaskBtn) elements.addTaskBtn.addEventListener("click", addTask);
-if (elements.cancelEditBtn) elements.cancelEditBtn.addEventListener("click", clearTaskForm);
-if (elements.checkPalindromeBtn) elements.checkPalindromeBtn.addEventListener("click", checkPalindrome);
-if (elements.submitSupportTicketBtn) elements.submitSupportTicketBtn.addEventListener("click", submitSupportTicket);
-if (elements.palindromeInput) {elements.palindromeInput.addEventListener("keydown", (event) => {
-if (event.key === "Enter") checkPalindrome();
-if (elements.BackToLearnerDashboardBtn) elements.BackToLearnerDashboardBtn.addEventListener("click", () => {navigateToDashboard("learner");});
-});
+if (elements.cancelEditBtn)
+  elements.cancelEditBtn.addEventListener("click", clearTaskForm);
+if (elements.checkPalindromeBtn)
+  elements.checkPalindromeBtn.addEventListener("click", checkPalindrome);
+if (elements.submitSupportTicketBtn)
+  elements.submitSupportTicketBtn.addEventListener(
+    "click",
+    submitSupportTicket,
+  );
+if (elements.palindromeInput) {
+  elements.palindromeInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") checkPalindrome();
+  });
 }
-if (elements.adminAddStudentBtn) elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
-if (elements.adminAddStaffBtn) elements.adminAddStaffBtn.addEventListener("click", addStaffMember);
+if (elements.adminAddStudentBtn)
+  elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
+if (elements.adminAddStaffBtn)
+  elements.adminAddStaffBtn.addEventListener("click", addStaffMember);
 if (elements.saveAssessmentBtn) {
   elements.saveAssessmentBtn.addEventListener("click", saveAssessment);
 }
 
 renderDashboard();
+restoreLearnerViewFromQuery();
