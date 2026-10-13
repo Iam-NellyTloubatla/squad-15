@@ -1092,10 +1092,10 @@ if (elements.addTaskBtn) elements.addTaskBtn.addEventListener("click", addTask);
 if (elements.cancelEditBtn) elements.cancelEditBtn.addEventListener("click", clearTaskForm);
 if (elements.checkPalindromeBtn) elements.checkPalindromeBtn.addEventListener("click", checkPalindrome);
 if (elements.submitSupportTicketBtn) elements.submitSupportTicketBtn.addEventListener("click", submitSupportTicket);
-if (elements.palindromeInput) {
-  elements.palindromeInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") checkPalindrome();
-  });
+if (elements.palindromeInput) {elements.palindromeInput.addEventListener("keydown", (event) => {
+if (event.key === "Enter") checkPalindrome();
+if (elements.clickToGoBackToLearnerDashboardBtn) elements.clickToGoBackToLearnerDashboardBtn.addEventListener("click", () => {navigateToDashboard("learner");});
+});
 }
 if (elements.adminAddStudentBtn) elements.adminAddStudentBtn.addEventListener("click", addSchoolUser);
 if (elements.adminAddStaffBtn) elements.adminAddStaffBtn.addEventListener("click", addStaffMember);

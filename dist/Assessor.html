@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Assessor</title>
+<style>
+  :root{--header-bg:#2b2b2b;--page-bg:#e8e8e8;--card-bg:#fff;--field-bg:#d9d9d9;--btn-bg:#1a1a1a;--btn-text:#fff;--radius:14px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--page-bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+  header{width:100%;background:var(--header-bg);color:#fff;display:flex;align-items:center;justify-content:center;padding:18px 16px;position:relative;}
+  main{width:100%;max-width:560px;background:var(--card-bg);margin:20px auto;padding:20px 18px;box-shadow:0 2px 6px rgba(0,0,0,0.15);}
+  .hidden{display:none!important;}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .panel{background:var(--field-bg);border-radius:14px;padding:16px 12px;min-height:200px;}
+  .field input, .field select, .field textarea{width:100%;padding:8px;margin:4px 0;border:none;border-radius:6px;background:#fff;}
+  .btn{background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:4px;padding:7px 14px;cursor:pointer;font-size:0.8rem;margin-top:6px;}
+  .actions{display:flex;justify-content:space-between;margin-top:18px;}
+  footer{width:100%;max-width:560px;text-align:center;font-size:0.65rem;color:#555;background:#d4d4d4;padding:8px 0 24px;}
+</style>
+</head>
+<body>
+<header><h1>NEMOSA - Assessor</h1><span id="userDisplay" style="position:absolute;right:12px;font-size:0.7rem;"></span></header>
+<main>
+  <section id="assessorView" class="hidden">
+  <div class="grid-2">
+<<<<<<< HEAD
+    <div class="card">
+      <h3>Add || Edit Task</h3>
+      <div class="panel">
+        <input id="taskTitle" type="text" placeholder="Task Title" />
+        <select id="taskType">
+          <option value="Written">Written</option>
+              <option value="Practical">Practical</option>
+              <option value="Assignment">Assignment</option>
+              <option value="Test">Test</option>
+        </select>
+        <textarea id="taskDesc" placeholder="Instructions"></textarea>
+        <input id="dueDate" type="date" />
+        <input id="totalMarks" type="number" placeholder="Total Marks" />
+        <button id="addTaskBtn" class="primary">Add Task</button>
+        <button id="cancelEditBtn" class="secondary hidden">
+                Cancel Edit
+              </button>
+        <h3>Stats</h3>
+            <p id="totalTasks">Total Tasks: 0</p>
+            <p id="totalSubmissions">Total Submissions: 0</p>
+            <p id="avgResult">Average Result: -</p>
+      </div>
+    </div>
+    
+    <div class="block">
+      <h3>Allocate Marks</h3>
+      <div class="panel">
+        <select id="assessorLearnerSelect">
+          <option value="">Select learner</option>
+        </select>
+        <select id="assessorTaskSelect">
+            <option value="">Select task</option>
+        </select>
+        <input
+            id="assessorMarks"
+            type="number"
+            min="0"
+            max="100"
+            placeholder="Marks (0 - 100)"
+          />
+          <textarea
+            id="assessorFeedback"
+            placeholder="Add assessor feedback"
+          ></textarea>
+          <button id="saveAssessmentBtn" class="primary">
+            Save Assessment
+          </button>
+          <div class="card">
+          <h3>All Tasks</h3>
+          <div id="tasksList" class="tasks-grid"></div>
+        </div>
+        <div class="card">
+          <h3>Submissions</h3>
+          <div id="submissionsList"></div>
+        </div>
+      </section>
+        
+      </div>
+    </div>
+  </div>
+  
+  <div class="actions">
+    <button class="btn" onclick="window.history.back('index.html')">Logout</button>
+    <button class="btn" onclick="alert('Please Logout')">Next</button>
+  </div>
+=======
+    <div>
+      <h3>Add / Edit Task</h3>
+      <div class="panel">
+        <div class="field"><input id="taskTitle" placeholder="Task Title"></div>
+        <div class="field"><select id="taskType"><option value="Written">Written</option><option value="Practical">Practical</option><option value="Assignment">Assignment</option><option value="Test">Test</option></select></div>
+        <div class="field"><textarea id="taskDesc" placeholder="Instructions"></textarea></div>
+        <div class="field"><input id="dueDate" type="date"></div>
+        <div class="field"><input id="totalMarks" type="number" placeholder="Total Marks"></div>
+        <button id="addTaskBtn" class="btn" onclick="createTask()">Add Task</button>
+        <button id="cancelEditBtn" class="btn hidden" onclick="clearTaskForm()">Cancel Edit</button>
+        <h3 style="margin-top:12px;">Stats</h3>
+        <p id="totalTasks">Total Tasks: 0</p>
+        <p id="totalSubmissions">Total Submissions: 0</p>
+        <p id="avgResult">Average Result: -</p>
+      </div>
+    </div>
+    <div>
+      <h3>Allocate Marks</h3>
+      <div class="panel">
+        <div class="field"><select id="assessorLearnerSelect"><option value="">Select learner</option></select></div>
+        <div class="field"><select id="assessorTaskSelect"><option value="">Select task</option></select></div>
+        <div class="field"><input id="assessorMarks" type="number" min="0" max="100" placeholder="Marks 0-100"></div>
+        <div class="field"><textarea id="assessorFeedback" placeholder="Feedback"></textarea></div>
+        <button class="btn" onclick="saveAssessment()">Save Assessment</button>
+        <h3 style="margin-top:12px;">All Tasks</h3>
+        <div id="tasksList"></div>
+        <h3 style="margin-top:12px;">Submissions</h3>
+        <div id="submissionsList"></div>
+      </div>
+    </div>
+  </div>
+  <div class="actions"><button class="btn" onclick="logoutUser()">Logout</button><button class="btn" onclick="window.print()">Print</button></div>
+
+  <div class="panel" style="margin-top:18px; background:#fff7e8; border:1px solid #f0c36d;">
+    <h3>Support Ticket</h3>
+    <div class="field">
+      <label for="assessorSupportEmail">Email address</label>
+      <input id="assessorSupportEmail" type="email" placeholder="Enter your email" />
+    </div>
+    <div class="field">
+      <label for="assessorSupportReport">Report details</label>
+      <textarea id="assessorSupportReport" rows="4" placeholder="Describe the issue or report"></textarea>
+    </div>
+    <button class="btn" onclick="submitSupportTicket('assessorSupportEmail','assessorSupportReport','assessorSupportTicketMsg')">Submit ticket</button>
+    <p id="assessorSupportTicketMsg" style="margin-top:10px; font-weight:700; color:#2b2b2b;">Ticket status: waiting for your report.</p>
+  </div>
+</main>
+<footer>All Rights Reserved NEMOSA 2026</footer>
+<script>
+  function submitSupportTicket(emailId, reportId, messageId) {
+    const emailInput = document.getElementById(emailId);
+    const reportInput = document.getElementById(reportId);
+    const message = document.getElementById(messageId);
+
+    if (!emailInput || !reportInput || !message) return;
+
+    const email = emailInput.value.trim();
+    const report = reportInput.value.trim();
+
+    if (!email || !report) {
+      message.textContent = "Ticket status: Please add both your email and a report before submitting.";
+      message.style.color = "#b42318";
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      message.textContent = "Ticket status: Please enter a valid email address.";
+      message.style.color = "#b42318";
+      return;
+    }
+
+    const ticketId = `NEM-${Date.now().toString().slice(-6)}`;
+    const tickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+    tickets.push({
+      id: ticketId,
+      email,
+      report,
+      createdAt: new Date().toISOString(),
+      status: "Submitted",
+    });
+    localStorage.setItem("supportTickets", JSON.stringify(tickets));
+
+    message.textContent = `Ticket status: Your report was submitted successfully. Ticket ${ticketId} has been sent to ${email}. You will receive feedback soon.`;
+    message.style.color = "#0f766e";
+    emailInput.value = "";
+    reportInput.value = "";
+  }
+</script>
+<script type="module" src="task.js"></script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEMOSA - Learner</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  :root{--header-bg:#2b2b2b;--page-bg:#e8e8e8;--card-bg:#fff;--field-bg:#d9d9d9;--btn-bg:#1a1a1a;--btn-text:#fff;--radius:6px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+<<<<<<< HEAD
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--page-bg);
+    color:var(--text-dark);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  header{
+    width:100%;
+    background:var(--header-bg);
+    color:#fff;
+    display:flex;
+    align-items:centre;
+    justify-content:center;
+    position:relative;
+    padding:18px 16px;
+  }
+  header h1{
+    font-size:1.4rem;
+    letter-spacing:2px;
+    font-weight:600;
+  }
+  .menu-icon{
+    position:absolute;
+    left:18px;
+    font-size:1.4rem;
+    cursor:pointer;
+  }
+  main{
+    width:100%;
+    max-width:480px;
+    background:var(--card-bg);
+    margin:20px auto;
+    padding:20px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .block h3{
+    font-size:0.82rem;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .panel{
+    background:var(--field-bg);
+    border-radius:var(--radius);
+    padding:16px 12px;
+    min-height:34px;
+  }
+  .field-list{
+    list-style:disc;
+    padding-left:18px;
+    font-size:0.75rem;
+    font-weight:600;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+  }
+  .btn{
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:none;
+    border-radius:4px;
+    padding:7px 18px;
+    font-size:0.75rem;
+    cursor:pointer;
+  }
+  .btn:hover{opacity:0.85;}
+  footer{
+    width:100%;
+    max-width:480px;
+    text-align:center;
+    font-size:0.65rem;
+    color:#555;
+    background:#d4d4d4;
+    padding:8px 0 24px;
+  }
+
+  h3 a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.whatsapp-btn:hover {
+    background-color: #128C7E;
+}
+
+.whatsapp-btn i {
+    font-size: 30px;
+}
+
+=======
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--page-bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+  header{width:100%;background:var(--header-bg);color:#fff;display:flex;align-items:center;justify-content:center;padding:18px 16px;position:relative;}
+  main{width:100%;max-width:560px;background:var(--card-bg);margin:20px auto;padding:20px 18px;box-shadow:0 2px 6px rgba(0,0,0,0.15);}
+  .hidden{display:none!important;}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .panel{background:var(--field-bg);border-radius:6px;padding:16px 12px;min-height:30px;}
+  .btn{background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:4px;padding:7px 14px;cursor:pointer;font-size:0.8rem;margin:2px;}
+  .actions{display:flex;justify-content:space-between;margin-top:18px;}
+  .whatsapp-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:#25D366;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;margin-top:8px;}
+  footer{width:100%;max-width:560px;text-align:center;font-size:0.65rem;color:#555;background:#d4d4d4;padding:8px 0 24px;}
+>>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
+</style>
+</head>
+<body>
+<header><h1>NEMOSA - Learner</h1><span id="userDisplay" style="position:absolute;right:12px;font-size:0.7rem;"></span></header>
+<main>
+  <section id="learnerView" class="hidden">
+  <div class="grid-2">
+<<<<<<< HEAD
+    <div class="card highlight">
+      <h3>My Task Progress</h3>
+      <div class="panel">
+        <p id="learnerTotal">Tasks Chosen: 0</p>
+            <p id="learnerWritten">Written: 0</p>
+            <p id="learnerSubmitted">Submitted: 0</p>
+            <p id="learnerAvg">My Average: -</p>
+            <p>-</p>
+            
+      </div>      
+    </div>
+      
+    <div class="grid-3">
+      <h3>Mini Game</h3>
+      <div class="panel">
+        <ul class="field-list">
+          <li><a href="Quiz.html" onclick="alert('Please load the quiz game...')">Quiz</a> or <a href="Palindrome.html">Palindrome</a></li>
+          <a href="https://wa.me/27640246008?text=Hello%20NEMOSA%20Support%2C%20I%20need%20help."
+   target="_blank"
+   class="whatsapp-btn">
+
+    <i class="fa-brands fa-whatsapp"></i>
+    WhatsApp Support
+
+</a>
+        </ul>
+      </div>
+=======
+    <div>
+      <h3>My Task Progress</h3>
+      <div class="panel">
+        <p id="learnerTotal">Tasks Chosen: 0</p>
+        <p id="learnerWritten">Written: 0</p>
+        <p id="learnerSubmitted">Submitted: 0</p>
+        <p id="learnerAvg">My Average: -</p>
+      </div>
+      <h3 style="margin-top:12px;">Mini Game - Squad 15</h3>
+      <div class="panel" style="display:flex;flex-direction:column;gap:8px;">
+        
+        
+        <a href="Palindrome.html" style="text-decoration:none;">
+          <button class="btn" style="width:100%;background:#2563eb;padding:12px;">🎮 Play Palindrome Quiz Game</button>
+        </a>
+        
+        <div style="font-size:0.7rem;color:#333;background:#fff;padding:8px;border-radius:4px;margin-top:4px;">
+          <b>Game Features:</b><br>
+          • 60 sec timer (JS setInterval animation)<br>
+          • 5 questions, 10 pts each<br>
+          • saveScoreToFirebase() → Firebase<br>
+          • Final score alert (ethical popup)
+        </div>
+        <a href="https://wa.me/27640246008?text=Hello%20NEMOSA%20Support%2C%20I%20need%20help." target="_blank" class="whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp Support</a>
+      </div>
+    </div>
+    <div>
+      <h3>Steps</h3>
+      <div id="learnerSteps" class="panel"></div>
+>>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
+    </div>
+
+    <div class="card">
+      <h3>Steps</h3>  
+      <div class="panel">
+        <div id="learnerSteps" class="step-list"></div>
+      </div>
+    
+  
+  </div>
+  <div class="card">
+          <h3>My Tasks &amp; Results</h3>
+          <div class="panel">
+          <div id="myTasks" class="tasks-grid"></div>
+        </div>
+  </div>
+
+  <div class="card">
+          <h3>Available Tasks to Choose</h3>
+          <div class="panel">
+          <div id="availableTasks" class="tasks-grid"></div>
+        </div>
+      </div>
+  </div>
+<<<<<<< HEAD
+
+  <div class="actions">
+    <button class="btn" onclick="window.history.back('index.html')">Logout</button>
+    <button class="btn" onclick="alert('Select a game or Logout')">Next</button>
+  </div>
+
+  <div class="panel" style="margin-top:18px; background:#fff7e8; border:1px solid #f0c36d;">
+    <h3>Support Ticket</h3>
+    <div class="field-list">
+      <div>
+        <label for="learnerSupportEmail">Email address</label>
+        <input id="learnerSupportEmail" type="email" placeholder="Enter your email" />
+      </div>
+      <div>
+        <label for="learnerSupportReport">Report details</label>
+        <textarea id="learnerSupportReport" rows="4" placeholder="Describe the issue or report"></textarea>
+      </div>
+      <button class="btn" onclick="submitSupportTicket('learnerSupportEmail','learnerSupportReport','learnerSupportTicketMsg')">Submit ticket</button>
+      <p id="learnerSupportTicketMsg" style="margin-top:10px; font-weight:700; color:#2b2b2b;">Ticket status: waiting for your report.</p>
+    </div>
+  </div>
+</div>
+</section>
+=======
+  <div style="margin-top:14px;">
+    <h3>My Tasks & Results</h3>
+    <div id="myTasks" class="panel"></div>
+    <h3 style="margin-top:12px;">Available Tasks to Choose</h3>
+    <div id="availableTasks" class="panel"></div>
+  </div>
+  <div class="actions"><button class="btn" onclick="logoutUser()">Logout</button><button class="btn" onclick="window.print()">Print My Progress</button></div>
+>>>>>>> 304a05611b1df38d2167b9c9a94afce78fb8256b
+</main>
+<footer>All Rights Reserved NEMOSA 2026</footer>
+<script>
+  function submitSupportTicket(emailId, reportId, messageId) {
+    const emailInput = document.getElementById(emailId);
+    const reportInput = document.getElementById(reportId);
+    const message = document.getElementById(messageId);
+
+    if (!emailInput || !reportInput || !message) return;
+
+    const email = emailInput.value.trim();
+    const report = reportInput.value.trim();
+
+    if (!email || !report) {
+      message.textContent = "Ticket status: Please add both your email and a report before submitting.";
+      message.style.color = "#b42318";
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      message.textContent = "Ticket status: Please enter a valid email address.";
+      message.style.color = "#b42318";
+      return;
+    }
+
+    const ticketId = `NEM-${Date.now().toString().slice(-6)}`;
+    const tickets = JSON.parse(localStorage.getItem("supportTickets") || "[]");
+    tickets.push({
+      id: ticketId,
+      email,
+      report,
+      createdAt: new Date().toISOString(),
+      status: "Submitted",
+    });
+    localStorage.setItem("supportTickets", JSON.stringify(tickets));
+
+    message.textContent = `Ticket status: Your report was submitted successfully. Ticket ${ticketId} has been sent to ${email}. You will receive feedback soon.`;
+    message.style.color = "#0f766e";
+    emailInput.value = "";
+    reportInput.value = "";
+  }
+</script>
+<script type="module" src="task.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "squad-15",
+  "version": "1.0.0",
+  "description": "---",
+  "main": "firebase-confirg.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node NEMOSA/task.js",
+    "build": "node -e \"const fs=require('fs'); const path=require('path'); const src='NEMOSA'; const out='dist'; fs.rmSync(out,{recursive:true,force:true}); fs.mkdirSync(out,{recursive:true}); for (const entry of fs.readdirSync(src,{withFileTypes:true})) { const s=path.join(src, entry.name); const d=path.join(out, entry.name); if (entry.isDirectory()) fs.cpSync(s, d, {recursive:true}); else fs.copyFileSync(s, d); }\"",
+    "deploy": "npm run build && cd NEMOSA && npx --yes firebase-tools deploy --project task-management-5d376",
+    "dev": "npm run build && cd NEMOSA && npx --yes firebase-tools emulators:start --only hosting",
+    "test": "node --check NEMOSA/task.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iam-NellyTloubatla/squad-15.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Iam-NellyTloubatla/squad-15/issues"
+  },
+  "homepage": "https://github.com/Iam-NellyTloubatla/squad-15#readme"
+}
